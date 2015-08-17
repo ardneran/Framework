@@ -6,10 +6,10 @@ solution "Framework"
 	-- defines {}
 
 	-- Additional excludes here
-	excludes { "**/External/SDL/**" }
+	excludes { "**/SDL/**" }
 
 	-- Additional includedirs here
-	includedirs { "External/SDL/include" }
+	includedirs { "include", "External/SDL/include" }
 
 	-- A project defines one build target
 	project "Framework"

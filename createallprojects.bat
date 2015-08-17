@@ -1,1 +1,2 @@
-Tools\Windows\premake5\premake5 --file=premake5.lua --os=windows vs2013
+REM Tools\Windows\premake5\premake5 --file=premake5.lua --os=windows vs2013
+Tools\Windows\premake4\premake4 --file=premake4.lua --os=windows vs2012
