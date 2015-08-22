@@ -14,13 +14,11 @@ Window::Window(Parameters& parameters)
 ,	m_yOrigin(parameters.yOrigin)
 ,	m_xSize(parameters.xSize)
 ,	m_ySize(parameters.ySize) {
-/*
 	SDL_Init(SDL_INIT_VIDEO);
 	sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL);
 	if (sdlWindow == 0) {
 		std::fprintf(stderr, "sdlWindow == 0");
 	}
-*/
 }
 
 Window::~Window() {

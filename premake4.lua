@@ -6,10 +6,10 @@ solution "Framework"
 	-- defines {}
 
 	-- Additional excludes here
-	excludes { "**/SDL/**" }
+	excludes { "External/SDL/**", "Library/SDL2/SDL2.framework/**" }
 
 	-- Additional includedirs here
-	includedirs { "include", "External/SDL/include" }
+	includedirs { "include" }
 
 	-- A project defines one build target
 	project "Framework"
@@ -17,7 +17,7 @@ solution "Framework"
 		language "C++"
 		files { "**.h", "**.hh", "**.hpp", "**.c", "**.cc", "**.cpp" }
 		files { "**.vert", "**.frag" }
- 
+
 		configuration "debug"
 			defines { "DEBUG" }
 			flags { "Symbols" }
@@ -38,8 +38,13 @@ solution "Framework"
 			excludes { "**/MacOS/**", "**/Linux/**" }
 
 		configuration "macosx"
-			buildoptions { "-fgnu89-inline" } -- hack for DevIL
-			linkoptions { "-framework Cocoa", "-framework OpenGL", "-framework QuartzCore" }
+			linkoptions { "-framework CoreFoundation", "-framework OpenGL" }
+			libdirs { "$HOME/Documents/Projects/GitHub/Framework/Library/SDL2/" }
+			links { "SDL2" }
+			files { "Library/SDL2/libSDL2.dylib" }
+
+
+			includedirs { "$HOME/Documents/Projects/GitHub/Framework/Library/SDL2/SDL2.framework/Headers" }
 			files { "**.m", "**.mm" }
 			excludes { "**/Windows/**", "**/Linux/**" }
 
