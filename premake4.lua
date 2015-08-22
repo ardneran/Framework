@@ -6,7 +6,7 @@ solution "Framework"
 	-- defines {}
 
 	-- Additional excludes here
-	excludes { "External/SDL/**", "Library/SDL2/SDL2.framework/**" }
+	-- excludes { }
 
 	-- Additional includedirs here
 	includedirs { "include" }
@@ -38,13 +38,8 @@ solution "Framework"
 			excludes { "**/MacOS/**", "**/Linux/**" }
 
 		configuration "macosx"
-			linkoptions { "-framework CoreFoundation", "-framework OpenGL" }
-			libdirs { "$HOME/Documents/Projects/GitHub/Framework/Library/SDL2/" }
-			links { "SDL2" }
-			files { "Library/SDL2/libSDL2.dylib" }
-
-
-			includedirs { "$HOME/Documents/Projects/GitHub/Framework/Library/SDL2/SDL2.framework/Headers" }
+			buildoptions { "-I/Library/Frameworks/SDL2.framework/Headers" }
+			linkoptions { "-framework CoreFoundation", "-framework OpenGL", "-framework SDL2", "-F/Library/Frameworks" }
 			files { "**.m", "**.mm" }
 			excludes { "**/Windows/**", "**/Linux/**" }
 
