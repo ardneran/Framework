@@ -33,7 +33,12 @@ solution "Framework"
 			-- targetname ( "Framework" )
 
 		configuration "windows"
-			linkoptions { }
+			platforms { "x64" }
+			buildoptions { "/ILibrary/Windows/SDL2-2.0.3/include"}
+			-- following single line can be used instead of the libdirs and links combination
+			-- linkoptions { "/LIBPATH:Library/Windows/SDL2-2.0.3/lib/x64", "SDL2.lib", "SDL2main.lib" }
+			libdirs { "Library/Windows/SDL2-2.0.3/lib/x64" }
+			links { "SDL2", "SDL2main" }
 			files { }
 			excludes { "**/MacOS/**", "**/Linux/**" }
 

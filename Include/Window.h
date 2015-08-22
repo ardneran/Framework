@@ -40,12 +40,14 @@ public:
 	inline int getYSize() { return m_ySize; }
 	inline bool isMinimized() const { return m_minimized; }
 	inline bool isMaximized() const { return m_maximized; }
+	inline bool isActive() const { return m_active; }
 
 	// Display callbacks
 	virtual void onMove(const int& x, const int& y);
 	virtual bool onResize(const int& xSize, const int& ySize);
 	virtual void onMinimize();
 	virtual void onMaximize();
+	virtual void onRestore();
 	virtual void onDisplay();
 	virtual void onIdle();
 
@@ -55,9 +57,14 @@ protected:
 
 	std::string m_title;
 	int m_xOrigin, m_yOrigin, m_xSize, m_ySize;
-	bool m_minimized, m_maximized;
+	bool m_minimized, m_maximized, m_active;
 
 private:
+	void handleEvent(const SDL_Event& event);
+	void handleWindowEvent(const SDL_Event& event);
+	void handleKeyUpEvent(const SDL_Event& event);
+	void handleKeyDownEvent(const SDL_Event& event);
+
 	SDL_Window* sdlWindow;
 };
 

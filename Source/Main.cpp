@@ -19,10 +19,8 @@ int main(int argc, char* argv[]) {
 
 	SampleWindow* sampleWindow = new SampleWindow(parameters);
 
-	while (true) {
-		if (!sampleWindow->isMinimized()) {
-			sampleWindow->onIdle();
-		}
+	while (sampleWindow->isActive()) {
+		sampleWindow->onIdle();
 	}
 
 	delete sampleWindow;
