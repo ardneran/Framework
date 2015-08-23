@@ -52,7 +52,6 @@ local.properties
 *.exp
 *.ilk
 *.idb
-*.lib
 *.meta
 *.pch
 *.pdb

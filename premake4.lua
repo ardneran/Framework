@@ -6,7 +6,7 @@ solution "Framework"
 	-- defines {}
 
 	-- Additional excludes here
-	-- excludes { }
+	excludes { "Library/**" }
 
 	-- Additional includedirs here
 	includedirs { "include" }
