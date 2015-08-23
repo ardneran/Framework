@@ -60,6 +60,14 @@ protected:
 	bool m_minimized, m_maximized, m_active;
 
 private:
+
+	void initializeSDL();
+	void initializeSDLimage();
+	void initializeSDLttf();
+	void deinitializeSDL();
+	void deinitializeSDLimage();
+	void deinitializeSDLttf();
+
 	void handleEvent(const SDL_Event& event);
 	void handleWindowEvent(const SDL_Event& event);
 	void handleKeyUpEvent(const SDL_Event& event);

@@ -15,18 +15,15 @@ Window::Window(Parameters& parameters)
 ,	m_xSize(parameters.xSize)
 ,	m_ySize(parameters.ySize)
 ,	m_active(true) {
-	SDL_Init(SDL_INIT_VIDEO);
-	sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-	if (sdlWindow == 0) {
-		std::fprintf(stderr, "sdlWindow == 0");
-	}
+	initializeSDL();
+	initializeSDLimage();
+	initializeSDLttf();
 }
 
 Window::~Window() {
-	if (sdlWindow != 0) {
-		SDL_DestroyWindow(sdlWindow);
-		SDL_Quit();
-	}
+	deinitializeSDLttf();
+	deinitializeSDLimage();
+	deinitializeSDL();
 }
 
 void Window::onMove(const int& x, const int& y) {
@@ -68,6 +65,33 @@ void Window::onIdle() {
 	while (SDL_PollEvent(&event)) {
 		handleEvent(event);
 	}
+}
+
+void Window::initializeSDL() {
+	SDL_Init(SDL_INIT_VIDEO);
+	sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	if (sdlWindow == 0) {
+		std::fprintf(stderr, "sdlWindow == 0");
+	}
+}
+
+void Window::initializeSDLimage() {
+}
+
+void Window::initializeSDLttf() {
+}
+
+void Window::deinitializeSDL() {
+	if (sdlWindow != 0) {
+		SDL_DestroyWindow(sdlWindow);
+		SDL_Quit();
+	}
+}
+
+void Window::deinitializeSDLimage() {
+}
+
+void Window::deinitializeSDLttf() {
 }
 
 void Window::handleEvent(const SDL_Event& event) {

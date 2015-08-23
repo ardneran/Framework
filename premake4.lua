@@ -34,7 +34,7 @@ solution "Framework"
 
 		configuration "windows"
 			platforms { "x64" }
-			buildoptions { "/ILibrary/Windows/SDL2-2.0.3/include"}
+			buildoptions { "/ILibrary/Windows/SDL2-2.0.3/include" }
 			-- following single line can be used instead of the libdirs and links combination
 			-- linkoptions { "/LIBPATH:Library/Windows/SDL2-2.0.3/lib/x64", "SDL2.lib", "SDL2main.lib" }
 			libdirs { "Library/Windows/SDL2-2.0.3/lib/x64" }
@@ -43,8 +43,8 @@ solution "Framework"
 			excludes { "**/MacOS/**", "**/Linux/**" }
 
 		configuration "macosx"
-			buildoptions { "-I/Library/Frameworks/SDL2.framework/Headers" }
-			linkoptions { "-framework CoreFoundation", "-framework OpenGL", "-framework SDL2", "-F/Library/Frameworks" }
+			buildoptions { "-I/Library/Frameworks/SDL2.framework/Headers", "-I/Library/Frameworks/SDL2_image.framework/Headers", "-I/Library/Frameworks/SDL2_ttf.framework/Headers" }
+			linkoptions { "-framework CoreFoundation", "-framework OpenGL", "-framework SDL2", "-framework SDL2_image", "-framework SDL2_ttf", "-F/Library/Frameworks" }
 			files { "**.m", "**.mm" }
 			excludes { "**/Windows/**", "**/Linux/**" }
 
