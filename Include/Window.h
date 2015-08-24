@@ -73,7 +73,7 @@ private:
 	void handleKeyUpEvent(const SDL_Event& event);
 	void handleKeyDownEvent(const SDL_Event& event);
 
-	SDL_Window* sdlWindow;
+	SDL_Window* m_sdlWindow;
 };
 
 #endif /* defined(____Window__) */

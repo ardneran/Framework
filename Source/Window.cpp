@@ -69,8 +69,8 @@ void Window::onIdle() {
 
 void Window::initializeSDL() {
 	SDL_Init(SDL_INIT_VIDEO);
-	sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-	if (sdlWindow == 0) {
+	m_sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	if (m_sdlWindow == 0) {
 		std::fprintf(stderr, "sdlWindow == 0");
 	}
 }
@@ -82,8 +82,8 @@ void Window::initializeSDLttf() {
 }
 
 void Window::deinitializeSDL() {
-	if (sdlWindow != 0) {
-		SDL_DestroyWindow(sdlWindow);
+	if (m_sdlWindow != 0) {
+		SDL_DestroyWindow(m_sdlWindow);
 		SDL_Quit();
 	}
 }
