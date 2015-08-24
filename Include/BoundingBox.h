@@ -19,17 +19,17 @@ public:
 	BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
 	virtual ~BoundingBox();
 
-	inline Vec3 GetCenter() { return m_center; }
-	inline Vec3 GetHalfDimension() const { return m_halfDimension; }
-	inline Vec3 GetCornerMin() { return m_cornerMin; }
-	inline Vec3 GetCornerMax() { return m_cornerMax; }
+	inline Vec3 getCenter() { return m_center; }
+	inline Vec3 getHalfDimension() const { return m_halfDimension; }
+	inline Vec3 getCornerMin() { return m_cornerMin; }
+	inline Vec3 getCornerMax() { return m_cornerMax; }
 
-	void Update(const Vec3& center);
-	void Update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
+	void update(const Vec3& center);
+	void update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
 
-	bool Contains(const Vec3& p) const;
-	bool Contains(const BoundingBox& other) const;
-	bool Intersects(const BoundingBox& other) const;
+	bool contains(const Vec3& p) const;
+	bool contains(const BoundingBox& other) const;
+	bool intersects(const BoundingBox& other) const;
 
 private:
 	Vec3 m_center;

@@ -34,7 +34,7 @@ BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ
 BoundingBox::~BoundingBox()
 { }
 
-void BoundingBox::Update(const Vec3& center)
+void BoundingBox::update(const Vec3& center)
 {
 	m_center = center;
 	m_cornerMin.x = center.x - m_halfDimension.x;
@@ -45,7 +45,7 @@ void BoundingBox::Update(const Vec3& center)
 	m_cornerMax.z = center.z + m_halfDimension.z;
 }
 
-void BoundingBox::Update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
+void BoundingBox::update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
 {
 	m_cornerMin.x = minX;
 	m_cornerMin.y = minY;
@@ -61,7 +61,7 @@ void BoundingBox::Update(const float& minX, const float& minY, const float& minZ
 	m_halfDimension.z = fabsf(maxZ - m_center.z);
 }
 
-bool BoundingBox::Contains(const Vec3& p) const
+bool BoundingBox::contains(const Vec3& p) const
 {
 	if (p.x > m_cornerMax.x)
 	{
@@ -96,12 +96,12 @@ bool BoundingBox::Contains(const Vec3& p) const
 	return true;
 }
 
-bool BoundingBox::Contains(const BoundingBox& other) const
+bool BoundingBox::contains(const BoundingBox& other) const
 {
-	return (Contains(other.m_cornerMin) && Contains(other.m_cornerMax));
+	return (contains(other.m_cornerMin) && contains(other.m_cornerMax));
 }
 
-bool BoundingBox::Intersects(const BoundingBox& other) const
+bool BoundingBox::intersects(const BoundingBox& other) const
 {
 	// Calculate current and minimum-non-intersecting distances between centers.
 	float distanceX = m_center.x - other.m_center.x;
