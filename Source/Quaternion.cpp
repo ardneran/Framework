@@ -11,6 +11,8 @@
 //namespace Engine
 //{
 
+	const Quat Quat::identity = Quat(0.0f, 0.0f, 0.0f, 1.0f);
+
 	Quat::Quat(void)
 	:   x(0.0f), y(0.0f), z(0.0f), w(0.0f)
 	{ }
@@ -57,11 +59,6 @@
 	Quat::Quat(const float &x, const float &y, const float &z, const float &w)
 	:   x(x), y(y), z(z), w(w)
 	{ }
-
-	Quat Quat::identity()
-	{
-		return Quat(0.0f, 0.0f, 0.0f, 1.0f);
-	}
 
 	Vec3 Quat::axis() const
 	{
@@ -178,7 +175,7 @@
 
 	Quat slerp(const Quat &q0, const Quat & q1, const float &t)
 	{
-		return Quat::identity();	//TODO
+		return Quat::identity;	//TODO
 	}
 	
 //}

@@ -8,14 +8,21 @@
 
 #include "Transform.h"
 
-Transform::Transform() {
+Transform::Transform()
+:	m_rotation(Quat::identity)
+,	m_translation(Vec3::zero)
+,	m_scale(Vec3::one) {
 }
 
 Transform::~Transform() {
 }
 
-Transform Transform::operator*(const Transform &transform) {
-	// TODO
+Transform Transform::operator*(const Transform& other) {
 	Transform t;
+	// TODO
 	return t;
+}
+
+Transform Transform::operator*=(const Transform& other) {
+	return (*this * other);
 }

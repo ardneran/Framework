@@ -32,7 +32,6 @@
 		Vec1(const float &x);
 
 		void	set(const float &x);
-		void	zero(void);
 		Vec1	abs(void) const;
 		float   sqr(void) const;
 		float   norm(void) const;
@@ -57,6 +56,9 @@
 		Vec1	operator*(const Mat4 &m) const;
 
 		operator float() { return x; }
+
+		static const Vec1 zero;
+		static const Vec1 one;
 	};
 
 	//  Vec2
@@ -85,7 +87,6 @@
 		Vec2(const float &x, const float &y);
 
 		void	set(const float &x, const float &y);
-		void	zero(void);
 		Vec2	abs(void) const;
 		float   sqr(void) const;
 		float   norm(void) const;
@@ -108,6 +109,9 @@
 		bool	operator==(const Vec2 &a) const;
 		bool	operator!=(const Vec2 &a) const;
 		Vec2	operator*(const Mat4 &m) const;
+
+		static const Vec2 zero;
+		static const Vec2 one;
 	};
 
 	//  Vec3
@@ -141,7 +145,6 @@
 		Vec3(const float &x, const float &y, const float &z);
 
 		void	set(const float &x, const float &y, const float &z);
-		void	zero(void);
 		Vec3	abs(void) const;
 		float   sqr(void) const;
 		float   norm(void) const;
@@ -164,6 +167,9 @@
 		bool	operator==(const Vec3 &a) const;
 		bool	operator!=(const Vec3 &a) const;
 		Vec3	operator*(const Mat4 &m) const;
+
+		static const Vec3 zero;
+		static const Vec3 one;
 	};
 
 	//  Vec4
@@ -187,7 +193,6 @@
 		Vec4(const float &x, const float &y, const float &z, const float &w);
 
 		void	set(const float &x, const float &y, const float &z, const float &w);
-		void	zero(void);
 		Vec4	abs(void) const;
 		float   sqr(void) const;
 		float   norm(void) const;
@@ -211,6 +216,9 @@
 		bool	operator==(const Vec4 &a) const;
 		bool	operator!=(const Vec4 &a) const;
 		Vec4	operator*(const Mat4 &m) const;
+
+		static const Vec4 zero;
+		static const Vec4 one;
 	};
 
 	//  Functions

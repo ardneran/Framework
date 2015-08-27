@@ -11,6 +11,15 @@
 //namespace Engine
 //{
 
+	const Vec1 Vec1::zero = Vec1(0.0f);
+	const Vec1 Vec1::one = Vec1(1.0f);
+	const Vec2 Vec2::zero = Vec2(0.0f, 0.0f);
+	const Vec2 Vec2::one = Vec2(1.0f, 1.0f);
+	const Vec3 Vec3::zero = Vec3(0.0f, 0.0f, 0.0f);
+	const Vec3 Vec3::one = Vec3(1.0f, 1.0f, 1.0f);
+	const Vec4 Vec4::zero = Vec4(0.0f, 0.0f, 0.0f, 0.0f);
+	const Vec4 Vec4::one = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
 	//  Vec1
 
 	Vec1::Vec1(void)
@@ -24,11 +33,6 @@
 	void Vec1::set(const float &x)
 	{
 		this->x = x;
-	}
-
-	void Vec1::zero(void)
-	{
-		x = 0.0f;
 	}
 
 	Vec1 Vec1::abs(void) const
@@ -157,11 +161,6 @@
 	{
 		this->x = x;
 		this->y = y;
-	}
-
-	void Vec2::zero(void)
-	{
-		x = y = 0.0f;
 	}
 
 	Vec2 Vec2::abs(void) const
@@ -299,11 +298,6 @@
 		this->x = x;
 		this->y = y;
 		this->z = z;
-	}
-
-	void Vec3::zero(void)
-	{
-		x = y = z = 0.0f;
 	}
 
 	Vec3 Vec3::abs(void) const
@@ -450,11 +444,6 @@
 		this->y = y;
 		this->z = z;
 		this->w = w;
-	}
-
-	void Vec4::zero(void)
-	{
-		x = y = z = w = 0.0f;
 	}
 
 	Vec4 Vec4::abs(void) const

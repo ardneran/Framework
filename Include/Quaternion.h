@@ -39,8 +39,6 @@
 		Quat(const Vec3 &v0, const Vec3 &v1);     // q that rotates v0 to v1
 		Quat(const float &x, const float &y, const float &z, const float &w);
 
-		static	Quat identity();
-
 		Vec3	axis() const;
 		float   angle() const;
 		Quat	inverse() const;
@@ -57,6 +55,8 @@
 		Quat	operator/(const Quat &a) const; // q0 / q1 is possible
 		void    operator*=(const Quat &a);
 		void    operator/=(const Quat &a);
+
+		static const Quat identity;
 	};
 
 	float	dot(const Quat &q0, const Quat &q1);
