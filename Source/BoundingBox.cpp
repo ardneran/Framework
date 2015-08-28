@@ -121,7 +121,12 @@ bool BoundingBox::intersects(const BoundingBox& other) const
 	return true;
 }
 
-bool BoundingBox::operator==(const BoundingBox& other)
+bool BoundingBox::operator==(const BoundingBox& other) const
 {
 	return (m_center == other.m_center && m_extent == other.m_extent);
+}
+
+bool BoundingBox::operator!=(const BoundingBox& other) const
+{
+	return (m_center != other.m_center || m_extent != other.m_extent);
 }

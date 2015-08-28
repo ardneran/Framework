@@ -31,7 +31,8 @@ public:
 	bool contains(const BoundingBox& other) const;
 	bool intersects(const BoundingBox& other) const;
 
-	bool operator==(const BoundingBox& other);
+	bool operator==(const BoundingBox& other) const;
+	bool operator!=(const BoundingBox& other) const;
 
 private:
 	Vec3 m_center;
