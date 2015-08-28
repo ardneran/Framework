@@ -20,7 +20,7 @@ public:
 	virtual ~BoundingBox();
 
 	inline Vec3 getCenter() { return m_center; }
-	inline Vec3 getHalfDimension() const { return m_halfDimension; }
+	inline Vec3 getExtent() const { return m_extent; }
 	inline Vec3 getCornerMin() { return m_cornerMin; }
 	inline Vec3 getCornerMax() { return m_cornerMax; }
 
@@ -31,9 +31,11 @@ public:
 	bool contains(const BoundingBox& other) const;
 	bool intersects(const BoundingBox& other) const;
 
+	bool operator==(const BoundingBox& other);
+
 private:
 	Vec3 m_center;
-	Vec3 m_halfDimension;
+	Vec3 m_extent;
 	Vec3 m_cornerMin;
 	Vec3 m_cornerMax;
 };

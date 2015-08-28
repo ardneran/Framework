@@ -13,7 +13,7 @@ BoundingBox::BoundingBox()
 
 BoundingBox::BoundingBox(const Vec3& center, const Vec3& halfDimension)
 	: m_center(center)
-	, m_halfDimension(halfDimension)
+	, m_extent(halfDimension)
 {
 	m_cornerMin = center - halfDimension;
 	m_cornerMax = center + halfDimension;
@@ -26,9 +26,9 @@ BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ
 	m_center.x = (minX + maxX) / 2.0f;
 	m_center.y = (minY + maxY) / 2.0f;
 	m_center.z = (minZ + maxZ) / 2.0f;
-	m_halfDimension.x = maxX - m_center.x;
-	m_halfDimension.y = maxY - m_center.y;
-	m_halfDimension.z = maxZ - m_center.z;
+	m_extent.x = maxX - m_center.x;
+	m_extent.y = maxY - m_center.y;
+	m_extent.z = maxZ - m_center.z;
 }
 
 BoundingBox::~BoundingBox()
@@ -37,12 +37,12 @@ BoundingBox::~BoundingBox()
 void BoundingBox::update(const Vec3& center)
 {
 	m_center = center;
-	m_cornerMin.x = center.x - m_halfDimension.x;
-	m_cornerMin.y = center.y - m_halfDimension.y;
-	m_cornerMin.z = center.z - m_halfDimension.z;
-	m_cornerMax.x = center.x + m_halfDimension.x;
-	m_cornerMax.y = center.y + m_halfDimension.y;
-	m_cornerMax.z = center.z + m_halfDimension.z;
+	m_cornerMin.x = center.x - m_extent.x;
+	m_cornerMin.y = center.y - m_extent.y;
+	m_cornerMin.z = center.z - m_extent.z;
+	m_cornerMax.x = center.x + m_extent.x;
+	m_cornerMax.y = center.y + m_extent.y;
+	m_cornerMax.z = center.z + m_extent.z;
 }
 
 void BoundingBox::update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
@@ -56,9 +56,9 @@ void BoundingBox::update(const float& minX, const float& minY, const float& minZ
 	m_center.x = (minX + maxX) * 0.5f;
 	m_center.y = (minY + maxY) * 0.5f;
 	m_center.z = (minZ + maxZ) * 0.5f;
-	m_halfDimension.x = fabsf(maxX - m_center.x);
-	m_halfDimension.y = fabsf(maxY - m_center.y);
-	m_halfDimension.z = fabsf(maxZ - m_center.z);
+	m_extent.x = fabsf(maxX - m_center.x);
+	m_extent.y = fabsf(maxY - m_center.y);
+	m_extent.z = fabsf(maxZ - m_center.z);
 }
 
 bool BoundingBox::contains(const Vec3& p) const
@@ -108,9 +108,9 @@ bool BoundingBox::intersects(const BoundingBox& other) const
 	float distanceY = m_center.y - other.m_center.y;
 	float distanceZ = m_center.z - other.m_center.z;
 
-	float minDistanceX = m_halfDimension.x + other.m_halfDimension.x;
-	float minDistanceY = m_halfDimension.y + other.m_halfDimension.y;
-	float minDistanceZ = m_halfDimension.z + other.m_halfDimension.z;
+	float minDistanceX = m_extent.x + other.m_extent.x;
+	float minDistanceY = m_extent.y + other.m_extent.y;
+	float minDistanceZ = m_extent.z + other.m_extent.z;
 
 	// If we are not intersecting at all, return (0, 0).
 	if (fabsf(distanceX) >= minDistanceX || fabsf(distanceY) >= minDistanceY || fabsf(distanceZ) >= minDistanceZ)
@@ -119,4 +119,9 @@ bool BoundingBox::intersects(const BoundingBox& other) const
 	}
 
 	return true;
+}
+
+bool BoundingBox::operator==(const BoundingBox& other)
+{
+	return (m_center == other.m_center && m_extent == other.m_extent);
 }

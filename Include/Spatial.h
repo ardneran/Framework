@@ -9,6 +9,7 @@
 #ifndef Spatial_h
 #define Spatial_h
 
+#include "BoundingBox.h"
 #include "Transform.h"
 
 class Spatial {
@@ -20,6 +21,7 @@ public:
 
 	Transform m_localTransform;
 	Transform m_worldTransform;
+	BoundingBox m_worldBoundingBox;
 
 protected:
 	// Abstract base class
