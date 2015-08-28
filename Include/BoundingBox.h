@@ -15,7 +15,7 @@ class BoundingBox
 {
 public:
 	BoundingBox();
-	BoundingBox(const Vec3& center, const Vec3& halfDimension);
+	BoundingBox(const Vec3& center, const Vec3& extent);
 	BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
 	virtual ~BoundingBox();
 

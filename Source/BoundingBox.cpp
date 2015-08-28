@@ -11,12 +11,12 @@
 BoundingBox::BoundingBox()
 { }
 
-BoundingBox::BoundingBox(const Vec3& center, const Vec3& halfDimension)
+BoundingBox::BoundingBox(const Vec3& center, const Vec3& extent)
 	: m_center(center)
-	, m_extent(halfDimension)
+	, m_extent(extent)
 {
-	m_cornerMin = center - halfDimension;
-	m_cornerMax = center + halfDimension;
+	m_cornerMin = center - extent;
+	m_cornerMax = center + extent;
 }
 
 BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
