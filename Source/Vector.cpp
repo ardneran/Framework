@@ -80,9 +80,9 @@
 		return Vec1(-x);
 	}
 
-	float Vec1::operator*(const Vec1 &a) const
+	Vec1 Vec1::operator*(const Vec1 &a) const
 	{
-		return x * a.x;
+		return Vec1(x * a.x);
 	}
 
 	Vec1 Vec1::operator*(const float &a) const
@@ -208,9 +208,9 @@
 		return Vec2(-x, -y);
 	}
 
-	float Vec2::operator*(const Vec2 &a) const
+	Vec2 Vec2::operator*(const Vec2 &a) const
 	{
-		return x * a.x + y * a.y;
+		return Vec2(x * a.x, y * a.y);
 	}
 
 	Vec2 Vec2::operator*(const float &a) const
@@ -345,9 +345,9 @@
 		return Vec3(-x, -y, -z);
 	}
 
-	float Vec3::operator*(const Vec3 &a) const
+	Vec3 Vec3::operator*(const Vec3 &a) const
 	{
-		return x * a.x + y * a.y + z * a.z;
+		return Vec3(x * a.x, y * a.y, z * a.z);
 	}
 
 	Vec3 Vec3::operator*(const float &a) const
@@ -496,9 +496,9 @@
 		return Vec4(-x, -y, -z, -w);
 	}
 
-	float Vec4::operator*(const Vec4 &a) const
+	Vec4 Vec4::operator*(const Vec4 &a) const
 	{
-		return x * a.x + y * a.y + z * a.z + w * a.w;
+		return Vec4(x * a.x, y * a.y, z * a.z, w * a.w);
 	}
 
 	Vec4 Vec4::operator*(const float &a) const

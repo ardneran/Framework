@@ -18,8 +18,11 @@ Transform::~Transform() {
 }
 
 Transform Transform::operator*(const Transform& other) {
+	// TODO verify this
 	Transform t;
-	// TODO
+	t.m_rotation = other.m_rotation * m_rotation;
+	t.m_scale = m_scale * other.m_scale;
+	t.m_translation = (other.m_rotation * (other.m_scale * m_translation)) + other.m_translation;
 	return t;
 }
 

@@ -41,7 +41,7 @@
 		float   operator[](const int index) const;
 		float&  operator[](const int index);
 		Vec1	operator-() const;
-		float   operator*(const Vec1 &a) const;
+		Vec1	operator*(const Vec1 &a) const;
 		Vec1	operator*(const float &a) const;
 		Vec1	operator/(const float &a) const;
 		Vec1	operator+(const Vec1 &a) const;
@@ -96,7 +96,7 @@
 		float   operator[](const int index) const;
 		float&  operator[](const int index);
 		Vec2	operator-() const;
-		float   operator*(const Vec2 &a) const;
+		Vec2	operator*(const Vec2 &a) const;
 		Vec2	operator*(const float &a) const;
 		Vec2	operator/(const float &a) const;
 		Vec2	operator+(const Vec2 &a) const;
@@ -154,7 +154,7 @@
 		float   operator[](const int index) const;
 		float&  operator[](const int index);
 		Vec3	operator-() const;
-		float   operator*(const Vec3 &a) const;
+		Vec3	operator*(const Vec3 &a) const;
 		Vec3	operator*(const float &a) const;
 		Vec3	operator/(const float &a) const;
 		Vec3	operator+(const Vec3 &a) const;
@@ -203,7 +203,7 @@
 		float   operator[](const int index) const;
 		float&  operator[](const int index);
 		Vec4	operator-() const;
-		float   operator*(const Vec4 &a) const;
+		Vec4	operator*(const Vec4 &a) const;
 		Vec4	operator*(const float &a) const;
 		Vec4	operator/(const float &a) const;
 		Vec4	operator+(const Vec4 &a) const;

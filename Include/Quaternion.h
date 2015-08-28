@@ -49,6 +49,7 @@
 		Mat3	mat3() const;
 		Mat4	mat4() const;
 
+		Vec3	operator*(const Vec3 &a) const;
 		Quat	operator+(const Quat &a) const;
 		Quat	operator-(const Quat &a) const;
 		Quat	operator*(const Quat &a) const; // q0 * q1 != q1 * q0 noncommutative
