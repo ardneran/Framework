@@ -25,6 +25,7 @@ public:
 	inline Vec3 getCornerMax() { return m_cornerMax; }
 
 	void update(const Vec3& center);
+	void update(const Vec3& center, const Vec3& extent);
 	void update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
 
 	bool contains(const Vec3& p) const;

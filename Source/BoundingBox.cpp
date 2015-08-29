@@ -9,26 +9,24 @@
 #include "BoundingBox.h"
 
 BoundingBox::BoundingBox()
+:	m_center(Vec3::zero)
+,	m_extent(Vec3::zero)
 { }
 
 BoundingBox::BoundingBox(const Vec3& center, const Vec3& extent)
-	: m_center(center)
-	, m_extent(extent)
+:	m_center(center)
+,	m_extent(extent)
 {
 	m_cornerMin = center - extent;
 	m_cornerMax = center + extent;
 }
 
 BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
-	: m_cornerMin(minX, minY, minZ)
-	, m_cornerMax(maxX, maxY, maxZ)
+:	m_cornerMin(minX, minY, minZ)
+,	m_cornerMax(maxX, maxY, maxZ)
 {
-	m_center.x = (minX + maxX) / 2.0f;
-	m_center.y = (minY + maxY) / 2.0f;
-	m_center.z = (minZ + maxZ) / 2.0f;
-	m_extent.x = maxX - m_center.x;
-	m_extent.y = maxY - m_center.y;
-	m_extent.z = maxZ - m_center.z;
+	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
+	m_extent = (m_center - m_cornerMin).abs();
 }
 
 BoundingBox::~BoundingBox()
@@ -37,14 +35,17 @@ BoundingBox::~BoundingBox()
 void BoundingBox::update(const Vec3& center)
 {
 	m_center = center;
-	m_cornerMin.x = center.x - m_extent.x;
-	m_cornerMin.y = center.y - m_extent.y;
-	m_cornerMin.z = center.z - m_extent.z;
-	m_cornerMax.x = center.x + m_extent.x;
-	m_cornerMax.y = center.y + m_extent.y;
-	m_cornerMax.z = center.z + m_extent.z;
+	m_cornerMin = center - m_extent;
+	m_cornerMax = center + m_extent;
 }
 
+void BoundingBox::update(const Vec3& center, const Vec3& extent)
+{
+	m_center = center;
+	m_extent = extent;
+	m_cornerMin = center - extent;
+	m_cornerMax = center + extent;
+}
 void BoundingBox::update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
 {
 	m_cornerMin.x = minX;
@@ -53,12 +54,8 @@ void BoundingBox::update(const float& minX, const float& minY, const float& minZ
 	m_cornerMax.x = maxX;
 	m_cornerMax.y = maxY;
 	m_cornerMax.z = maxZ;
-	m_center.x = (minX + maxX) * 0.5f;
-	m_center.y = (minY + maxY) * 0.5f;
-	m_center.z = (minZ + maxZ) * 0.5f;
-	m_extent.x = fabsf(maxX - m_center.x);
-	m_extent.y = fabsf(maxY - m_center.y);
-	m_extent.z = fabsf(maxZ - m_center.z);
+	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
+	m_extent = (m_center - m_cornerMin).abs();
 }
 
 bool BoundingBox::contains(const Vec3& p) const
