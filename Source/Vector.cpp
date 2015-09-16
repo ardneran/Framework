@@ -13,12 +13,23 @@
 
 	const Vec1 Vec1::zero = Vec1(0.0f);
 	const Vec1 Vec1::one = Vec1(1.0f);
+	const Vec1 Vec1::min = Vec1(FLT_MIN);
+	const Vec1 Vec1::max = Vec1(FLT_MAX);
+
 	const Vec2 Vec2::zero = Vec2(0.0f, 0.0f);
 	const Vec2 Vec2::one = Vec2(1.0f, 1.0f);
+	const Vec2 Vec2::min = Vec2(FLT_MIN, FLT_MIN);
+	const Vec2 Vec2::max = Vec2(FLT_MAX, FLT_MAX);
+
 	const Vec3 Vec3::zero = Vec3(0.0f, 0.0f, 0.0f);
 	const Vec3 Vec3::one = Vec3(1.0f, 1.0f, 1.0f);
+	const Vec3 Vec3::min = Vec3(FLT_MIN, FLT_MIN, FLT_MIN);
+	const Vec3 Vec3::max = Vec3(FLT_MAX, FLT_MAX, FLT_MAX);
+
 	const Vec4 Vec4::zero = Vec4(0.0f, 0.0f, 0.0f, 0.0f);
 	const Vec4 Vec4::one = Vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	const Vec4 Vec4::min = Vec4(FLT_MIN, FLT_MIN, FLT_MIN, FLT_MIN);
+	const Vec4 Vec4::max = Vec4(FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX);
 
 	//  Vec1
 

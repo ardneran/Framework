@@ -59,6 +59,8 @@
 
 		static const Vec1 zero;
 		static const Vec1 one;
+		static const Vec1 min;
+		static const Vec1 max;
 	};
 
 	//  Vec2
@@ -112,6 +114,8 @@
 
 		static const Vec2 zero;
 		static const Vec2 one;
+		static const Vec2 min;
+		static const Vec2 max;
 	};
 
 	//  Vec3
@@ -170,6 +174,8 @@
 
 		static const Vec3 zero;
 		static const Vec3 one;
+		static const Vec3 min;
+		static const Vec3 max;
 	};
 
 	//  Vec4
@@ -219,6 +225,8 @@
 
 		static const Vec4 zero;
 		static const Vec4 one;
+		static const Vec4 min;
+		static const Vec4 max;
 	};
 
 	//  Functions

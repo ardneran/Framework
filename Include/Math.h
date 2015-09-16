@@ -9,6 +9,8 @@
 #ifndef __Engine_Framework__Math__
 #define __Engine_Framework__Math__
 
+#include <float.h>
+
 // Use this with SDL
 #include <SDL.h>
 #define M_PI_2		22.0f / 14.0f
