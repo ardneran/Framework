@@ -22,31 +22,40 @@ BoundingBox::BoundingBox(const Vec3& center, const Vec3& extent)
 }
 
 BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
-:	m_cornerMin(minX, minY, minZ)
-,	m_cornerMax(maxX, maxY, maxZ)
 {
+	m_cornerMin = Vec3(minX, minY, minZ);
+	m_cornerMax = Vec3(maxX, maxY, maxZ);
 	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
-	m_extent = (m_center - m_cornerMin).abs();
+	m_extent = m_center - m_cornerMin;
 }
 
 BoundingBox::~BoundingBox()
 { }
 
-void BoundingBox::update(const Vec3& center)
+void BoundingBox::updateCenter(const Vec3& center)
 {
 	m_center = center;
 	m_cornerMin = center - m_extent;
 	m_cornerMax = center + m_extent;
 }
 
-void BoundingBox::update(const Vec3& center, const Vec3& extent)
+void BoundingBox::updateCenterExtent(const Vec3& center, const Vec3& extent)
 {
 	m_center = center;
 	m_extent = extent;
 	m_cornerMin = center - extent;
 	m_cornerMax = center + extent;
 }
-void BoundingBox::update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
+
+void BoundingBox::updateMinMax(const Vec3& cornerMin, const Vec3& cornerMax)
+{
+	m_cornerMin = cornerMin;
+	m_cornerMax = cornerMax;
+	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
+	m_extent = m_center - m_cornerMin;
+}
+
+void BoundingBox::updateMinMax(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
 {
 	m_cornerMin.x = minX;
 	m_cornerMin.y = minY;
@@ -55,7 +64,56 @@ void BoundingBox::update(const float& minX, const float& minY, const float& minZ
 	m_cornerMax.y = maxY;
 	m_cornerMax.z = maxZ;
 	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
-	m_extent = (m_center - m_cornerMin).abs();
+	m_extent = m_center - m_cornerMin;
+}
+
+void BoundingBox::create(const std::vector<BoundingBox>& boxes)
+{
+	std::vector<Vec3> points;
+	for (std::vector<BoundingBox>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer)
+	{
+		points.push_back(boxPointer->getCornerMin());
+		points.push_back(boxPointer->getCornerMax());
+	}
+	create(points);
+}
+
+void BoundingBox::create(const std::vector<Vec3>& points)
+{
+	Vec3 cornerMin = Vec3::max;
+	Vec3 cornerMax = Vec3::min;
+	for (std::vector<Vec3>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer)
+	{
+		if (pointPointer->x < cornerMin.x)
+		{
+			cornerMin.x = pointPointer->x;
+		}
+
+		if (pointPointer->x > cornerMax.x)
+		{
+			cornerMax.x = pointPointer->x;
+		}
+
+		if (pointPointer->y < cornerMin.y)
+		{
+			cornerMin.y = pointPointer->y;
+		}
+
+		if (pointPointer->y > cornerMax.y)
+		{
+			cornerMax.y = pointPointer->y;
+		}
+
+		if (pointPointer->z < cornerMin.z)
+		{
+			cornerMin.z = pointPointer->z;
+		}
+
+		if (pointPointer->z > cornerMax.z)
+		{
+			cornerMax.z = pointPointer->z;
+		}
+	}
 }
 
 bool BoundingBox::contains(const Vec3& p) const

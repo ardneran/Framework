@@ -9,6 +9,7 @@
 #ifndef TEST_BoundingBox_H
 #define TEST_BoundingBox_H
 
+#include <vector>
 #include "Vector.h"
 
 class BoundingBox
@@ -19,14 +20,18 @@ public:
 	BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
 	virtual ~BoundingBox();
 
-	inline Vec3 getCenter() { return m_center; }
+	inline Vec3 getCenter() const { return m_center; }
 	inline Vec3 getExtent() const { return m_extent; }
-	inline Vec3 getCornerMin() { return m_cornerMin; }
-	inline Vec3 getCornerMax() { return m_cornerMax; }
+	inline Vec3 getCornerMin() const { return m_cornerMin; }
+	inline Vec3 getCornerMax() const { return m_cornerMax; }
 
-	void update(const Vec3& center);
-	void update(const Vec3& center, const Vec3& extent);
-	void update(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
+	void updateCenter(const Vec3& center);
+	void updateCenterExtent(const Vec3& center, const Vec3& extent);
+	void updateMinMax(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
+	void updateMinMax(const Vec3& cornerMin, const Vec3& cornerMax);
+
+	void create(const std::vector<BoundingBox>& boxes);
+	void create(const std::vector<Vec3>& points);
 
 	bool contains(const Vec3& p) const;
 	bool contains(const BoundingBox& other) const;

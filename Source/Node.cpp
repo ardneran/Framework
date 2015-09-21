@@ -17,20 +17,19 @@ Node::Node() {
 
 void Node::updateWorldTransforms() {
 	Spatial::updateWorldTransforms();
-	for (std::vector<Spatial*>::iterator it = m_children.begin(); it != m_children.end(); ++it) {
-		if (*it) {
-			(*it)->update();
+	for (std::vector<Spatial*>::iterator spatialPointerPointer = m_children.begin(); spatialPointerPointer != m_children.end(); ++spatialPointerPointer) {
+		if (*spatialPointerPointer) {
+			(*spatialPointerPointer)->update();
 		}
 	}
 }
 
 bool Node::updateWorldBounds() {
 	BoundingBox oldWorldBoundingBox = m_worldBoundingBox;
-	m_worldBoundingBox.update(Vec3::zero, Vec3::zero);
-	for (std::vector<Spatial*>::iterator it = m_children.begin(); it != m_children.end(); ++it) {
-		if (*it) {
-			// TODO add to bound
-		}
+	std::vector<BoundingBox> boxes;
+	for (std::vector<Spatial*>::iterator spatialPointerPointer = m_children.begin(); spatialPointerPointer != m_children.end(); ++spatialPointerPointer) {
+		boxes.push_back((*spatialPointerPointer)->m_worldBoundingBox);
 	}
+	m_worldBoundingBox.create(boxes);
 	return (oldWorldBoundingBox != m_worldBoundingBox);
 }
