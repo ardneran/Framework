@@ -23,8 +23,12 @@ BoundingBox::BoundingBox(const Vec3& center, const Vec3& extent)
 
 BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ)
 {
-	m_cornerMin = Vec3(minX, minY, minZ);
-	m_cornerMax = Vec3(maxX, maxY, maxZ);
+	m_cornerMin.x = minX;
+	m_cornerMin.y = minY;
+	m_cornerMin.z = minZ;
+	m_cornerMax.x = maxX;
+	m_cornerMax.y = maxY;
+	m_cornerMax.z = maxZ;
 	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
 	m_extent = m_center - m_cornerMin;
 }
@@ -158,22 +162,13 @@ bool BoundingBox::contains(const BoundingBox& other) const
 
 bool BoundingBox::intersects(const BoundingBox& other) const
 {
-	// Calculate current and minimum-non-intersecting distances between centers.
-	float distanceX = m_center.x - other.m_center.x;
-	float distanceY = m_center.y - other.m_center.y;
-	float distanceZ = m_center.z - other.m_center.z;
-
-	float minDistanceX = m_extent.x + other.m_extent.x;
-	float minDistanceY = m_extent.y + other.m_extent.y;
-	float minDistanceZ = m_extent.z + other.m_extent.z;
-
-	// If we are not intersecting at all, return (0, 0).
-	if (fabsf(distanceX) >= minDistanceX || fabsf(distanceY) >= minDistanceY || fabsf(distanceZ) >= minDistanceZ)
-	{
-		return false;
-	}
-
-	return true;
+	// Calculate current and min non intersecting distance between centers.
+	// If we are not intersecting at all then return (0, 0).
+	Vec3 curDistance = m_center - other.m_center;
+	Vec3 minDistance = m_extent + other.m_extent;
+	return ((!(fabsf(curDistance.x) >= minDistance.x)) &&
+			(!(fabsf(curDistance.y) >= minDistance.y)) &&
+			(!(fabsf(curDistance.z) >= minDistance.z)));
 }
 
 bool BoundingBox::operator==(const BoundingBox& other) const
