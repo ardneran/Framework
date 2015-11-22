@@ -10,7 +10,7 @@
 #define ____Window__
 
 #include <string>
-#include <SDL.h>
+#include "SDL.h"
 
 class Window {
 public:

@@ -12,18 +12,22 @@
 #include <float.h>
 
 // Use this with SDL
-#include <SDL.h>
-#define M_PI_2		22.0f / 14.0f
-#define sinf SDL_sin
-#define asinf SDL_asin
-#define cosf SDL_cos
-#define acosf SDL_acos
-#define tanf SDL_tan
-#define atanf SDL_atan
-#define tan2f SDL_tan2
-#define atan2f SDL_atan2
-#define sqrtf SDL_sqrt
-#define fabsf SDL_fabs
+#include "SDL.h"
+
+#if defined(__APPLE__)
+#else
+//#define M_PI_2		22.0f / 14.0f
+//#define sinf SDL_sin
+//#define asinf SDL_asin
+//#define cosf SDL_cos
+//#define acosf SDL_acos
+//#define tanf SDL_tan
+//#define atanf SDL_atan
+//#define tan2f SDL_tan2
+//#define atan2f SDL_atan2
+//#define sqrtf SDL_sqrt
+//#define fabsf SDL_fabs
+#endif //defined(__APPLE__)
 
 // Use this without SDL
 //#define _USE_MATH_DEFINES
