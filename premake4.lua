@@ -49,6 +49,6 @@ solution "Framework"
 			excludes { "**/Windows/**", "**/Linux/**" }
 
 		configuration "linux"
-			linkoptions { "-lGL", "-lGLU", "-lGLEW", "-lX11", "-L/usr/lib/nvidia-355/" } -- hack for nvidia driver
+			linkoptions { "-lGL", "-lGLU", "-lGLEW", "-lX11", "-L/usr/lib/nvidia-358/" } -- hack for nvidia driver
 			files { }
 			excludes { "**/Windows/**", "**/MacOS/**" }
