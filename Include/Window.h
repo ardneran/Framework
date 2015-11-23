@@ -10,7 +10,10 @@
 #define ____Window__
 
 #include <string>
+#include "Renderer.h"
 #include "SDL.h"
+#include "SDL_image.h"
+#include "SDL_ttf.h"
 
 class Window {
 public:
@@ -58,6 +61,8 @@ protected:
 	std::string m_title;
 	int m_xOrigin, m_yOrigin, m_xSize, m_ySize;
 	bool m_minimized, m_maximized, m_active;
+
+	Renderer* m_renderer;
 
 private:
 

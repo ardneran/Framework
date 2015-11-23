@@ -32,9 +32,10 @@ void Window::onMove(const int& x, const int& y) {
 }
 
 bool Window::onResize(const int& xSize, const int& ySize) {
-	m_minimized = false;
-	m_maximized = false;
-	if (xSize != m_xSize || ySize != m_ySize) {
+	if (xSize > 0 && ySize > 0) {
+		if (m_renderer) {
+			m_renderer->resize(xSize, ySize);
+		}
 		m_xSize = xSize;
 		m_ySize = ySize;
 		return  true;
@@ -69,29 +70,33 @@ void Window::onIdle() {
 
 void Window::initializeSDL() {
 	SDL_Init(SDL_INIT_VIDEO);
-	m_sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-	if (m_sdlWindow == 0) {
-		std::fprintf(stderr, "sdlWindow == 0");
-	}
+	//m_sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	//if (m_sdlWindow == 0) {
+	//	std::fprintf(stderr, "sdlWindow == 0");
+	//}
 }
 
 void Window::initializeSDLimage() {
+	IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
 }
 
 void Window::initializeSDLttf() {
+	TTF_Init();
 }
 
 void Window::deinitializeSDL() {
-	if (m_sdlWindow != 0) {
-		SDL_DestroyWindow(m_sdlWindow);
-		SDL_Quit();
-	}
+	//if (m_sdlWindow != 0) {
+	//	SDL_DestroyWindow(m_sdlWindow);
+	//}
+	SDL_Quit();
 }
 
 void Window::deinitializeSDLimage() {
+	IMG_Quit();
 }
 
 void Window::deinitializeSDLttf() {
+	TTF_Quit();
 }
 
 void Window::handleEvent(const SDL_Event& event) {

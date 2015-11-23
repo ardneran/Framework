@@ -43,8 +43,8 @@ solution "Framework"
 			excludes { "**/MacOS/**", "**/Linux/**" }
 
 		configuration "macosx"
-			frameworkdirs { "Library/MacOS/SDL2-2.0.3" }
-			linkoptions { "-framework SDL2" }
+			frameworkdirs { "Library/MacOS/SDL2-2.0.3", "Library/MacOS/SDL2_image-2.0.0", "Library/MacOS/SDL2_ttf-2.0.12" }
+			linkoptions { "-framework SDL2", "-framework SDL2_image", "-framework SDL2_ttf" }
 			files { "**.m", "**.mm" }
 			excludes { "**/Windows/**", "**/Linux/**" }
 

@@ -8,9 +8,9 @@
 
 #include "SampleWindow.h"
 
-SampleWindow::SampleWindow(Parameters& parameters)
-:	Window(parameters) {
+SampleWindow::~SampleWindow() {
 }
 
-SampleWindow::~SampleWindow() {
+SampleWindow::SampleWindow(Parameters& parameters)
+:	Window(parameters) {
 }
