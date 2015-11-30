@@ -9,10 +9,13 @@
 #ifndef ____Window__
 #define ____Window__
 
+#include <cassert>
+#include <iostream>
 #include <string>
 #include "Renderer.h"
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_opengl.h"
 #include "SDL_ttf.h"
 
 class Window {
@@ -47,7 +50,7 @@ public:
 
 	// Display callbacks
 	virtual void onMove(const int& x, const int& y);
-	virtual bool onResize(const int& xSize, const int& ySize);
+	virtual bool onChangeSize(const int& xSize, const int& ySize);
 	virtual void onMinimize();
 	virtual void onMaximize();
 	virtual void onRestore();
@@ -69,9 +72,11 @@ private:
 	void initializeSDL();
 	void initializeSDLimage();
 	void initializeSDLttf();
+	void initializeOpenGL();
 	void deinitializeSDL();
 	void deinitializeSDLimage();
 	void deinitializeSDLttf();
+	void deinitializeOpenGL();
 
 	void handleEvent(const SDL_Event& event);
 	void handleWindowEvent(const SDL_Event& event);
@@ -79,6 +84,7 @@ private:
 	void handleKeyDownEvent(const SDL_Event& event);
 
 	SDL_Window* m_sdlWindow;
+	SDL_GLContext m_sdlContext;
 };
 
 #endif /* defined(____Window__) */

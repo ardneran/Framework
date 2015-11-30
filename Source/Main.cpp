@@ -14,8 +14,8 @@ int main(int argc, char* argv[]) {
 	parameters.title = "Framework";
 	parameters.xOrigin = 0;
 	parameters.yOrigin = 0;
-	parameters.xSize = 1024;
-	parameters.ySize = 768;
+	parameters.xSize = 1920;
+	parameters.ySize = 1080;
 
 	SampleWindow* sampleWindow = new SampleWindow(parameters);
 
