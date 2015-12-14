@@ -69,6 +69,16 @@ void Camera::setFrustum(const float& rightMin, const float& rightMax, const floa
 	updateViewProjectionMatrix();
 }
 
+void Camera::setPreViewMatrix(const Mat4& preViewMatrix) {
+	m_preViewMatrix = preViewMatrix;
+	updateViewProjectionMatrix();
+}
+
+void Camera::setPostProjectionMatrix(const Mat4& postProjectionMatrix) {
+	m_postProjectionMatrix = postProjectionMatrix;
+	updateViewProjectionMatrix();
+}
+
 void Camera::getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front) {
 	position = m_position;
 	right = m_right;
@@ -100,6 +110,14 @@ void Camera::getFrustum(float& rightMin, float& rightMax, float& upMin, float& u
 	upMax = m_upMax;
 	frontMin = m_frontMin;
 	frontMax = m_frontMax;
+}
+
+void Camera::getPreViewMatrix(Mat4& preViewMatrix) {
+	preViewMatrix = m_preViewMatrix;
+}
+
+void Camera::getPostProjectionMatrix(Mat4& postProjectionMatrix) {
+	postProjectionMatrix = m_postProjectionMatrix;
 }
 
 void Camera::updateViewMatrix() {

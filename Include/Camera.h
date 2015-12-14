@@ -22,12 +22,16 @@ public:
 	void setAxes(const Vec3& right, const Vec3& up, const Vec3& front);
 	void setFrustum(const float& upFovDegrees, const float& aspectRatio, const float& frontMin, const float& frontMax);
 	void setFrustum(const float& rightMin, const float& rightMax, const float& upMin, const float& upMax, const float& frontMin, const float& frontMax);
+	void setPreViewMatrix(const Mat4& preViewMatrix);
+	void setPostProjectionMatrix(const Mat4& postProjectionMatrix);
 
 	void getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front);
 	void getPosition(Vec3& position);
 	void getAxes(Vec3& right, Vec3& up, Vec3& front);
 	void getFrustum(float& upFovDegrees, float& aspectRatio, float& frontMin, float& frontMax);
 	void getFrustum(float& rightMin, float& rightMax, float& upMin, float& upMax, float& frontMin, float& frontMax);
+	void getPreViewMatrix(Mat4& preViewMatrix);
+	void getPostProjectionMatrix(Mat4& postProjectionMatrix);
 
 private:
 	void updateViewMatrix();
