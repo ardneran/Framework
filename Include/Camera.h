@@ -30,8 +30,6 @@ public:
 	void getFrustum(float& rightMin, float& rightMax, float& upMin, float& upMax, float& frontMin, float& frontMax);
 
 private:
-	void onFrameChange();
-	void onFrustumChange();
 	void updateViewMatrix();
 	void updateProjectionMatrix();
 	void updateViewProjectionMatrix();

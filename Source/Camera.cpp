@@ -28,6 +28,9 @@ Camera::Camera()
 ,	m_viewOrthographicProjectionMatrix(Mat4::identity)
 ,	m_viewPerspectiveProjectionMatrix(Mat4::identity)
 ,	m_postProjectionMatrix(Mat4::identity) {
+	updateViewMatrix();
+	updateProjectionMatrix();
+	updateViewProjectionMatrix();
 }
 
 Camera::~Camera() {
@@ -38,27 +41,32 @@ void Camera::setFrame(const Vec3& position, const Vec3& right, const Vec3& up, c
 	m_right = right;
 	m_up = up;
 	m_front = front;
-	onFrameChange();
+	updateViewMatrix();
+	updateViewProjectionMatrix();
 }
 
 void Camera::setPosition(const Vec3& position) {
 	m_position = position;
-	onFrameChange();
+	updateViewMatrix();
+	updateViewProjectionMatrix();
 }
 
 void Camera::setAxes(const Vec3& right, const Vec3& up, const Vec3& front) {
 	m_right = right;
 	m_up = up;
 	m_front = front;
-	onFrameChange();
+	updateViewMatrix();
+	updateViewProjectionMatrix();
 }
 
 void Camera::setFrustum(const float& upFovDegrees, const float& aspectRatio, const float& frontMin, const float& frontMax) {
-	onFrustumChange();
+	updateProjectionMatrix();
+	updateViewProjectionMatrix();
 }
 
 void Camera::setFrustum(const float& rightMin, const float& rightMax, const float& upMin, const float& upMax, const float& frontMin, const float& frontMax) {
-	onFrustumChange();
+	updateProjectionMatrix();
+	updateViewProjectionMatrix();
 }
 
 void Camera::getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front) {
@@ -94,14 +102,6 @@ void Camera::getFrustum(float& rightMin, float& rightMax, float& upMin, float& u
 	frontMax = m_frontMax;
 }
 
-void Camera::onFrameChange() {
-	updateViewMatrix();
-}
-
-void Camera::onFrustumChange() {
-	updateProjectionMatrix();
-}
-
 void Camera::updateViewMatrix() {
 	// update view matrix
 	m_viewMatrix.d00 = m_right[0];
@@ -120,9 +120,6 @@ void Camera::updateViewMatrix() {
 	m_viewMatrix.d31 = 0.0f;
 	m_viewMatrix.d32 = 0.0f;
 	m_viewMatrix.d33 = 1.0f;
-
-	// update dependency matrix
-	updateViewProjectionMatrix();
 }
 
 void Camera::updateProjectionMatrix() {
@@ -166,9 +163,6 @@ void Camera::updateProjectionMatrix() {
 	m_perspectiveProjectionMatrix.d31 = 0.0f;
 	m_perspectiveProjectionMatrix.d32 = 1.0f;
 	m_perspectiveProjectionMatrix.d33 = 0.0f;
-
-	// update dependency matrix
-	updateViewProjectionMatrix();
 }
 
 void Camera::updateViewProjectionMatrix() {
