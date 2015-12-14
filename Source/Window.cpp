@@ -33,13 +33,18 @@ void Window::onMove(const int& x, const int& y) {
 	m_yOrigin = y;
 }
 
-bool Window::onChangeSize(const int& xSize, const int& ySize) {
-	if (xSize > 0 && ySize > 0) {
+bool Window::onResize(const int& xSize, const int& ySize) {
+	m_minimized = false;
+	m_maximized = false;
+
+	if (m_xSize != xSize || m_ySize != ySize) {
+		m_xSize = xSize;
+		m_ySize = ySize;
+
 		if (m_renderer) {
 			m_renderer->resize(xSize, ySize);
 		}
-		m_xSize = xSize;
-		m_ySize = ySize;
+
 		return  true;
 	}
 	return false;
@@ -238,7 +243,7 @@ void Window::handleWindowEvent(const SDL_Event &event) {
 			break;
 		case SDL_WINDOWEVENT_RESIZED:
 		case SDL_WINDOWEVENT_SIZE_CHANGED:
-			onChangeSize(event.window.data1, event.window.data2);
+			onResize(event.window.data1, event.window.data2);
 			break;
 		case SDL_WINDOWEVENT_MINIMIZED:
 			onMinimize();

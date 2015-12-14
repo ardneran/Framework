@@ -43,9 +43,6 @@
 		Mat2(const float &m00, const float &m01,
 			 const float &m10, const float &m11);
 
-		static Mat2	 identity();
-		static Mat2	 zero();
-
 		Mat2			transpose();
 		Mat2			inverse();
 		float			determinant();
@@ -54,6 +51,9 @@
 		Mat2			operator*(const Mat2 &v) const;
 		Mat2			operator*(const float &f) const;
 		Mat2			operator/(const float &f) const;
+
+		static const Mat2 identity;
+		static const Mat2 zero;
 	};
 
 	//  Mat3
@@ -77,9 +77,6 @@
 			 const float &m10, const float &m11, const float &m12,
 			 const float &m20, const float &m21, const float &m22);
 
-		static Mat3	 identity();
-		static Mat3	 zero();
-
 		static Mat3	 translate(const float &tx, const float &ty);
 		static Mat3	 translate(const Vec2 &v);
 		static Mat3	 rotate(const float &theta);
@@ -94,6 +91,9 @@
 		Mat3			operator*(const Mat3 &v) const;
 		Mat3			operator*(const float &f) const;
 		Mat3			operator/(const float &f) const;
+
+		static const Mat3 identity;
+		static const Mat3 zero;
 	};
 
 	//  Mat4
@@ -120,9 +120,6 @@
 			 const float &m20,const float &m21,const float &m22,const float &m23,
 			 const float &m30,const float &m31,const float &m32,const float &m33);
 
-		static Mat4 identity();
-		static Mat4 zero();
-
 		static Mat4 translate(const float &tx, const float &ty, const float &tz);
 		static Mat4 translate(const Vec3 &v);
 		static Mat4 rotateX(const float &theta);
@@ -144,6 +141,11 @@
 		Mat4		operator*(const Mat4 &m) const;
 		Mat4		operator*(const float &f) const;
 		Mat4		operator/(const float &f) const;
+		bool		operator==(const Mat4 &m) const;
+		bool		operator!=(const Mat4 &m) const;
+
+		static const Mat4 identity;
+		static const Mat4 zero;
 	};
 	
 //}

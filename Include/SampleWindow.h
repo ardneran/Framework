@@ -13,8 +13,8 @@
 
 class SampleWindow : public Window {
 public:
-	~SampleWindow();
 	SampleWindow(Parameters& parameters);
+	~SampleWindow();
 };
 
 #endif

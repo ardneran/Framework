@@ -11,7 +11,7 @@
 
 #include <cassert>
 #include <iostream>
-#include <string>
+#include "Camera.h"
 #include "Renderer.h"
 #include "SDL.h"
 #include "SDL_image.h"
@@ -50,7 +50,7 @@ public:
 
 	// Display callbacks
 	virtual void onMove(const int& x, const int& y);
-	virtual bool onChangeSize(const int& xSize, const int& ySize);
+	virtual bool onResize(const int& xSize, const int& ySize);
 	virtual void onMinimize();
 	virtual void onMaximize();
 	virtual void onRestore();
@@ -66,6 +66,7 @@ protected:
 	bool m_minimized, m_maximized, m_active;
 
 	Renderer* m_renderer;
+	Camera m_camera;
 
 private:
 

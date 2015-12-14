@@ -34,18 +34,6 @@
 	,	d10(m10), d11(m11)
 	{ }
 
-	Mat2 Mat2::identity()
-	{
-		return Mat2(1.0f, 0.0f,
-					0.0f, 1.0f);
-	}
-
-	Mat2 Mat2::zero()
-	{
-		return Mat2(0.0f, 0.0f,
-					0.0f, 0.0f);
-	}
-
 	Mat2 Mat2::transpose()
 	{
 		return Mat2(d00, d10,
@@ -92,6 +80,12 @@
 		return m;
 	}
 
+	const Mat2 Mat2::identity = Mat2(1.0f, 0.0f,
+									 0.0f, 1.0f);
+
+	const Mat2 Mat2::zero = Mat2(0.0f, 0.0f,
+								 0.0f, 0.0f);
+
 	//  Mat3
 
 	Mat3::Mat3(void)
@@ -107,20 +101,6 @@
 	,	d10(m10), d11(m11), d12(m12)
 	,	d20(m20), d21(m21), d22(m22)
 	{ }
-
-	Mat3 Mat3::identity()
-	{
-		return Mat3(1.0f, 0.0f, 0.0f,
-					0.0f, 1.0f, 0.0f,
-					0.0f, 0.0f, 1.0f);
-	}
-
-	Mat3 Mat3::zero()
-	{
-		return Mat3(0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f);
-	}
 
 	Mat3 Mat3::translate(const float &tx, const float &ty)
 	{
@@ -235,6 +215,14 @@
 		return m;
 	}
 
+	const Mat3 Mat3::identity = Mat3(1.0f, 0.0f, 0.0f,
+									 0.0f, 1.0f, 0.0f,
+									 0.0f, 0.0f, 1.0f);
+
+	const Mat3 Mat3::zero = Mat3(0.0f, 0.0f, 0.0f,
+								 0.0f, 0.0f, 0.0f,
+								 0.0f, 0.0f, 0.0f);
+
 	//  Mat4
 
 	Mat4::Mat4(void)
@@ -253,22 +241,6 @@
 	,	d20(m20), d21(m21), d22(m22), d23(m23)
 	,	d30(m30), d31(m31), d32(m32), d33(m33)
 	{ }
-
-	Mat4 Mat4::identity()
-	{
-		return Mat4(1.0f, 0.0f, 0.0f, 0.0f,
-					0.0f, 1.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 1.0f, 0.0f,
-					0.0f, 0.0f, 0.0f, 1.0f);
-	}
-
-	Mat4 Mat4::zero()
-	{
-		return Mat4(0.0f, 0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f, 0.0f,
-					0.0f, 0.0f, 0.0f, 0.0f);
-	}
 
 	Mat4 Mat4::translate(const float &tx, const float &ty, const float &tz)
 	{
@@ -522,5 +494,55 @@
 		m.d30 /= f; m.d31 /= f; m.d32 /= f; m.d33 /= f;
 		return m;
 	}
-	
+
+	bool Mat4::operator==(const Mat4 &m) const
+	{
+		return (d00 == m.d00 &&
+				d01 == m.d01 &&
+				d02 == m.d02 &&
+				d03 == m.d03 &&
+				d10 == m.d10 &&
+				d11 == m.d11 &&
+				d12 == m.d12 &&
+				d13 == m.d13 &&
+				d20 == m.d20 &&
+				d21 == m.d21 &&
+				d22 == m.d22 &&
+				d23 == m.d23 &&
+				d30 == m.d30 &&
+				d31 == m.d31 &&
+				d32 == m.d32 &&
+				d33 == m.d33);
+	}
+
+	bool Mat4::operator!=(const Mat4 &m) const
+	{
+		return (d00 != m.d00 &&
+				d01 != m.d01 &&
+				d02 != m.d02 &&
+				d03 != m.d03 &&
+				d10 != m.d10 &&
+				d11 != m.d11 &&
+				d12 != m.d12 &&
+				d13 != m.d13 &&
+				d20 != m.d20 &&
+				d21 != m.d21 &&
+				d22 != m.d22 &&
+				d23 != m.d23 &&
+				d30 != m.d30 &&
+				d31 != m.d31 &&
+				d32 != m.d32 &&
+				d33 != m.d33);
+	}
+
+	const Mat4 Mat4::identity = Mat4(1.0f, 0.0f, 0.0f, 0.0f,
+									 0.0f, 1.0f, 0.0f, 0.0f,
+									 0.0f, 0.0f, 1.0f, 0.0f,
+									 0.0f, 0.0f, 0.0f, 1.0f);
+
+	const Mat4 Mat4::zero = Mat4(0.0f, 0.0f, 0.0f, 0.0f,
+								 0.0f, 0.0f, 0.0f, 0.0f,
+								 0.0f, 0.0f, 0.0f, 0.0f,
+								 0.0f, 0.0f, 0.0f, 0.0f);
+
 //}
