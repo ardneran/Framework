@@ -690,10 +690,10 @@
 		float f = (v[2] * w[3]) - (v[3] * w[2]);
 
 		// Calculate the result-vector components.
-		return Vec4(  (u.y * f) - (u.z * e) + (u.w * d),
+		return Vec4(+ (u.y * f) - (u.z * e) + (u.w * d),
 					- (u.x * f) + (u.z * c) - (u.w * b),
-					(u.x * e) - (u.y * c) + (u.w * a),
-					- (u.x * d) + (u.y * b) - (u.z * a) );
+					+ (u.x * e) - (u.y * c) + (u.w * a),
+					- (u.x * d) + (u.y * b) - (u.z * a));
 	}
 
 	float dist(const Vec1 &u, const Vec1 &v)
@@ -786,7 +786,7 @@
 		return incident - normal * 2.0f * dot(incident, normal);
 	}
 
-	Vec3  vectorTripleProduct(const Vec3 &u, const Vec3 &v, const Vec3 &w)
+	Vec3 vectorTripleProduct(const Vec3 &u, const Vec3 &v, const Vec3 &w)
 	{
 		//a x (b x c) = (a . c) b - (a . b) c
 		return cross(u, cross(v, w));
