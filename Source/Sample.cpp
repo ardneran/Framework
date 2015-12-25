@@ -1,12 +1,12 @@
 //
-//  Main.cpp
+//  Sample.cpp
 //  Framework
 //
 //  Created by Narendra Umate on 8/18/15.
 //
 //
 
-#include "Main.h"
+#include "Sample.h"
 
 int main(int argc, char* argv[]) {
 
@@ -19,8 +19,18 @@ int main(int argc, char* argv[]) {
 
 	SampleWindow* sampleWindow = new SampleWindow(parameters);
 
-	while (sampleWindow->isActive()) {
-		sampleWindow->onIdle();
+	SDL_Event event;
+
+	while (true) {
+		if (sampleWindow->isActive()) {
+			if (SDL_PollEvent(&event)) {
+				sampleWindow->handleEvent(event);
+			} else {
+				sampleWindow->onIdle();
+			}
+		} else {
+			break;
+		}
 	}
 
 	delete sampleWindow;

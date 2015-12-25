@@ -69,10 +69,6 @@ void Window::onDisplay() {
 }
 
 void Window::onIdle() {
-	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
-		handleEvent(event);
-	}
 }
 
 void Window::initializeSDL() {
