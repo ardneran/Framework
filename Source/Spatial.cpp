@@ -12,34 +12,34 @@ Spatial::~Spatial() {
 }
 
 Spatial::Spatial()
-:	m_parent(0) {
+: m_parent(0) {
 }
 
 void Spatial::update(const bool& initiator) {
-	updateWorldTransforms();
-	bool boundsDirty = updateWorldBounds();
-	if (boundsDirty && initiator) {
-		propagateWorldBoundsToParent();
-	}
+    updateWorldTransforms();
+    bool boundsDirty = updateWorldBounds();
+    if (boundsDirty && initiator) {
+        propagateWorldBoundsToParent();
+    }
 }
 
 void Spatial::updateWorldTransforms() {
-	if (m_parent) {
-		m_worldTransform = m_parent->m_worldTransform * m_localTransform;
-	} else {
-		m_worldTransform = m_localTransform;
-	}
+    if (m_parent) {
+        m_worldTransform = m_parent->m_worldTransform * m_localTransform;
+    } else {
+        m_worldTransform = m_localTransform;
+    }
 }
 
 bool Spatial::updateWorldBounds() {
-	return true;
+    return true;
 }
 
 void Spatial::propagateWorldBoundsToParent() {
-	if (m_parent) {
-		bool parentBoundsDirty = m_parent->updateWorldBounds();
-		if (parentBoundsDirty) {
-			m_parent->propagateWorldBoundsToParent();
-		}
-	}
+    if (m_parent) {
+        bool parentBoundsDirty = m_parent->updateWorldBounds();
+        if (parentBoundsDirty) {
+            m_parent->propagateWorldBoundsToParent();
+        }
+    }
 }

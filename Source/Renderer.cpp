@@ -8,14 +8,11 @@
 
 #include "Renderer.h"
 
-Renderer::~Renderer()
-{
+Renderer::~Renderer() {
 }
 
-Renderer::Renderer()
-{
+Renderer::Renderer() {
 }
 
-void Renderer::resize(const int& xSize, const int& ySize)
-{
+void Renderer::resize(const int& xSize, const int& ySize) {
 }

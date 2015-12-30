@@ -14,25 +14,25 @@
 
 class Spatial {
 public:
-	virtual ~Spatial();
-	inline Spatial* getParent() { return m_parent; }
-	inline void setParent(Spatial* const parent) { m_parent = parent; }
-	void update(const bool& initiator = true);
+    virtual ~Spatial();
+    inline Spatial* getParent() { return m_parent; }
+    inline void setParent(Spatial* const parent) { m_parent = parent; }
+    void update(const bool& initiator = true);
 
-	Transform m_localTransform;
-	Transform m_worldTransform;
-	BoundingBox m_worldBoundingBox;
+    Transform m_localTransform;
+    Transform m_worldTransform;
+    BoundingBox m_worldBoundingBox;
 
 protected:
-	// Abstract base class
-	Spatial();
+    // Abstract base class
+    Spatial();
 
-	virtual void updateWorldTransforms();
-	virtual bool updateWorldBounds();
-	void propagateWorldBoundsToParent();
+    virtual void updateWorldTransforms();
+    virtual bool updateWorldBounds();
+    void propagateWorldBoundsToParent();
 
 private:
-	Spatial* m_parent;
+    Spatial* m_parent;
 };
 
 #endif /* Spatial_h */

@@ -9,12 +9,11 @@
 #ifndef Renderer_h
 #define Renderer_h
 
-class Renderer
-{
+class Renderer {
 public:
-	virtual ~Renderer();
-	Renderer();
-	void resize(const int& xSize, const int& ySize);
+    virtual ~Renderer();
+    Renderer();
+    void resize(const int& xSize, const int& ySize);
 };
 
 #endif /* Renderer_h */

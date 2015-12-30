@@ -14,16 +14,16 @@
 
 class Transform {
 public:
-	Transform();
-	~Transform();
+    Transform();
+    ~Transform();
 
-	Transform operator*(const Transform& other);
-	Transform operator*=(const Transform& other);
+    Transform operator*(const Transform& other);
+    Transform operator*=(const Transform& other);
 
 protected:
-	Quat m_rotation;
-	Vec3 m_translation;
-	Vec3 m_scale;
+    Quat m_rotation;
+    Vec3 m_translation;
+    Vec3 m_scale;
 };
 
 #endif

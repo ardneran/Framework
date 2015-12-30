@@ -15,14 +15,14 @@
 class Node : public Spatial {
 
 public:
-	~Node();
-	Node();
+    ~Node();
+    Node();
 
 protected:
-	virtual void updateWorldTransforms();
-	virtual bool updateWorldBounds();
+    virtual void updateWorldTransforms();
+    virtual bool updateWorldBounds();
 
-	std::vector<Spatial*> m_children;
+    std::vector<Spatial*> m_children;
 };
 
 #endif /* Node_h */
