@@ -50,7 +50,6 @@ public:
 
     void handleEvent(const SDL_Event& event);
 
-    // Display callbacks
     virtual void onMove(const int& x, const int& y);
     virtual bool onResize(const int& xSize, const int& ySize);
     virtual void onMinimize();
@@ -60,12 +59,16 @@ public:
     virtual void onIdle();
 
 protected:
-    // Abstract base class
-    Window(Parameters& parameters);
+    Window(Parameters& parameters); // Abstract base class
 
     std::string m_title;
-    int m_xOrigin, m_yOrigin, m_xSize, m_ySize;
-    bool m_minimized, m_maximized, m_active;
+    int m_xOrigin;
+    int m_yOrigin;
+    int m_xSize;
+    int m_ySize;
+    bool m_minimized;
+    int m_maximized;
+    int m_active;
 
     Renderer* m_renderer;
     Camera m_camera;

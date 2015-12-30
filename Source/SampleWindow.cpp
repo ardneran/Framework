@@ -10,7 +10,14 @@
 
 SampleWindow::SampleWindow(Parameters& parameters)
 : Window(parameters) {
+    createScene();
 }
 
 SampleWindow::~SampleWindow() {
+}
+
+void SampleWindow::onIdle() {
+}
+
+void SampleWindow::createScene() {
 }

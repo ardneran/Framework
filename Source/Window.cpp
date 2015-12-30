@@ -28,6 +28,23 @@ Window::~Window() {
     deinitializeSDL();
 }
 
+void Window::handleEvent(const SDL_Event& event) {
+    switch (event.type) {
+        case SDL_WINDOWEVENT: {
+            handleWindowEvent(event);
+        } break;
+        case SDL_KEYUP: {
+            handleKeyUpEvent(event);
+        } break;
+        case SDL_KEYDOWN: {
+            handleKeyDownEvent(event);
+        } break;
+        case SDL_QUIT: {
+            m_active = false;
+        } break;
+    }
+}
+
 void Window::onMove(const int& x, const int& y) {
     m_xOrigin = x;
     m_yOrigin = y;
@@ -212,23 +229,6 @@ void Window::deinitializeSDLttf() {
 void Window::deinitializeOpenGL() {
     if (m_sdlWindow != 0) {
         SDL_DestroyWindow(m_sdlWindow);
-    }
-}
-
-void Window::handleEvent(const SDL_Event& event) {
-    switch (event.type) {
-        case SDL_WINDOWEVENT: {
-            handleWindowEvent(event);
-        } break;
-        case SDL_KEYUP: {
-            handleKeyUpEvent(event);
-        } break;
-        case SDL_KEYDOWN: {
-            handleKeyDownEvent(event);
-        } break;
-        case SDL_QUIT: {
-            m_active = false;
-        } break;
     }
 }
 

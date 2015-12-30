@@ -15,6 +15,11 @@ class SampleWindow : public Window {
 public:
     SampleWindow(Parameters& parameters);
     ~SampleWindow();
+
+    virtual void onIdle();
+
+private:
+    void createScene();
 };
 
 #endif
