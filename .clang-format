@@ -4,7 +4,6 @@ BasedOnStyle:  WebKit
 AlignAfterOpenBracket: true
 AlignEscapedNewlinesLeft: true
 AlignOperands:   true
-AlignTrailingComments: true
 AllowShortFunctionsOnASingleLine: Inline
 ConstructorInitializerIndentWidth: 0
 IndentCaseLabels: true
