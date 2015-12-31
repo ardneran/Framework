@@ -7,3 +7,9 @@
 //
 
 #include "Culler.h"
+
+Culler::Culler() {
+}
+
+Culler::~Culler() {
+}

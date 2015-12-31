@@ -9,4 +9,10 @@
 #ifndef Culler_h
 #define Culler_h
 
+class Culler {
+public:
+    Culler();
+    ~Culler();
+};
+
 #endif /* Culler_h */
