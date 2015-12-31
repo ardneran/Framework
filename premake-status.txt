@@ -1,2 +1,4 @@
 premake5 bugs are blocking the upgrade. clean operation is missing and excludes directive is broken.
 meanwhile generate vs 2012 project. then within the solution right click upgrade to vs 2013 version.
+to build premake4 and premake5 get the premake-4.x and premake-core with git clone --recursive path.
+then use old executables to generate project files after running the premake embed cmd to bootstrap.
