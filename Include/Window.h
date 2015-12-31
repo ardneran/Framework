@@ -32,7 +32,7 @@ public:
         int xOrigin, yOrigin, xSize, ySize;
     };
 
-    virtual ~Window();
+    virtual ~Window() = 0;
 
     inline void setTitle(const std::string& title) { m_title = title; }
     inline std::string getTitle() { return m_title; }

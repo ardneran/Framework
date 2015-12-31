@@ -11,8 +11,9 @@
 
 class Renderer {
 public:
-    virtual ~Renderer();
     Renderer();
+    virtual ~Renderer() = 0;
+
     void resize(const int& xSize, const int& ySize);
 };
 

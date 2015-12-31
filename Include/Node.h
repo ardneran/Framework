@@ -15,8 +15,8 @@
 class Node : public Spatial {
 
 public:
-    ~Node();
     Node();
+    ~Node();
 
 protected:
     virtual void updateWorldTransforms();

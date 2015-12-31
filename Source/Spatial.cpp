@@ -8,11 +8,11 @@
 
 #include "Spatial.h"
 
-Spatial::~Spatial() {
-}
-
 Spatial::Spatial()
 : m_parent(0) {
+}
+
+Spatial::~Spatial() {
 }
 
 void Spatial::update(const bool& initiator) {

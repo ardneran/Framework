@@ -8,10 +8,10 @@
 
 #include "Visual.h"
 
-Visual::~Visual() {
+Visual::Visual() {
 }
 
-Visual::Visual() {
+Visual::~Visual() {
 }
 
 bool Visual::updateModelBounds() {

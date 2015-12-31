@@ -14,7 +14,9 @@
 
 class Spatial {
 public:
-    virtual ~Spatial();
+    Spatial();
+    virtual ~Spatial() = 0;
+
     inline Spatial* getParent() { return m_parent; }
     inline void setParent(Spatial* const parent) { m_parent = parent; }
     void update(const bool& initiator = true);
@@ -24,9 +26,6 @@ public:
     BoundingBox m_worldBoundingBox;
 
 protected:
-    // Abstract base class
-    Spatial();
-
     virtual void updateWorldTransforms();
     virtual bool updateWorldBounds();
     void propagateWorldBoundsToParent();
