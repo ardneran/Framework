@@ -9,7 +9,7 @@ solution "Framework"
 	excludes { "Library/**" }
 
 	-- Additional includedirs here
-	includedirs { "include" }
+	includedirs { "Include" }
 
 	-- A project defines one build target
 	project "Framework"
