@@ -4,7 +4,7 @@
 
 1. Terminal sudo add-apt-repository ppa:graphics-drivers/ppa
 2. Terminal sudo apt-get update
-3. Terminal sudo apt-get install nvidia-355 g++
+3. Terminal sudo apt-get install nvidia-358 g++
 4. Terminal ./createallprojects5.sh
 5. Terminal make
 
