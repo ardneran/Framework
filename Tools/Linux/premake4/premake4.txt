@@ -1,0 +1,4 @@
+This binary was built from modified source to support framework linking. Do not
+replace binaries until the following pull requests are merged into source.
+
+https://github.com/premake/premake-4.x/pull/4
