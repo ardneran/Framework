@@ -131,7 +131,10 @@ void Window::initializeOpenGL() {
 
     // Create Window
     m_sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    assert(m_sdlWindow != NULL);
+    if (m_sdlWindow == NULL) {
+        printf("SDL_CreateWindow Error: %s\n", SDL_GetError());
+        assert(m_sdlWindow != NULL);
+    }
 
     // Create Context
     const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3 };
@@ -144,7 +147,10 @@ void Window::initializeOpenGL() {
             break;
         }
     }
-    assert(m_sdlContext != NULL);
+    if (m_sdlContext == NULL) {
+        printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
+        assert(m_sdlContext != NULL);
+    }
 
     // Set VSync
     if (SDL_GL_SetSwapInterval(-1) != 0) {
@@ -227,7 +233,7 @@ void Window::deinitializeSDLttf() {
 }
 
 void Window::deinitializeOpenGL() {
-    if (m_sdlWindow != 0) {
+    if (m_sdlWindow != NULL) {
         SDL_DestroyWindow(m_sdlWindow);
     }
 }
