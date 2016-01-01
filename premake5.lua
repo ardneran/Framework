@@ -49,6 +49,7 @@ solution "Framework"
 			excludes { "**/Windows/**", "**/Linux/**" }
 
 		configuration "linux"
-			linkoptions { "-lGL", "-lGLU", "-lGLEW", "-lX11", "-L/usr/lib/nvidia-358/" } -- hack for nvidia driver
+			buildoptions { "-I/usr/include/SDL2" }
+			linkoptions { "-lGL", "-lGLU", "-lSDL2", "-lSDL2_image", "-lSDL2_ttf", "-L/usr/lib/nvidia-358/" } -- hack for nvidia driver
 			files { }
 			excludes { "**/Windows/**", "**/MacOS/**" }

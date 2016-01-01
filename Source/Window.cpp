@@ -131,7 +131,7 @@ void Window::initializeOpenGL() {
 
     // Create Window
     m_sdlWindow = SDL_CreateWindow(m_title.c_str(), m_xOrigin, m_yOrigin, m_xSize, m_ySize, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
-    assert(m_sdlWindow != nullptr);
+    assert(m_sdlWindow != NULL);
 
     // Create Context
     const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3 };
@@ -140,11 +140,11 @@ void Window::initializeOpenGL() {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major[i]);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor[i]);
         m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
-        if (m_sdlContext != nullptr) {
+        if (m_sdlContext != NULL) {
             break;
         }
     }
-    assert(m_sdlContext != nullptr);
+    assert(m_sdlContext != NULL);
 
     // Set VSync
     if (SDL_GL_SetSwapInterval(-1) != 0) {
@@ -168,12 +168,12 @@ void Window::initializeOpenGL() {
     glGetIntegerv(GL_NUM_EXTENSIONS, &extensionsCount);
     std::cout << "OpenGL Extensions: " << extensionsCount << std::endl;
 
-#if not defined(__APPLE__)
-    // TODO Fix this for Mac
+#if not defined(__APPLE__) && not defined(__linux__)
+    // TODO Fix this for unsupported platforms
     for (GLint i = 0; i < extensionsCount; ++i) {
         std::cout << glGetStringi(GL_EXTENSIONS, i) << std::endl;
     }
-#endif // defined (__APPLE__)
+#endif // defined (__APPLE__) && not defined(__linux__)
 
     int videoDrivers = SDL_GetNumVideoDrivers();
     std::cout << "Video Drivers: " << videoDrivers << std::endl;
