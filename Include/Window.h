@@ -48,7 +48,8 @@ public:
     inline bool isMaximized() const { return m_maximized; }
     inline bool isActive() const { return m_active; }
 
-    void handleEvent(const SDL_Event& event);
+    void handleSwapWindow();
+    void handlePollEvent();
 
     virtual void onMove(const int& x, const int& y);
     virtual bool onResize(const int& xSize, const int& ySize);
@@ -83,10 +84,12 @@ private:
     void deinitializeSDLttf();
     void deinitializeOpenGL();
 
-    void handleWindowEvent(const SDL_Event& event);
-    void handleKeyUpEvent(const SDL_Event& event);
-    void handleKeyDownEvent(const SDL_Event& event);
+    void handleEvent();
+    void handleWindowEvent();
+    void handleKeyUpEvent();
+    void handleKeyDownEvent();
 
+    SDL_Event m_sdlEvent;
     SDL_Window* m_sdlWindow;
     SDL_GLContext m_sdlContext;
 };

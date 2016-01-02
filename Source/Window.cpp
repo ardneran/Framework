@@ -28,21 +28,14 @@ Window::~Window() {
     deinitializeSDL();
 }
 
-void Window::handleEvent(const SDL_Event& event) {
-    switch (event.type) {
-        case SDL_WINDOWEVENT: {
-            handleWindowEvent(event);
-        } break;
-        case SDL_KEYUP: {
-            handleKeyUpEvent(event);
-        } break;
-        case SDL_KEYDOWN: {
-            handleKeyDownEvent(event);
-        } break;
-        case SDL_QUIT: {
-            m_active = false;
-        } break;
-    }
+void Window::handleSwapWindow() {
+    SDL_GL_SwapWindow(m_sdlWindow);
+}
+
+void Window::handlePollEvent() {
+  while (SDL_PollEvent(&m_sdlEvent)) {
+    handleEvent();
+  }
 }
 
 void Window::onMove(const int& x, const int& y) {
@@ -254,14 +247,31 @@ void Window::deinitializeOpenGL() {
     }
 }
 
-void Window::handleWindowEvent(const SDL_Event& event) {
-    switch (event.window.event) {
+void Window::handleEvent() {
+    switch (m_sdlEvent.type) {
+        case SDL_WINDOWEVENT: {
+            handleWindowEvent();
+        } break;
+        case SDL_KEYUP: {
+            handleKeyUpEvent();
+        } break;
+        case SDL_KEYDOWN: {
+            handleKeyDownEvent();
+        } break;
+        case SDL_QUIT: {
+            m_active = false;
+        } break;
+    }
+}
+
+void Window::handleWindowEvent() {
+    switch (m_sdlEvent.window.event) {
         case SDL_WINDOWEVENT_MOVED:
-            onMove(event.window.data1, event.window.data2);
+            onMove(m_sdlEvent.window.data1, m_sdlEvent.window.data2);
             break;
         case SDL_WINDOWEVENT_RESIZED:
         case SDL_WINDOWEVENT_SIZE_CHANGED:
-            onResize(event.window.data1, event.window.data2);
+            onResize(m_sdlEvent.window.data1, m_sdlEvent.window.data2);
             break;
         case SDL_WINDOWEVENT_MINIMIZED:
             onMinimize();
@@ -277,8 +287,8 @@ void Window::handleWindowEvent(const SDL_Event& event) {
     }
 }
 
-void Window::handleKeyUpEvent(const SDL_Event& event) {
-    switch (event.key.keysym.sym) {
+void Window::handleKeyUpEvent() {
+    switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             break;
         default:
@@ -286,8 +296,8 @@ void Window::handleKeyUpEvent(const SDL_Event& event) {
     }
 }
 
-void Window::handleKeyDownEvent(const SDL_Event& event) {
-    switch (event.key.keysym.sym) {
+void Window::handleKeyDownEvent() {
+    switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             m_active = false;
             break;

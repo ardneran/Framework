@@ -19,15 +19,11 @@ int main(int argc, char* argv[]) {
 
     SampleWindow* sampleWindow = new SampleWindow(parameters);
 
-    SDL_Event event;
-
     while (true) {
+        sampleWindow->handleSwapWindow();
         if (sampleWindow->isActive()) {
-            if (SDL_PollEvent(&event)) {
-                sampleWindow->handleEvent(event);
-            } else {
-                sampleWindow->onIdle();
-            }
+            sampleWindow->handlePollEvent();
+            sampleWindow->onIdle();
         } else {
             break;
         }
