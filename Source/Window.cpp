@@ -103,7 +103,6 @@ void Window::initializeSDLttf() {
 }
 
 void Window::initializeOpenGL() {
-    // Set Attributes
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 2);
@@ -117,12 +116,16 @@ void Window::initializeOpenGL() {
     SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_STEREO, 0);
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 32);
+#if not defined (__linux__)
+  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 32);
+#endif // not defined (__linux__)
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 0);
-    //SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#if defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 0);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+#endif // defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_EGL, 0);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG | SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG | SDL_GL_CONTEXT_RESET_ISOLATION_FLAG);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -137,11 +140,23 @@ void Window::initializeOpenGL() {
     }
 
     // Create Context
+#if defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, CONTEXT_MAJOR_VERSION);
+  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, CONTEXT_MINOR_VERSION);
+  m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
+  if (m_sdlContext == NULL) {
+      printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
+      assert(m_sdlContext != NULL);
+  } else {
+      printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", CONTEXT_MAJOR_VERSION, CONTEXT_MINOR_VERSION);
+  }
+#else
     const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3 };
     const int minor[] = { 5, 4, 3, 2, 1, 0, 3, 2, 1, 0 };
-    for (int i = 0; i < 10; ++i) {
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major[i]);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor[i]);
+    int index = 0;
+    for (index = 0; index < 10; ++index) {
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major[index]);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor[index]);
         m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
         if (m_sdlContext != NULL) {
             break;
@@ -150,7 +165,10 @@ void Window::initializeOpenGL() {
     if (m_sdlContext == NULL) {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
         assert(m_sdlContext != NULL);
+    } else {
+        printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", major[index], minor[index]);
     }
+#endif // defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
 
     // Set VSync
     if (SDL_GL_SetSwapInterval(-1) != 0) {
