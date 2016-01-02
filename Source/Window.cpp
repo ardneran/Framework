@@ -33,9 +33,9 @@ void Window::handleSwapWindow() {
 }
 
 void Window::handlePollEvent() {
-  while (SDL_PollEvent(&m_sdlEvent)) {
-    handleEvent();
-  }
+    while (SDL_PollEvent(&m_sdlEvent)) {
+        handleEvent();
+    }
 }
 
 void Window::onMove(const int& x, const int& y) {
@@ -109,16 +109,16 @@ void Window::initializeOpenGL() {
     SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE, 0);
     SDL_GL_SetAttribute(SDL_GL_STEREO, 0);
-#if not defined (__linux__)
-  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
-  SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 32);
-#endif // not defined (__linux__)
+#if not defined(__linux__)
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+    SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 32);
+#endif // not defined(__linux__)
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
     SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
-#if defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
+#if defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, CONTEXT_MAJOR_VERSION);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, CONTEXT_MINOR_VERSION);
-#endif // defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
+#endif // defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_EGL, 0);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG | SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG | SDL_GL_CONTEXT_RESET_ISOLATION_FLAG);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -132,15 +132,15 @@ void Window::initializeOpenGL() {
         assert(m_sdlWindow != NULL);
     }
 
-    // Create Context
-#if defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
-  m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
-  if (m_sdlContext == NULL) {
-      printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
-      assert(m_sdlContext != NULL);
-  } else {
-      printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", CONTEXT_MAJOR_VERSION, CONTEXT_MINOR_VERSION);
-  }
+// Create Context
+#if defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
+    m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
+    if (m_sdlContext == NULL) {
+        printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
+        assert(m_sdlContext != NULL);
+    } else {
+        printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", CONTEXT_MAJOR_VERSION, CONTEXT_MINOR_VERSION);
+    }
 #else
     const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3 };
     const int minor[] = { 5, 4, 3, 2, 1, 0, 3, 2, 1, 0 };
@@ -159,7 +159,7 @@ void Window::initializeOpenGL() {
     } else {
         printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", major[index], minor[index]);
     }
-#endif // defined (CONTEXT_MAJOR_VERSION) && defined (CONTEXT_MINOR_VERSION)
+#endif // defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
 
     // Set VSync
     if (SDL_GL_SetSwapInterval(-1) != 0) {
@@ -188,7 +188,7 @@ void Window::initializeOpenGL() {
     for (GLint i = 0; i < extensionsCount; ++i) {
         std::cout << glGetStringi(GL_EXTENSIONS, i) << std::endl;
     }
-#endif // defined (__APPLE__) && not defined(__linux__)
+#endif // defined(__APPLE__) && not defined(__linux__)
 
     int videoDrivers = SDL_GetNumVideoDrivers();
     std::cout << "Video Drivers: " << videoDrivers << std::endl;
