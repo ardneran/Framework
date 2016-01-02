@@ -34,7 +34,20 @@ void Window::handleSwapWindow() {
 
 void Window::handlePollEvent() {
     while (SDL_PollEvent(&m_sdlEvent)) {
-        handleEvent();
+        switch (m_sdlEvent.type) {
+            case SDL_WINDOWEVENT: {
+                handleWindowEvent();
+            } break;
+            case SDL_KEYUP: {
+                handleKeyUpEvent();
+            } break;
+            case SDL_KEYDOWN: {
+                handleKeyDownEvent();
+            } break;
+            case SDL_QUIT: {
+                m_active = false;
+            } break;
+        }
     }
 }
 
@@ -132,16 +145,15 @@ void Window::initializeOpenGL() {
         assert(m_sdlWindow != NULL);
     }
 
-// Create Context
 #if defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
+    // Create Context
     m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
     if (m_sdlContext == NULL) {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
         assert(m_sdlContext != NULL);
-    } else {
-        printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", CONTEXT_MAJOR_VERSION, CONTEXT_MINOR_VERSION);
     }
 #else
+    // Create Context
     const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3 };
     const int minor[] = { 5, 4, 3, 2, 1, 0, 3, 2, 1, 0 };
     int index = 0;
@@ -156,8 +168,6 @@ void Window::initializeOpenGL() {
     if (m_sdlContext == NULL) {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
         assert(m_sdlContext != NULL);
-    } else {
-        printf("SDL_GL_CreateContext Success: OpenGL %d.%d\n", major[index], minor[index]);
     }
 #endif // defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
 
@@ -244,23 +254,6 @@ void Window::deinitializeSDLttf() {
 void Window::deinitializeOpenGL() {
     if (m_sdlWindow != NULL) {
         SDL_DestroyWindow(m_sdlWindow);
-    }
-}
-
-void Window::handleEvent() {
-    switch (m_sdlEvent.type) {
-        case SDL_WINDOWEVENT: {
-            handleWindowEvent();
-        } break;
-        case SDL_KEYUP: {
-            handleKeyUpEvent();
-        } break;
-        case SDL_KEYDOWN: {
-            handleKeyDownEvent();
-        } break;
-        case SDL_QUIT: {
-            m_active = false;
-        } break;
     }
 }
 

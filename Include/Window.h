@@ -84,7 +84,6 @@ private:
     void deinitializeSDLttf();
     void deinitializeOpenGL();
 
-    void handleEvent();
     void handleWindowEvent();
     void handleKeyUpEvent();
     void handleKeyDownEvent();
