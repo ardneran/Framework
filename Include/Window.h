@@ -53,7 +53,6 @@ public:
     inline bool isMaximized() const { return m_maximized; }
     inline bool isActive() const { return m_active; }
 
-    void handleSwapWindow();
     void handlePollEvent();
 
     virtual void onMove(const int& x, const int& y);
@@ -75,10 +74,7 @@ protected:
     bool m_minimized;
     int m_maximized;
     int m_active;
-
     GlRenderer* m_renderer;
-
-    Camera m_camera;
 
 private:
     void initializeSDL();

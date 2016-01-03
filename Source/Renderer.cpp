@@ -56,12 +56,20 @@ float Renderer::getClearDepth() const {
     return m_clearDepth;
 }
 
-void Renderer::setClearStencil(unsigned int& clearStencil) {
+void Renderer::setClearStencil(const unsigned int& clearStencil) {
     m_clearStencil = clearStencil;
 }
 
 unsigned int Renderer::getClearStencil() const {
     return m_clearStencil;
+}
+
+void Renderer::setWindow(void* const window) {
+    m_window = window;
+}
+
+void* Renderer::getWindow() const {
+    return m_window;
 }
 
 //}

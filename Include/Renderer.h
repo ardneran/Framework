@@ -48,8 +48,11 @@ public:
     void setClearDepth(const float& clearDepth);
     float getClearDepth() const;
 
-    void setClearStencil(unsigned int& clearStencil);
+    void setClearStencil(const unsigned int& clearStencil);
     unsigned int getClearStencil() const;
+
+    void setWindow(void* const window);
+    void* getWindow() const;
 
     virtual void setViewport(const int& xPos, const int& yPos, const int& w, const int& h) = 0;
     virtual void getViewport(int& xPos, int& yPos, int& w, int& h) const = 0;
@@ -73,6 +76,7 @@ protected:
     Color4f m_clearColor;
     float m_clearDepth;
     unsigned int m_clearStencil;
+    void* m_window;
 };
 //}
 

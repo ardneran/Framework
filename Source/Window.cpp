@@ -29,10 +29,6 @@ Window::~Window() {
     deinitializeSDL();
 }
 
-void Window::handleSwapWindow() {
-    SDL_GL_SwapWindow(m_sdlWindow);
-}
-
 void Window::handlePollEvent() {
     while (SDL_PollEvent(&m_sdlEvent)) {
         switch (m_sdlEvent.type) {
@@ -230,6 +226,8 @@ void Window::initializeOpenGL() {
             std::cout << ", TT";
         std::cout << "]" << std::endl;
     }
+
+    m_renderer->setWindow(m_sdlWindow);
 }
 
 void Window::deinitializeSDL() {

@@ -109,10 +109,8 @@ void GlRenderer::clearBuffers(const int& x, const int& y, const int& w, const in
 }
 
 void GlRenderer::displayColorBuffer(const int& syncInterval) {
-    // Preferred values are -1 > 1 > 0.
     SDL_GL_SetSwapInterval(syncInterval);
-    // TODO Fix this
-    // SDL_GL_SwapWindow(m_sdlWindow);
+    SDL_GL_SwapWindow(static_cast<SDL_Window*>(m_window));
 }
 
 //}

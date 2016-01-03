@@ -19,9 +19,6 @@ SampleWindow::~SampleWindow() {
 
 void SampleWindow::onIdle() {
     m_renderer->displayColorBuffer(0);
-
-    // TODO Remove this
-    handleSwapWindow();
 }
 
 void SampleWindow::createScene() {
