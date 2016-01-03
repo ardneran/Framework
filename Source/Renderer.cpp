@@ -1,18 +1,67 @@
 //
 //  Renderer.cpp
-//  Framework
+//  Application
 //
-//  Created by Narendra Umate on 11/22/15.
-//
+//  Created by Narendra Umate on 9/7/13.
+//  Copyright (c) 2013 Narendra Umate. All rights reserved.
 //
 
 #include "Renderer.h"
 
-Renderer::Renderer() {
+//namespace Engine
+//{
+
+Renderer::Renderer()
+: m_width(0)
+, m_height(0)
+, m_clearColor(Color4f(0.5f, 0.5f, 0.5f, 1.0f))
+, m_clearDepth(10)
+, m_clearStencil(10) {
 }
 
 Renderer::~Renderer() {
+    m_width = 0;
+    m_height = 0;
 }
 
-void Renderer::resize(const int& xSize, const int& ySize) {
+void Renderer::setWidth(const int& width) {
+    m_width = width;
 }
+
+int Renderer::getWidth() {
+    return m_width;
+}
+
+void Renderer::setHeight(const int& height) {
+    m_height = height;
+}
+
+int Renderer::getHeight() {
+    return m_height;
+}
+
+void Renderer::setClearColor(const Color4f& clearColor) {
+    m_clearColor = clearColor;
+}
+
+Color4f Renderer::getClearColor() const {
+    return m_clearColor;
+}
+
+void Renderer::setClearDepth(const float& clearDepth) {
+    m_clearDepth = clearDepth;
+}
+
+float Renderer::getClearDepth() const {
+    return m_clearDepth;
+}
+
+void Renderer::setClearStencil(unsigned int& clearStencil) {
+    m_clearStencil = clearStencil;
+}
+
+unsigned int Renderer::getClearStencil() const {
+    return m_clearStencil;
+}
+
+//}

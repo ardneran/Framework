@@ -14,6 +14,7 @@ Window::Window(Parameters& parameters)
 , m_yOrigin(parameters.yOrigin)
 , m_xSize(parameters.xSize)
 , m_ySize(parameters.ySize)
+, m_renderer(parameters.renderer)
 , m_active(true) {
     initializeSDL();
     initializeSDLimage();
@@ -170,14 +171,6 @@ void Window::initializeOpenGL() {
         assert(m_sdlContext != NULL);
     }
 #endif // defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
-
-    // Set VSync
-    if (SDL_GL_SetSwapInterval(-1) != 0) {
-        if (SDL_GL_SetSwapInterval(1) != 0) {
-            if (SDL_GL_SetSwapInterval(0) != 0) {
-            }
-        }
-    }
 
     // Set Context to Current
     SDL_GL_MakeCurrent(m_sdlWindow, m_sdlContext);

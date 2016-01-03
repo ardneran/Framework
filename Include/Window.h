@@ -12,7 +12,7 @@
 #include <cassert>
 #include <iostream>
 #include "Camera.h"
-#include "Renderer.h"
+#include "GlRenderer.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_opengl.h"
@@ -26,10 +26,15 @@ public:
         , xOrigin(0)
         , yOrigin(0)
         , xSize(0)
-        , ySize(0) {
+        , ySize(0)
+        , renderer(0) {
         }
         std::string title;
-        int xOrigin, yOrigin, xSize, ySize;
+        int xOrigin;
+        int yOrigin;
+        int xSize;
+        int ySize;
+        GlRenderer* renderer;
     };
 
     virtual ~Window() = 0;
@@ -71,7 +76,8 @@ protected:
     int m_maximized;
     int m_active;
 
-    Renderer* m_renderer;
+    GlRenderer* m_renderer;
+
     Camera m_camera;
 
 private:

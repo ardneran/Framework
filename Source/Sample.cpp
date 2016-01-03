@@ -16,20 +16,24 @@ int main(int argc, char* argv[]) {
     parameters.yOrigin = 0;
     parameters.xSize = 1920;
     parameters.ySize = 1080;
+    parameters.renderer = new GlRenderer();
 
     SampleWindow* sampleWindow = new SampleWindow(parameters);
 
     while (true) {
-        sampleWindow->handleSwapWindow();
         if (sampleWindow->isActive()) {
             sampleWindow->handlePollEvent();
-            sampleWindow->onIdle();
+            if (!sampleWindow->isMinimized()) {
+                sampleWindow->onIdle();
+            }
         } else {
             break;
         }
     }
 
     delete sampleWindow;
+
+    delete parameters.renderer;
 
     return 0;
 }
