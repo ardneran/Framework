@@ -40,30 +40,6 @@ int Renderer::getHeight() {
     return m_height;
 }
 
-void Renderer::setClearColor(const Color4f& clearColor) {
-    m_clearColor = clearColor;
-}
-
-Color4f Renderer::getClearColor() const {
-    return m_clearColor;
-}
-
-void Renderer::setClearDepth(const float& clearDepth) {
-    m_clearDepth = clearDepth;
-}
-
-float Renderer::getClearDepth() const {
-    return m_clearDepth;
-}
-
-void Renderer::setClearStencil(const unsigned int& clearStencil) {
-    m_clearStencil = clearStencil;
-}
-
-unsigned int Renderer::getClearStencil() const {
-    return m_clearStencil;
-}
-
 void Renderer::setWindow(void* const window) {
     m_window = window;
 }

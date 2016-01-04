@@ -42,23 +42,21 @@ public:
     void setHeight(const int& height);
     int getHeight();
 
-    void setClearColor(const Color4f& clearColor);
-    Color4f getClearColor() const;
-
-    void setClearDepth(const float& clearDepth);
-    float getClearDepth() const;
-
-    void setClearStencil(const unsigned int& clearStencil);
-    unsigned int getClearStencil() const;
-
     void setWindow(void* const window);
     void* getWindow() const;
 
+    virtual void setClearColor(const Color4f& clearColor) = 0;
+    virtual Color4f getClearColor() const = 0;
+    virtual void setClearDepth(const float& clearDepth) = 0;
+    virtual float getClearDepth() const = 0;
+    virtual void setClearStencil(const unsigned int& clearStencil) = 0;
+    virtual unsigned int getClearStencil() const = 0;
     virtual void setViewport(const int& xPos, const int& yPos, const int& w, const int& h) = 0;
     virtual void getViewport(int& xPos, int& yPos, int& w, int& h) const = 0;
     virtual void setDepthRange(const float& zMin, const float& zMax) = 0;
     virtual void getDepthRange(float& zMin, float& zMax) const = 0;
-    virtual void resize(const int& width, const int& height) = 0;
+    virtual void setSize(const int& width, const int& height) = 0;
+    virtual void getSize(int& width, int& height) = 0;
 
     virtual void clearColorBuffer() = 0;
     virtual void clearDepthBuffer() = 0;

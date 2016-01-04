@@ -62,7 +62,7 @@ bool Window::onResize(const int& xSize, const int& ySize) {
         m_ySize = ySize;
 
         if (m_renderer) {
-            m_renderer->resize(xSize, ySize);
+            m_renderer->setSize(xSize, ySize);
         }
 
         return true;

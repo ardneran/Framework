@@ -22,11 +22,18 @@ public:
     GlRenderer();
     ~GlRenderer();
 
+    void setClearColor(const Color4f& clearColor);
+    Color4f getClearColor() const;
+    void setClearDepth(const float& clearDepth);
+    float getClearDepth() const;
+    void setClearStencil(const unsigned int& clearStencil);
+    unsigned int getClearStencil() const;
     void setViewport(const int& xPos, const int& yPos, const int& w, const int& h);
     void getViewport(int& xPos, int& yPos, int& w, int& h) const;
     void setDepthRange(const float& zMin, const float& zMax);
     void getDepthRange(float& zMin, float& zMax) const;
-    void resize(const int& width, const int& height);
+    void setSize(const int& width, const int& height);
+    void getSize(int& width, int& height);
 
     void clearColorBuffer();
     void clearDepthBuffer();

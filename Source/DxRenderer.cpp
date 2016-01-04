@@ -20,6 +20,30 @@ DxRenderer::DxRenderer()
 DxRenderer::~DxRenderer() {
 }
 
+void DxRenderer::setClearColor(const Color4f& clearColor) {
+    m_clearColor = clearColor;
+}
+
+Color4f DxRenderer::getClearColor() const {
+    return m_clearColor;
+}
+
+void DxRenderer::setClearDepth(const float& clearDepth) {
+    m_clearDepth = clearDepth;
+}
+
+float DxRenderer::getClearDepth() const {
+    return m_clearDepth;
+}
+
+void DxRenderer::setClearStencil(const unsigned int& clearStencil) {
+    m_clearStencil = clearStencil;
+}
+
+unsigned int DxRenderer::getClearStencil() const {
+    return m_clearStencil;
+}
+
 void DxRenderer::setViewport(const int& xPos, const int& yPos, const int& w, const int& h) {
 }
 
@@ -30,6 +54,12 @@ void DxRenderer::setDepthRange(const float& zMin, const float& zMax) {
 }
 
 void DxRenderer::getDepthRange(float& zMin, float& zMax) const {
+}
+
+void DxRenderer::setSize(const int& width, const int& height) {
+}
+
+void DxRenderer::getSize(int& width, int& height) {
 }
 
 void DxRenderer::resize(const int& width, const int& height) {

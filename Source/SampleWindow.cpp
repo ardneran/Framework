@@ -11,7 +11,6 @@
 SampleWindow::SampleWindow(Parameters& parameters)
 : Window(parameters) {
     m_renderer->setClearColor(Color::Gray);
-    m_renderer->clearColorBuffer();
     createScene();
 }
 

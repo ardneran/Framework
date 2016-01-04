@@ -20,6 +20,33 @@ GlRenderer::GlRenderer()
 GlRenderer::~GlRenderer() {
 }
 
+void GlRenderer::setClearColor(const Color4f& clearColor) {
+    m_clearColor = clearColor;
+    glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
+}
+
+Color4f GlRenderer::getClearColor() const {
+    return m_clearColor;
+}
+
+void GlRenderer::setClearDepth(const float& clearDepth) {
+    m_clearDepth = clearDepth;
+    glClearDepth(m_clearDepth);
+}
+
+float GlRenderer::getClearDepth() const {
+    return m_clearDepth;
+}
+
+void GlRenderer::setClearStencil(const unsigned int& clearStencil) {
+    m_clearStencil = clearStencil;
+    glClearStencil(m_clearStencil);
+}
+
+unsigned int GlRenderer::getClearStencil() const {
+    return m_clearStencil;
+}
+
 void GlRenderer::setViewport(const int& xPos, const int& yPos, const int& w, const int& h) {
     glViewport(xPos, yPos, w, h);
 }
@@ -44,12 +71,17 @@ void GlRenderer::getDepthRange(float& zMin, float& zMax) const {
     zMax = params[1];
 }
 
-void GlRenderer::resize(const int& width, const int& height) {
+void GlRenderer::setSize(const int& width, const int& height) {
     m_width = width;
     m_height = height;
     int params[4];
     glGetIntegerv(GL_VIEWPORT, params);
     glViewport(params[0], params[1], width, height);
+}
+
+void GlRenderer::getSize(int& width, int& height) {
+    width = m_width;
+    height = m_height;
 }
 
 void GlRenderer::clearColorBuffer() {
@@ -99,9 +131,9 @@ void GlRenderer::clearStencilBuffer(const int& x, const int& y, const int& w, co
 }
 
 void GlRenderer::clearBuffers(const int& x, const int& y, const int& w, const int& h) {
-    glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
-    glClearDepth(m_clearDepth);
-    glClearStencil(m_clearStencil);
+    //glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
+    //glClearDepth(m_clearDepth);
+    //glClearStencil(m_clearStencil);
     glEnable(GL_SCISSOR_TEST);
     glScissor(x, y, w, h);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
