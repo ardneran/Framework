@@ -85,17 +85,17 @@ void GlRenderer::getSize(int& width, int& height) {
 }
 
 void GlRenderer::clearColorBuffer() {
-    glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
+    //glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void GlRenderer::clearDepthBuffer() {
-    glClearDepth(m_clearDepth);
+    //glClearDepth(m_clearDepth);
     glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 void GlRenderer::clearStencilBuffer() {
-    glClearStencil(m_clearStencil);
+    //glClearStencil(m_clearStencil);
     glClear(GL_STENCIL_BUFFER_BIT);
 }
 
@@ -107,7 +107,7 @@ void GlRenderer::clearBuffers() {
 }
 
 void GlRenderer::clearColorBuffer(const int& x, const int& y, const int& w, const int& h) {
-    glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
+    //glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
     glEnable(GL_SCISSOR_TEST);
     glScissor(x, y, w, h);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -115,7 +115,7 @@ void GlRenderer::clearColorBuffer(const int& x, const int& y, const int& w, cons
 }
 
 void GlRenderer::clearDepthBuffer(const int& x, const int& y, const int& w, const int& h) {
-    glClearDepth(m_clearDepth);
+    //glClearDepth(m_clearDepth);
     glEnable(GL_SCISSOR_TEST);
     glScissor(x, y, w, h);
     glClear(GL_DEPTH_BUFFER_BIT);
@@ -123,7 +123,7 @@ void GlRenderer::clearDepthBuffer(const int& x, const int& y, const int& w, cons
 }
 
 void GlRenderer::clearStencilBuffer(const int& x, const int& y, const int& w, const int& h) {
-    glClearStencil(m_clearStencil);
+    //glClearStencil(m_clearStencil);
     glEnable(GL_SCISSOR_TEST);
     glScissor(x, y, w, h);
     glClear(GL_STENCIL_BUFFER_BIT);
