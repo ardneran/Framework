@@ -18,6 +18,8 @@ public:
     Node();
     ~Node();
 
+    int getChildrenSize();
+
 protected:
     virtual void updateWorldTransforms();
     virtual bool updateWorldBounds();

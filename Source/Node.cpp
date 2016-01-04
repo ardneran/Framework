@@ -12,6 +12,16 @@ Node::Node() {
 }
 
 Node::~Node() {
+    for (std::vector<Spatial*>::iterator spatialPointerPointer = m_children.begin(); spatialPointerPointer != m_children.end(); ++spatialPointerPointer) {
+        if (*spatialPointerPointer) {
+            (*spatialPointerPointer)->setParent(NULL);
+            (*spatialPointerPointer) = NULL;
+        }
+    }
+}
+
+int Node::getChildrenSize() {
+    return static_cast<int>(m_children.size());
 }
 
 void Node::updateWorldTransforms() {

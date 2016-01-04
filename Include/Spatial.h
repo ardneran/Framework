@@ -17,8 +17,8 @@ public:
     Spatial();
     virtual ~Spatial() = 0;
 
-    inline Spatial* getParent() { return m_parent; }
-    inline void setParent(Spatial* const parent) { m_parent = parent; }
+    void setParent(Spatial* const parent);
+    Spatial* getParent() const;
     void update(const bool& initiator = true);
 
     Transform m_localTransform;

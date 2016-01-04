@@ -15,6 +15,14 @@ Spatial::Spatial()
 Spatial::~Spatial() {
 }
 
+void Spatial::setParent(Spatial* const parent) {
+    m_parent = parent;
+}
+
+Spatial* Spatial::getParent() const {
+    return m_parent;
+}
+
 void Spatial::update(const bool& initiator) {
     updateWorldTransforms();
     bool boundsDirty = updateWorldBounds();
