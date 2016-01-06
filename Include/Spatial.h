@@ -26,8 +26,10 @@ public:
     BoundingBox m_worldBoundingBox;
 
 protected:
-    virtual void updateWorldTransforms();
-    virtual bool updateWorldBounds();
+    virtual void updateWorldTransforms() = 0;
+    virtual bool updateWorldBounds() = 0;
+
+private:
     void propagateWorldBoundsToParent();
 
 private:
