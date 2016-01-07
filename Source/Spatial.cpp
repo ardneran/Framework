@@ -8,46 +8,19 @@
 
 #include "Spatial.h"
 
-Spatial::Spatial()
-: m_parent(0) {
+Spatial::Spatial() {
 }
 
 Spatial::~Spatial() {
 }
 
-void Spatial::setParent(Spatial* const parent) {
-    m_parent = parent;
+BoundingBox Spatial::getBoundingBox() {
+    return m_worldBoundingBox;
 }
 
-Spatial* Spatial::getParent() const {
-    return m_parent;
+Transform Spatial::getTransform() {
+    return m_worldTransform;
 }
 
-void Spatial::update(const bool& initiator) {
-    updateWorldTransforms();
-    bool boundsDirty = updateWorldBounds();
-    if (boundsDirty && initiator) {
-        propagateWorldBoundsToParent();
-    }
-}
-
-void Spatial::updateWorldTransforms() {
-    if (m_parent) {
-        m_worldTransform = m_parent->m_worldTransform * m_localTransform;
-    } else {
-        m_worldTransform = m_localTransform;
-    }
-}
-
-bool Spatial::updateWorldBounds() {
-    return true;
-}
-
-void Spatial::propagateWorldBoundsToParent() {
-    if (m_parent) {
-        bool parentBoundsDirty = m_parent->updateWorldBounds();
-        if (parentBoundsDirty) {
-            m_parent->propagateWorldBoundsToParent();
-        }
-    }
+void Spatial::update() {
 }

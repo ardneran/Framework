@@ -17,23 +17,14 @@ public:
     Spatial();
     virtual ~Spatial() = 0;
 
-    void setParent(Spatial* const parent);
-    Spatial* getParent() const;
-    void update(const bool& initiator = true);
+    BoundingBox getBoundingBox();
+    Transform getTransform();
 
-    Transform m_localTransform;
-    Transform m_worldTransform;
-    BoundingBox m_worldBoundingBox;
+    virtual void update();
 
 protected:
-    virtual void updateWorldTransforms() = 0;
-    virtual bool updateWorldBounds() = 0;
-
-private:
-    void propagateWorldBoundsToParent();
-
-private:
-    Spatial* m_parent;
+    BoundingBox m_worldBoundingBox;
+    Transform m_worldTransform;
 };
 
 #endif /* Spatial_h */
