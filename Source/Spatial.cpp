@@ -14,12 +14,20 @@ Spatial::Spatial() {
 Spatial::~Spatial() {
 }
 
-BoundingBox Spatial::getBoundingBox() {
+BoundingBox Spatial::getWorldBoundingBox() {
     return m_worldBoundingBox;
 }
 
-Transform Spatial::getTransform() {
+BoundingBox Spatial::getLocalBoundingBox() {
+    return m_localBoundingBox;
+}
+
+Transform Spatial::getWorldTransform() {
     return m_worldTransform;
+}
+
+Transform Spatial::getLocalTransform() {
+    return m_localTransform;
 }
 
 void Spatial::update() {

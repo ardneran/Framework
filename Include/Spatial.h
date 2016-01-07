@@ -17,14 +17,18 @@ public:
     Spatial();
     virtual ~Spatial() = 0;
 
-    BoundingBox getBoundingBox();
-    Transform getTransform();
+    BoundingBox getWorldBoundingBox();
+    BoundingBox getLocalBoundingBox();
+    Transform getWorldTransform();
+    Transform getLocalTransform();
 
     virtual void update();
 
 protected:
     BoundingBox m_worldBoundingBox;
+    BoundingBox m_localBoundingBox;
     Transform m_worldTransform;
+    Transform m_localTransform;
 };
 
 #endif /* Spatial_h */
