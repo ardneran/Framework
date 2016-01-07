@@ -8,22 +8,27 @@
 
 #include "Octree.h"
 
+const int Octree::bucketSize = 4;
+
 Octree::Octree()
-: m_boundingBox() {
+: m_depth(0)
+, m_boundingBox() {
     for (int i = 0; i < 8; ++i) {
         m_children[i] = NULL;
     }
 }
 
-Octree::Octree(const BoundingBox& boundingBox)
-: m_boundingBox(boundingBox) {
+Octree::Octree(const int& depth, const BoundingBox& boundingBox)
+: m_depth(depth)
+, m_boundingBox(boundingBox) {
     for (int i = 0; i < 8; ++i) {
         m_children[i] = NULL;
     }
 }
 
-Octree::Octree(const Vec3& center, const Vec3 extent)
-: m_boundingBox(center, extent) {
+Octree::Octree(const int& depth, const Vec3& center, const Vec3 extent)
+: m_depth(depth)
+, m_boundingBox(center, extent) {
     for (int i = 0; i < 8; ++i) {
         m_children[i] = NULL;
     }
@@ -57,7 +62,7 @@ bool Octree::insert(Spatial* spatial) {
     }
 
     // Fill the accepted bucket
-    if (m_acceptedSpatials.size() < 4) {
+    if (m_acceptedSpatials.size() < bucketSize) {
         m_acceptedSpatials.push_back(spatial);
         return true;
     }
@@ -66,14 +71,14 @@ bool Octree::insert(Spatial* spatial) {
     if (!subtreesArePresent()) {
         Vec3 middle = m_boundingBox.getCenter();
         Vec3 extent = m_boundingBox.getExtent() / 2.0f;
-        m_children[NNN] = new Octree(Vec3(middle.x - extent.x, middle.y - extent.y, middle.z - extent.z), extent);
-        m_children[NNP] = new Octree(Vec3(middle.x - extent.x, middle.y - extent.y, middle.z + extent.z), extent);
-        m_children[NPN] = new Octree(Vec3(middle.x - extent.x, middle.y + extent.y, middle.z - extent.z), extent);
-        m_children[NPP] = new Octree(Vec3(middle.x - extent.x, middle.y + extent.y, middle.z + extent.z), extent);
-        m_children[PNN] = new Octree(Vec3(middle.x + extent.x, middle.y - extent.y, middle.z - extent.z), extent);
-        m_children[PNP] = new Octree(Vec3(middle.x + extent.x, middle.y - extent.y, middle.z + extent.z), extent);
-        m_children[PPN] = new Octree(Vec3(middle.x + extent.x, middle.y + extent.y, middle.z - extent.z), extent);
-        m_children[PPP] = new Octree(Vec3(middle.x + extent.x, middle.y + extent.y, middle.z + extent.z), extent);
+        m_children[NNN] = new Octree(m_depth + 1, Vec3(middle.x - extent.x, middle.y - extent.y, middle.z - extent.z), extent);
+        m_children[NNP] = new Octree(m_depth + 1, Vec3(middle.x - extent.x, middle.y - extent.y, middle.z + extent.z), extent);
+        m_children[NPN] = new Octree(m_depth + 1, Vec3(middle.x - extent.x, middle.y + extent.y, middle.z - extent.z), extent);
+        m_children[NPP] = new Octree(m_depth + 1, Vec3(middle.x - extent.x, middle.y + extent.y, middle.z + extent.z), extent);
+        m_children[PNN] = new Octree(m_depth + 1, Vec3(middle.x + extent.x, middle.y - extent.y, middle.z - extent.z), extent);
+        m_children[PNP] = new Octree(m_depth + 1, Vec3(middle.x + extent.x, middle.y - extent.y, middle.z + extent.z), extent);
+        m_children[PPN] = new Octree(m_depth + 1, Vec3(middle.x + extent.x, middle.y + extent.y, middle.z - extent.z), extent);
+        m_children[PPP] = new Octree(m_depth + 1, Vec3(middle.x + extent.x, middle.y + extent.y, middle.z + extent.z), extent);
     }
 
     // Disperse
@@ -134,14 +139,14 @@ void Octree::update() {
             delete m_children[PNP];
             delete m_children[PPN];
             delete m_children[PPP];
-            m_children[NNN] = 0;
-            m_children[NNP] = 0;
-            m_children[NPN] = 0;
-            m_children[NPP] = 0;
-            m_children[PNN] = 0;
-            m_children[PNP] = 0;
-            m_children[PPN] = 0;
-            m_children[PPP] = 0;
+            m_children[NNN] = NULL;
+            m_children[NNP] = NULL;
+            m_children[NPN] = NULL;
+            m_children[NPP] = NULL;
+            m_children[PNN] = NULL;
+            m_children[PNP] = NULL;
+            m_children[PPN] = NULL;
+            m_children[PPP] = NULL;
         }
     }
 
@@ -149,14 +154,22 @@ void Octree::update() {
     for (std::list<Spatial*>::iterator it = spatialsToUpdate.begin(); it != spatialsToUpdate.end(); ++it) {
         (*it)->update();
         if (!insert(*it)) {
-            m_rejectedSpatials.push_back(*it);
+            if (m_depth == 0) {
+                delete (*it);
+            } else {
+                m_rejectedSpatials.push_back(*it);
+            }
         }
     }
 
     // Run the distribute on the distribute list and classify it into accept and reject
     for (std::list<Spatial*>::iterator it = spatialsToDistribute.begin(); it != spatialsToDistribute.end(); ++it) {
         if (!insert(*it)) {
-            m_rejectedSpatials.push_back(*it);
+            if (m_depth == 0) {
+                delete (*it);
+            } else {
+                m_rejectedSpatials.push_back(*it);
+            }
         }
     }
 }

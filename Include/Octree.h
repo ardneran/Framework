@@ -16,8 +16,8 @@
 class Octree {
 public:
     Octree();
-    Octree(const BoundingBox& boundingBox);
-    Octree(const Vec3& center, const Vec3 extent);
+    Octree(const int& depth, const BoundingBox& boundingBox);
+    Octree(const int& depth, const Vec3& center, const Vec3 extent);
     virtual ~Octree();
 
     bool insert(Spatial* spatial);
@@ -39,10 +39,13 @@ private:
     bool subtreesAreEmpty();
     bool subtreesArePresent();
 
+    int m_depth;
     BoundingBox m_boundingBox;
     Octree* m_children[8];
     std::list<Spatial*> m_acceptedSpatials;
     std::list<Spatial*> m_rejectedSpatials;
+
+    static const int bucketSize;
 };
 
 #endif /* Octree_h */
