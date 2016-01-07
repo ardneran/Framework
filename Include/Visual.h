@@ -15,14 +15,6 @@ class Visual : public Spatial {
 public:
     Visual();
     virtual ~Visual() = 0;
-
-    bool updateModelBounds();
-
-protected:
-    virtual bool updateWorldBounds();
-
-private:
-    BoundingBox m_modelBoundingBox;
 };
 
 #endif /* Visual_h */
