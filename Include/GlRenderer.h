@@ -20,7 +20,7 @@ class GlRenderer : public Renderer {
 
 public:
     GlRenderer();
-    ~GlRenderer();
+    virtual ~GlRenderer();
 
     void setClearColor(const Color4f& clearColor);
     Color4f getClearColor() const;

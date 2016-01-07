@@ -14,7 +14,7 @@
 class SampleWindow : public Window {
 public:
     SampleWindow(Parameters& parameters);
-    ~SampleWindow();
+    virtual ~SampleWindow();
 
     virtual void onIdle();
 

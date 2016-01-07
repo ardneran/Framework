@@ -15,7 +15,7 @@
 class Camera {
 public:
     Camera();
-    ~Camera();
+    virtual ~Camera();
 
     void setFrame(const Vec3& position, const Vec3& right, const Vec3& up, const Vec3& front);
     void setPosition(const Vec3& position);

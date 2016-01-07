@@ -19,7 +19,7 @@ class DxRenderer : public Renderer {
 
 public:
     DxRenderer(const int& width, const int& height);
-    ~DxRenderer();
+    virtual ~DxRenderer();
 
     void setClearColor(const Color4f& clearColor);
     Color4f getClearColor() const;

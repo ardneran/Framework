@@ -15,7 +15,7 @@
 class Transform {
 public:
     Transform();
-    ~Transform();
+    virtual ~Transform();
 
     Transform operator*(const Transform& other);
     Transform operator*=(const Transform& other);

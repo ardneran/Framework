@@ -12,7 +12,7 @@
 class Culler {
 public:
     Culler();
-    ~Culler();
+    virtual ~Culler();
 };
 
 #endif /* Culler_h */
