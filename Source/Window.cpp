@@ -15,7 +15,10 @@ Window::Window(Parameters& parameters)
 , m_xSize(parameters.xSize)
 , m_ySize(parameters.ySize)
 , m_renderer(parameters.renderer)
-, m_active(true) {
+, m_minimized(false)
+, m_maximized(false)
+, m_active(true)
+, m_camera(NULL) {
     initializeSDL();
     initializeSDLimage();
     initializeSDLttf();

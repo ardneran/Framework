@@ -47,12 +47,14 @@ Octree::~Octree() {
         delete (*it);
         *it = NULL;
     }
+    m_acceptedSpatials.clear();
 
     // Cleanup rejected spatials that still exist during abrupt termination
     for (std::list<Spatial*>::iterator it = m_rejectedSpatials.begin(); it != m_rejectedSpatials.end(); ++it) {
         delete (*it);
         *it = NULL;
     }
+    m_rejectedSpatials.clear();
 }
 
 bool Octree::insert(Spatial* spatial) {

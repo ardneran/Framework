@@ -27,7 +27,7 @@ public:
         , yOrigin(0)
         , xSize(0)
         , ySize(0)
-        , renderer(0) {
+        , renderer(NULL) {
         }
         std::string title;
         int xOrigin;
@@ -49,6 +49,7 @@ public:
     inline int getXSize() { return m_xSize; }
     inline void setYSize(const int& ySize) { m_ySize = ySize; }
     inline int getYSize() { return m_ySize; }
+
     inline bool isMinimized() const { return m_minimized; }
     inline bool isMaximized() const { return m_maximized; }
     inline bool isActive() const { return m_active; }
@@ -71,10 +72,12 @@ protected:
     int m_yOrigin;
     int m_xSize;
     int m_ySize;
-    bool m_minimized;
-    int m_maximized;
-    int m_active;
     GlRenderer* m_renderer;
+
+    bool m_minimized;
+    bool m_maximized;
+    int m_active;
+    Camera* m_camera;
 
 private:
     void initializeSDL();

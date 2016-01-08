@@ -9,6 +9,8 @@
 #ifndef Framework_SampleWindow_h
 #define Framework_SampleWindow_h
 
+#include "Culler.h"
+#include "Octree.h"
 #include "Window.h"
 
 class SampleWindow : public Window {
@@ -20,6 +22,10 @@ public:
 
 private:
     void createScene();
+    void destroyScene();
+
+    Octree* m_octree;
+    Culler* m_culler;
 };
 
 #endif
