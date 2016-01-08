@@ -9,7 +9,7 @@
 #ifndef TEST_BoundingBox_H
 #define TEST_BoundingBox_H
 
-#include <vector>
+#include <list>
 #include "Vector.h"
 
 class BoundingBox {
@@ -29,8 +29,8 @@ public:
     void updateMinMax(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
     void updateMinMax(const Vec3& cornerMin, const Vec3& cornerMax);
 
-    void create(const std::vector<BoundingBox>& boxes);
-    void create(const std::vector<Vec3>& points);
+    void create(const std::list<BoundingBox>& boxes);
+    void create(const std::list<Vec3>& points);
 
     bool contains(const Vec3& p) const;
     bool contains(const BoundingBox& other) const;
