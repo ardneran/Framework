@@ -76,7 +76,7 @@ protected:
 
     bool m_minimized;
     bool m_maximized;
-    int m_active;
+    bool m_active;
     Camera* m_camera;
 
 private:
@@ -84,10 +84,12 @@ private:
     void initializeSDLimage();
     void initializeSDLttf();
     void initializeOpenGL();
+    void initializeCamera();
     void deinitializeSDL();
     void deinitializeSDLimage();
     void deinitializeSDLttf();
     void deinitializeOpenGL();
+    void deinitializeCamera();
 
     void handleWindowEvent();
     void handleKeyUpEvent();

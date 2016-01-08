@@ -145,6 +145,9 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(m_window));
 }
 
+void GlRenderer::draw(Visual* visual) {
+}
+
 //}
 
 #endif // defined(__APPLE__) || defined(__linux__)

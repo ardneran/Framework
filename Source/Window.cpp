@@ -23,9 +23,11 @@ Window::Window(Parameters& parameters)
     initializeSDLimage();
     initializeSDLttf();
     initializeOpenGL();
+    initializeCamera();
 }
 
 Window::~Window() {
+    deinitializeCamera();
     deinitializeOpenGL();
     deinitializeSDLttf();
     deinitializeSDLimage();
@@ -233,6 +235,10 @@ void Window::initializeOpenGL() {
     m_renderer->setWindow(m_sdlWindow);
 }
 
+void Window::initializeCamera() {
+    m_camera = new Camera();
+}
+
 void Window::deinitializeSDL() {
     SDL_Quit();
 }
@@ -248,6 +254,12 @@ void Window::deinitializeSDLttf() {
 void Window::deinitializeOpenGL() {
     if (m_sdlWindow != NULL) {
         SDL_DestroyWindow(m_sdlWindow);
+    }
+}
+
+void Window::deinitializeCamera() {
+    if (m_camera != NULL) {
+        delete m_camera;
     }
 }
 

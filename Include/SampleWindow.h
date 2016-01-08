@@ -9,8 +9,10 @@
 #ifndef Framework_SampleWindow_h
 #define Framework_SampleWindow_h
 
+#include <list>
 #include "Culler.h"
 #include "Octree.h"
+#include "Spatial.h"
 #include "Window.h"
 
 class SampleWindow : public Window {

@@ -13,3 +13,8 @@ Culler::Culler() {
 
 Culler::~Culler() {
 }
+
+std::list<Spatial*> Culler::cull(Camera* camera, Octree* octree) {
+    std::list<Spatial*> culledSpatials;
+    return culledSpatials;
+}

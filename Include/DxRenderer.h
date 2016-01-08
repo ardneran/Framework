@@ -43,6 +43,7 @@ public:
     void clearStencilBuffer(const int& x, const int& y, const int& w, const int& h);
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
+    void draw(Visual* visual);
 };
 
 //}

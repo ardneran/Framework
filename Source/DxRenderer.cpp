@@ -92,6 +92,9 @@ void DxRenderer::clearBuffers(const int& x, const int& y, const int& w, const in
 void DxRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
+void DxRenderer::draw(Visual* visual) {
+}
+
 //}
 
 #endif // defined(_WIN32)
