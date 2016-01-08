@@ -15,7 +15,6 @@
 
 class Octree {
 public:
-    Octree();
     Octree(const int& depth, const BoundingBox& boundingBox);
     Octree(const int& depth, const Vec3& center, const Vec3 extent);
     virtual ~Octree();
@@ -46,6 +45,7 @@ private:
     std::list<Spatial*> m_rejectedSpatials;
 
     static const int bucketSize;
+    static const int maxDepth;
 };
 
 #endif /* Octree_h */

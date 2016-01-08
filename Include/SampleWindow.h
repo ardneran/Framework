@@ -10,8 +10,6 @@
 #define Framework_SampleWindow_h
 
 #include <list>
-#include "Culler.h"
-#include "Octree.h"
 #include "Spatial.h"
 #include "Window.h"
 
@@ -25,9 +23,6 @@ public:
 private:
     void createScene();
     void destroyScene();
-
-    Octree* m_octree;
-    Culler* m_culler;
 };
 
 #endif

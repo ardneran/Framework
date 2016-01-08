@@ -8,15 +8,8 @@
 
 #include "Octree.h"
 
-const int Octree::bucketSize = 4;
-
-Octree::Octree()
-: m_depth(0)
-, m_boundingBox() {
-    for (int i = 0; i < 8; ++i) {
-        m_children[i] = NULL;
-    }
-}
+const int Octree::bucketSize = 1;
+const int Octree::maxDepth = 8;
 
 Octree::Octree(const int& depth, const BoundingBox& boundingBox)
 : m_depth(depth)
@@ -63,7 +56,14 @@ bool Octree::insert(Spatial* spatial) {
         return false;
     }
 
-    // Fill the accepted bucket
+    // TODO verify that this actually works
+    // Fill here because of the depth limit
+    if (m_depth >= maxDepth) {
+        m_acceptedSpatials.push_back(spatial);
+        return true;
+    }
+
+    // Fill here because of the bucket limit
     if (m_acceptedSpatials.size() < bucketSize) {
         m_acceptedSpatials.push_back(spatial);
         return true;

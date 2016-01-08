@@ -11,8 +11,9 @@
 
 #include <cassert>
 #include <iostream>
-#include "Camera.h"
+#include "Culler.h"
 #include "GlRenderer.h"
+#include "Octree.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_opengl.h"
@@ -78,18 +79,20 @@ protected:
     bool m_maximized;
     bool m_active;
     Camera* m_camera;
+    Culler* m_culler;
+    Octree* m_octree;
 
 private:
     void initializeSDL();
     void initializeSDLimage();
     void initializeSDLttf();
     void initializeOpenGL();
-    void initializeCamera();
+    void initializeOther();
     void deinitializeSDL();
     void deinitializeSDLimage();
     void deinitializeSDLttf();
     void deinitializeOpenGL();
-    void deinitializeCamera();
+    void deinitializeOther();
 
     void handleWindowEvent();
     void handleKeyUpEvent();

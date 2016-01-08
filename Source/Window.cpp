@@ -23,11 +23,11 @@ Window::Window(Parameters& parameters)
     initializeSDLimage();
     initializeSDLttf();
     initializeOpenGL();
-    initializeCamera();
+    initializeOther();
 }
 
 Window::~Window() {
-    deinitializeCamera();
+    deinitializeOther();
     deinitializeOpenGL();
     deinitializeSDLttf();
     deinitializeSDLimage();
@@ -235,8 +235,10 @@ void Window::initializeOpenGL() {
     m_renderer->setWindow(m_sdlWindow);
 }
 
-void Window::initializeCamera() {
+void Window::initializeOther() {
     m_camera = new Camera();
+    m_culler = new Culler();
+    m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
 }
 
 void Window::deinitializeSDL() {
@@ -257,7 +259,13 @@ void Window::deinitializeOpenGL() {
     }
 }
 
-void Window::deinitializeCamera() {
+void Window::deinitializeOther() {
+    if (m_octree != NULL) {
+        delete m_octree;
+    }
+    if (m_culler != NULL) {
+        delete m_culler;
+    }
     if (m_camera != NULL) {
         delete m_camera;
     }
