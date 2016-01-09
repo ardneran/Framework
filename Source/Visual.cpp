@@ -8,10 +8,40 @@
 
 #include "Visual.h"
 
-Visual::Visual() {
+Visual::Visual()
+: m_name(NULL)
+, m_positions(NULL)
+, m_normals(NULL)
+, m_texcoords(NULL)
+, m_indices(NULL)
+, m_materialIds(NULL) {
 }
 
 Visual::~Visual() {
+    if (m_name) {
+        delete m_name;
+    }
+    if (m_positions) {
+        delete m_positions;
+    }
+    if (m_normals) {
+        delete m_normals;
+    }
+    if (m_texcoords) {
+        delete m_texcoords;
+    }
+    if (m_indices) {
+        delete m_indices;
+    }
+    if (m_materialIds) {
+        delete m_materialIds;
+    }
+}
+
+void Visual::setName(const std::string& name) {
+    m_nameSize = name.size() + 1;
+    m_name = new char[m_nameSize];
+    std::strcpy(m_name, name.c_str());
 }
 
 void Visual::setPositions(const std::vector<float>& positions) {

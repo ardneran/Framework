@@ -27,9 +27,15 @@ void SampleWindow::onIdle() {
 }
 
 void SampleWindow::createScene() {
-    std::list<Visual*> visuals = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
-                                                       "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
-    for (std::list<Visual*>::iterator it = visuals.begin(); it != visuals.end(); ++it) {
+    std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
+                                                           "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
+    for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
+        m_octree->insert(*it);
+    }
+
+    std::list<Visual*> visualsTeapot = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/teapot.obj",
+                                                             "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/");
+    for (std::list<Visual*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
         m_octree->insert(*it);
     }
 }
