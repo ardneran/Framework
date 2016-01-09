@@ -11,6 +11,7 @@
 
 #if defined(__APPLE__) || defined(__linux__)
 
+#define GL_GLEXT_PROTOTYPES 1
 #include "SDL_opengl.h"
 #include "Renderer.h"
 

@@ -21,6 +21,7 @@ public:
 
     bool insert(Spatial* spatial);
     void update();
+	std::list<Spatial*> collect();
 
 private:
     enum OctreeChildren {

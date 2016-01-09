@@ -27,6 +27,11 @@ void SampleWindow::onIdle() {
 }
 
 void SampleWindow::createScene() {
+    std::list<Visual*> visuals = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
+                                                       "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
+    for (std::list<Visual*>::iterator it = visuals.begin(); it != visuals.end(); ++it) {
+        m_octree->insert(*it);
+    }
 }
 
 void SampleWindow::destroyScene() {

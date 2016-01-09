@@ -13,10 +13,10 @@
 #include <iostream>
 #include "Culler.h"
 #include "GlRenderer.h"
+#include "ObjMeshLoader.h"
 #include "Octree.h"
 #include "SDL.h"
 #include "SDL_image.h"
-#include "SDL_opengl.h"
 #include "SDL_ttf.h"
 
 class Window {
@@ -81,6 +81,7 @@ protected:
     Camera* m_camera;
     Culler* m_culler;
     Octree* m_octree;
+    ObjMeshLoader* m_objMeshLoader;
 
 private:
     void initializeSDL();

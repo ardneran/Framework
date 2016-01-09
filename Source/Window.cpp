@@ -239,6 +239,7 @@ void Window::initializeOther() {
     m_camera = new Camera();
     m_culler = new Culler();
     m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
+    m_objMeshLoader = new ObjMeshLoader();
 }
 
 void Window::deinitializeSDL() {
@@ -260,6 +261,9 @@ void Window::deinitializeOpenGL() {
 }
 
 void Window::deinitializeOther() {
+    if (m_objMeshLoader != NULL) {
+        delete m_objMeshLoader;
+    }
     if (m_octree != NULL) {
         delete m_octree;
     }

@@ -176,6 +176,20 @@ void Octree::update() {
     }
 }
 
+std::list<Spatial*> Octree::collect() {
+    std::list<Spatial*> allCollectedSpatials;
+    std::list<Spatial*> childCollectedSpatials;
+    if (subtreesArePresent()) {
+        for (int i = 0; i < 8; ++i) {
+            childCollectedSpatials = m_children[i]->collect();
+            allCollectedSpatials.splice(allCollectedSpatials.end(), childCollectedSpatials);
+        }
+    }
+    allCollectedSpatials.insert(allCollectedSpatials.end(), m_acceptedSpatials.begin(), m_acceptedSpatials.end());
+    allCollectedSpatials.insert(allCollectedSpatials.end(), m_rejectedSpatials.begin(), m_rejectedSpatials.end());
+    return allCollectedSpatials;
+}
+
 bool Octree::treeIsEmpty() {
     if (m_acceptedSpatials.size() == 0 && m_rejectedSpatials.size() == 0) {
         if (!subtreesArePresent()) {
