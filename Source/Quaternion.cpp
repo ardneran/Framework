@@ -70,6 +70,38 @@ Quat::Quat(const float& x, const float& y, const float& z, const float& w)
 , w(w) {
 }
 
+Quat::Quat(const Mat4& matrix) {
+    if ((matrix.d00 + matrix.d11 + matrix.d22) > 0.0f) {
+        float m1 = (float)sqrtf((double)(matrix.d00 + matrix.d11 + matrix.d22 + 1.0f));
+        w = m1 * 0.5f;
+        m1 = 0.5f / m1;
+        x = (matrix.d12 - matrix.d21) * m1;
+        y = (matrix.d20 - matrix.d02) * m1;
+        z = (matrix.d01 - matrix.d10) * m1;
+    } else if ((matrix.d00 >= matrix.d11) && (matrix.d00 >= matrix.d22)) {
+        float m2 = (float)sqrtf((double)(1.0f + matrix.d00 - matrix.d11 - matrix.d22));
+        float m3 = 0.5f / m2;
+        x = 0.5f * m2;
+        y = (matrix.d01 + matrix.d10) * m3;
+        z = (matrix.d02 + matrix.d20) * m3;
+        w = (matrix.d12 - matrix.d21) * m3;
+    } else if (matrix.d11 > matrix.d22) {
+        float m4 = (float)sqrtf((double)(1.0f + matrix.d11 - matrix.d00 - matrix.d22));
+        float m5 = 0.5f / m4;
+        x = (matrix.d10 + matrix.d01) * m5;
+        y = 0.5f * m4;
+        z = (matrix.d21 + matrix.d12) * m5;
+        w = (matrix.d20 - matrix.d02) * m5;
+    } else {
+        float m6 = (float)sqrtf((double)(1.0f + matrix.d22 - matrix.d00 - matrix.d11));
+        float m7 = 0.5f / m6;
+        x = (matrix.d20 + matrix.d02) * m7;
+        y = (matrix.d21 + matrix.d12) * m7;
+        z = 0.5f * m6;
+        w = (matrix.d01 - matrix.d10) * m7;
+    }
+}
+
 Vec3 Quat::axis() const {
     return Vec3(x, y, z);
 }
