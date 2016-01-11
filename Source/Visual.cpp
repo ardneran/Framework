@@ -79,9 +79,8 @@ void Visual::setPositions(const std::vector<float>& positions) {
         }
         j++;
     }
-    m_localBoundingBox.updateMinMax(bbmin, bbmax);
-    // TODO fix this so the transform math is correct
-    m_worldBoundingBox.updateMinMax(bbmin, bbmax);
+
+    setBoundingBox(Space::Local, BoundingBox(bbmin, bbmax));
 }
 
 void Visual::setNormals(const std::vector<float>& normals) {

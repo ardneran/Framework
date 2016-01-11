@@ -27,6 +27,13 @@ Quat::Quat(const Vec4& vec4)
 , w(vec4.w) {
 }
 
+Quat::Quat(const float& x, const float& y, const float& z, const float& w)
+: x(x)
+, y(y)
+, z(z)
+, w(w) {
+}
+
 Quat::Quat(const float& s, const Vec3& vec3)
 : x(vec3.x)
 , y(vec3.y)
@@ -63,11 +70,27 @@ Quat::Quat(const Vec3& v0, const Vec3& v1) {
     w = /* s = */ s_multiply_2 / 2.0f;
 }
 
-Quat::Quat(const float& x, const float& y, const float& z, const float& w)
-: x(x)
-, y(y)
-, z(z)
-, w(w) {
+Quat::Quat(const float& yaw, const float& pitch, const float& roll) {
+    // Reference
+    // http://referencesource.microsoft.com/#System.Numerics/System/Numerics/Quaternion.cs
+    // Roll first, about axis the object is facing, then
+    // pitch upward, then yaw to face into the new heading
+    const float halfRoll = roll * 0.5f;
+    const float sr = sinf(halfRoll);
+    const float cr = cosf(halfRoll);
+
+    const float halfPitch = pitch * 0.5f;
+    const float sp = sinf(halfPitch);
+    const float cp = cosf(halfPitch);
+
+    const float halfYaw = yaw * 0.5f;
+    const float sy = sinf(halfYaw);
+    const float cy = cosf(halfYaw);
+
+    x = cy * sp * cr + sy * cp * sr;
+    y = sy * cp * cr - cy * sp * sr;
+    z = cy * cp * sr - sy * sp * cr;
+    w = cy * cp * cr + sy * sp * sr;
 }
 
 Quat::Quat(const Mat4& matrix) {

@@ -287,109 +287,34 @@ Mat4 Mat4::translate(const float& tx, const float& ty, const float& tz) {
 }
 
 Mat4 Mat4::translate(const Vec3& v) {
-    return Mat4(1.0f, 0.0f, 0.0f, v.x,
-                0.0f, 1.0f, 0.0f, v.y,
-                0.0f, 0.0f, 1.0f, v.z,
+    return Mat4::translate(v.x, v.y, v.z);
+}
+
+Mat4 Mat4::rotate(const float& rx, const float& ry, const float& rz, const float& rw) {
+    const float x = rx;
+    const float y = ry;
+    const float z = rz;
+    const float w = rw;
+    const float x2 = x + x;
+    const float y2 = y + y;
+    const float z2 = z + z;
+    const float wx2 = w * x2;
+    const float wy2 = w * y2;
+    const float wz2 = w * z2;
+    const float xx2 = x * x2;
+    const float xy2 = x * y2;
+    const float xz2 = x * z2;
+    const float yy2 = y * y2;
+    const float yz2 = y * z2;
+    const float zz2 = z * z2;
+    return Mat4(1.0f - yy2 - zz2, xy2 - wz2, xz2 + wy2, 0.0f,
+                xy2 + wz2, 1.0f - xx2 - zz2, yz2 - wx2, 0.0f,
+                xz2 - wy2, yz2 + wx2, 1.0f - xx2 - yy2, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-Mat4 Mat4::rotateX(const float& theta) {
-#if defined RADIANS
-    float cosT = cosf(theta); //  theta in radians
-    float sinT = sinf(theta); //  theta in radians
-#elif defined DEGREES
-    float cosT = cosf(theta * M_PI_180); //  theta in degrees
-    float sinT = sinf(theta * M_PI_180); //  theta in degrees
-#endif
-
-#ifdef RIGHTHANDED
-    return Mat4(1.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, cosT, sinT, 0.0f,
-                0.0f, -sinT, cosT, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
-#elif defined LEFTHANDED
-    return Mat4(1.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, cosT, -sinT, 0.0f,
-                0.0f, sinT, cosT, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
-#endif
-}
-
-Mat4 Mat4::rotateY(const float& theta) {
-#if defined RADIANS
-    float cosT = cosf(theta); //  theta in radians
-    float sinT = sinf(theta); //  theta in radians
-#elif defined DEGREES
-    float cosT = cosf(theta * M_PI_180); //  theta in degrees
-    float sinT = sinf(theta * M_PI_180); //  theta in degrees
-#endif
-
-#ifdef RIGHTHANDED
-    return Mat4(cosT, 0.0f, -sinT, 0.0f,
-                0.0f, 1.0f, 0.0f, 0.0f,
-                sinT, 0.0f, cosT, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
-#elif defined LEFTHANDED
-    return Mat4(cosT, 0.0f, sinT, 0.0f,
-                0.0f, 1.0f, 0.0f, 0.0f,
-                -sinT, 0.0f, cosT, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
-#endif
-}
-
-Mat4 Mat4::rotateZ(const float& theta) {
-#if defined RADIANS
-    float cosT = cosf(theta); //  theta in radians
-    float sinT = sinf(theta); //  theta in radians
-#elif defined DEGREES
-    float cosT = cosf(theta * M_PI_180); //  theta in degrees
-    float sinT = sinf(theta * M_PI_180); //  theta in degrees
-#endif
-
-#ifdef RIGHTHANDED
-    return Mat4(cosT, sinT, 0.0f, 0.0f,
-                -sinT, cosT, 0.0f, 0.0f,
-                0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
-#elif defined LEFTHANDED
-    return Mat4(cosT, -sinT, 0.0f, 0.0f,
-                sinT, cosT, 0.0f, 0.0f,
-                0.0f, 0.0f, 1.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
-#endif
-}
-
-Mat4 Mat4::rotate(const float& theta,
-                  const float& x,
-                  const float& y,
-                  const float& z) {
-    float alpha = atan2f(x, y);
-    float beta = atan2f(y, z);
-    float _theta = theta;
-
-    // Avoid Gimbal lock
-    if (y == 0.0f && z == 0.0f) {
-        if (x == 0.0f)
-            alpha = beta = _theta = 0.0f;
-        else if (x > 0.0f)
-            beta = M_PI_2;
-        else
-            beta = -M_PI_2;
-    }
-
-    Mat4 m; // = Mat4::identity();
-
-    m = m * Mat4::rotateZ(-alpha);
-    m = m * Mat4::rotateX(-beta);
-    m = m * Mat4::rotateZ(_theta);
-    m = m * Mat4::rotateX(beta);
-    m = m * Mat4::rotateZ(alpha);
-
-    return m;
-}
-
-Mat4 Mat4::rotate(const float& theta, const Vec3& v) {
-    return Mat4::rotate(theta, v.x, v.y, v.z);
+Mat4 Mat4::rotate(const Quat& q) {
+    return Mat4::rotate(q.x, q.y, q.z, q.w);
 }
 
 Mat4 Mat4::scale(const float& sx, const float& sy, const float& sz) {
@@ -400,10 +325,7 @@ Mat4 Mat4::scale(const float& sx, const float& sy, const float& sz) {
 }
 
 Mat4 Mat4::scale(const Vec3& s) {
-    return Mat4(s.x, 0.0f, 0.0f, 0.0f,
-                0.0f, s.y, 0.0f, 0.0f,
-                0.0f, 0.0f, s.z, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f);
+    return Mat4::scale(s.x, s.y, s.z);
 }
 
 Mat4 Mat4::transpose() {
@@ -414,19 +336,19 @@ Mat4 Mat4::transpose() {
 }
 
 Mat4 Mat4::inverse() {
-    float s0 = d00 * d11 - d10 * d01;
-    float s1 = d00 * d12 - d10 * d02;
-    float s2 = d00 * d13 - d10 * d03;
-    float s3 = d01 * d12 - d11 * d02;
-    float s4 = d01 * d13 - d11 * d03;
-    float s5 = d02 * d13 - d12 * d03;
+    const float s0 = d00 * d11 - d10 * d01;
+    const float s1 = d00 * d12 - d10 * d02;
+    const float s2 = d00 * d13 - d10 * d03;
+    const float s3 = d01 * d12 - d11 * d02;
+    const float s4 = d01 * d13 - d11 * d03;
+    const float s5 = d02 * d13 - d12 * d03;
 
-    float c0 = d20 * d31 - d30 * d21;
-    float c1 = d20 * d32 - d30 * d22;
-    float c2 = d20 * d33 - d30 * d23;
-    float c3 = d21 * d32 - d31 * d22;
-    float c4 = d21 * d33 - d31 * d23;
-    float c5 = d22 * d33 - d32 * d23;
+    const float c0 = d20 * d31 - d30 * d21;
+    const float c1 = d20 * d32 - d30 * d22;
+    const float c2 = d20 * d33 - d30 * d23;
+    const float c3 = d21 * d32 - d31 * d22;
+    const float c4 = d21 * d33 - d31 * d23;
+    const float c5 = d22 * d33 - d32 * d23;
 
     return Mat4(d11 * c5 - d12 * c4 + d13 * c3,
                 -d01 * c5 + d02 * c4 - d03 * c3,
@@ -448,19 +370,19 @@ Mat4 Mat4::inverse() {
 }
 
 float Mat4::determinant() {
-    float s0 = d00 * d11 - d10 * d01;
-    float s1 = d00 * d12 - d10 * d02;
-    float s2 = d00 * d13 - d10 * d03;
-    float s3 = d01 * d12 - d11 * d02;
-    float s4 = d01 * d13 - d11 * d03;
-    float s5 = d02 * d13 - d12 * d03;
+    const float s0 = d00 * d11 - d10 * d01;
+    const float s1 = d00 * d12 - d10 * d02;
+    const float s2 = d00 * d13 - d10 * d03;
+    const float s3 = d01 * d12 - d11 * d02;
+    const float s4 = d01 * d13 - d11 * d03;
+    const float s5 = d02 * d13 - d12 * d03;
 
-    float c0 = d20 * d31 - d30 * d21;
-    float c1 = d20 * d32 - d30 * d22;
-    float c2 = d20 * d33 - d30 * d23;
-    float c3 = d21 * d32 - d31 * d22;
-    float c4 = d21 * d33 - d31 * d23;
-    float c5 = d22 * d33 - d32 * d23;
+    const float c0 = d20 * d31 - d30 * d21;
+    const float c1 = d20 * d32 - d30 * d22;
+    const float c2 = d20 * d33 - d30 * d23;
+    const float c3 = d21 * d32 - d31 * d22;
+    const float c4 = d21 * d33 - d31 * d23;
+    const float c5 = d22 * d33 - d32 * d23;
 
     return s0 * c5 - s1 * c4 + s2 * c3 + s3 * c2 - s4 * c1 + s5 * c0;
 

@@ -11,6 +11,7 @@
 
 #include "Math.h"
 #include "Vector.h"
+#include "Quaternion.h"
 
 #if defined(__APPLE__) || defined(__linux__)
 //	OpenGL
@@ -26,6 +27,7 @@
 class Vec2;
 class Vec3;
 class Vec4;
+class Quat;
 
 //  Mat2
 
@@ -118,14 +120,8 @@ public:
 
     static Mat4 translate(const float& tx, const float& ty, const float& tz);
     static Mat4 translate(const Vec3& v);
-    static Mat4 rotateX(const float& theta);
-    static Mat4 rotateY(const float& theta);
-    static Mat4 rotateZ(const float& theta);
-    static Mat4 rotate(const float& theta,
-                       const float& x,
-                       const float& y,
-                       const float& z);
-    static Mat4 rotate(const float& theta, const Vec3& v);
+    static Mat4 rotate(const float& rx, const float& ry, const float& rz, const float& rw);
+    static Mat4 rotate(const Quat& q);
     static Mat4 scale(const float& sx, const float& sy, const float& sz);
     static Mat4 scale(const Vec3& s);
 

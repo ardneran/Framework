@@ -52,7 +52,7 @@ Octree::~Octree() {
 
 bool Octree::insert(Spatial* spatial) {
     // Check if spatial fits in the tree
-    if (!m_boundingBox.contains(spatial->getWorldBoundingBox())) {
+    if (!m_boundingBox.contains(spatial->getBoundingBox(Spatial::Space::World))) {
         return false;
     }
 

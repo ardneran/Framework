@@ -144,6 +144,12 @@ bool BoundingBox::intersects(const BoundingBox& other) const {
     return ((!(fabsf(curDistance.x) >= minDistance.x)) && (!(fabsf(curDistance.y) >= minDistance.y)) && (!(fabsf(curDistance.z) >= minDistance.z)));
 }
 
+BoundingBox BoundingBox::transform(const Mat4& m) const {
+    BoundingBox boundingBox;
+    boundingBox.updateMinMax(m_cornerMin * m, m_cornerMax * m);
+    return boundingBox;
+}
+
 bool BoundingBox::operator==(const BoundingBox& other) const {
     return (m_center == other.m_center && m_extent == other.m_extent);
 }

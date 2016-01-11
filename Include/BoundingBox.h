@@ -35,6 +35,7 @@ public:
     bool contains(const Vec3& p) const;
     bool contains(const BoundingBox& other) const;
     bool intersects(const BoundingBox& other) const;
+	BoundingBox transform(const Mat4& m) const;
 
     bool operator==(const BoundingBox& other) const;
     bool operator!=(const BoundingBox& other) const;

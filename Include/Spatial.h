@@ -17,14 +17,24 @@ public:
     Spatial();
     virtual ~Spatial() = 0;
 
-    BoundingBox getWorldBoundingBox();
-    BoundingBox getLocalBoundingBox();
-    Transform getWorldTransform();
-    Transform getLocalTransform();
-
     virtual void update();
 
-protected:
+    enum Space {
+        Local,
+        World
+    };
+
+    void setBoundingBox(const Space& space, const BoundingBox& boundingBox);
+    void setTranslate(const Space& space, const Vec3& translate);
+    void setRotate(const Space& space, const Quat& rotate);
+    void setScale(const Space& space, const Vec3& scale);
+
+    BoundingBox getBoundingBox(const Space& space);
+    Vec3 getTranslate(const Space& space);
+    Quat getRotate(const Space& space);
+    Vec3 getScale(const Space& space);
+
+private:
     BoundingBox m_worldBoundingBox;
     BoundingBox m_localBoundingBox;
     Transform m_worldTransform;
