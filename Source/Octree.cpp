@@ -99,7 +99,6 @@ bool Octree::insert(Spatial* spatial) {
     return true;
 }
 
-// TODO Fix the bug where rejected children might be updated twice below
 void Octree::update() {
     // A list of spatials that this update will update
     std::list<Spatial*> spatialsToUpdate;

@@ -40,6 +40,8 @@
 #define M_PI_180 M_PI / 180.0f
 #define M_180_PI 180.0f / M_PI
 #define M_EPSILON 0.000001f
+#define M_DEGREE_TO_RADIAN M_PI_180
+#define M_RADIAN_TO_DEGREE M_180_PI
 
 //namespace Engine
 //{
