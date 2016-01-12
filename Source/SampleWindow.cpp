@@ -38,33 +38,46 @@ void SampleWindow::createScene() {
     b.setScale(Vec3(1, 2, 3));
     Transform c = a * b;
 	*/
-
     for (int i = 0; i < 8; ++i) {
         std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
                                                                "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
         for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
-            if (i % 2) {
-                (*it)->setTranslate(Spatial::Space::World, Vec3::one * (+10) * i);
-            } else {
-                (*it)->setTranslate(Spatial::Space::World, Vec3::one * (-10) * i);
-            }
+            (*it)->setTranslate(Spatial::Space::World, getDirection(i) * 10);
             m_octree->insert(*it);
         }
-    }
-
-    for (int i = 0; i < 8; ++i) {
+        /*
         std::list<Visual*> visualsTeapot = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/teapot.obj",
                                                                  "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/");
         for (std::list<Visual*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
-            if (i % 2) {
-                (*it)->setTranslate(Spatial::Space::World, Vec3::one * (+20) * i);
-            } else {
-                (*it)->setTranslate(Spatial::Space::World, Vec3::one * (-20) * i);
-            }
+            (*it)->setTranslate(Spatial::Space::World, getDirection(i) * 20);
             m_octree->insert(*it);
         }
+		*/
     }
 }
 
 void SampleWindow::destroyScene() {
+}
+
+Vec3 SampleWindow::getDirection(const unsigned int& octant) {
+    unsigned int localOctant = octant % 8;
+    switch (localOctant) {
+        case 0:
+            return Vec3(-1, -1, -1);
+        case 1:
+            return Vec3(-1, -1, +1);
+        case 2:
+            return Vec3(-1, +1, -1);
+        case 3:
+            return Vec3(-1, +1, +1);
+        case 4:
+            return Vec3(+1, -1, -1);
+        case 5:
+            return Vec3(+1, -1, +1);
+        case 6:
+            return Vec3(+1, +1, -1);
+        case 7:
+        default:
+            return Vec3(+1, +1, +1);
+    }
 }

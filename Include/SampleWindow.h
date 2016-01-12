@@ -23,6 +23,7 @@ public:
 private:
     void createScene();
     void destroyScene();
+    Vec3 getDirection(const unsigned int& octant);
 };
 
 #endif
