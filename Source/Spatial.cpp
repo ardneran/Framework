@@ -18,7 +18,7 @@ void Spatial::update() {
 }
 
 void Spatial::setBoundingBox(const Space& space, const BoundingBox& boundingBox) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         m_localBoundingBox = boundingBox;
         m_worldBoundingBox = boundingBox.transform(m_worldTransform.getStraightMatrix());
     } else {
@@ -28,7 +28,7 @@ void Spatial::setBoundingBox(const Space& space, const BoundingBox& boundingBox)
 }
 
 void Spatial::setTranslate(const Space& space, const Vec3& translate) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         m_localTransform.setTranslate(translate);
         // TODO Bounding Box
     } else {
@@ -38,7 +38,7 @@ void Spatial::setTranslate(const Space& space, const Vec3& translate) {
 }
 
 void Spatial::setRotate(const Space& space, const Quat& rotate) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         m_localTransform.setRotate(rotate);
         // TODO Bounding Box
     } else {
@@ -48,7 +48,7 @@ void Spatial::setRotate(const Space& space, const Quat& rotate) {
 }
 
 void Spatial::setScale(const Space& space, const Vec3& scale) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         m_localTransform.setScale(scale);
         // TODO Bounding Box
     } else {
@@ -58,7 +58,7 @@ void Spatial::setScale(const Space& space, const Vec3& scale) {
 }
 
 BoundingBox Spatial::getBoundingBox(const Space& space) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         return m_localBoundingBox;
     } else {
         return m_worldBoundingBox;
@@ -66,7 +66,7 @@ BoundingBox Spatial::getBoundingBox(const Space& space) {
 }
 
 Vec3 Spatial::getTranslate(const Space& space) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         return m_localTransform.getTranslate();
     } else {
         return m_worldTransform.getTranslate();
@@ -74,7 +74,7 @@ Vec3 Spatial::getTranslate(const Space& space) {
 }
 
 Quat Spatial::getRotate(const Space& space) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         return m_localTransform.getRotate();
     } else {
         return m_worldTransform.getRotate();
@@ -82,7 +82,7 @@ Quat Spatial::getRotate(const Space& space) {
 }
 
 Vec3 Spatial::getScale(const Space& space) {
-    if (space == Spatial::Local) {
+    if (space == Space::Local) {
         return m_localTransform.getScale();
     } else {
         return m_worldTransform.getScale();
