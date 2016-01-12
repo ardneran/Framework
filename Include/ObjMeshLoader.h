@@ -16,7 +16,8 @@
 class ObjMeshLoader : public MeshLoader {
 public:
     ObjMeshLoader();
-    ~ObjMeshLoader();
+    virtual ~ObjMeshLoader();
+
     std::list<Visual*> load(const std::string& filepath, const std::string& filebase);
 };
 

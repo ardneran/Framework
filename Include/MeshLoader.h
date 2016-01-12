@@ -15,6 +15,7 @@ class MeshLoader {
 public:
     MeshLoader();
     virtual ~MeshLoader() = 0;
+
     virtual std::list<Visual*> load(const std::string& filepath, const std::string& filebase) = 0;
 };
 
