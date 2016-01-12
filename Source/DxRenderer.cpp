@@ -20,6 +20,12 @@ DxRenderer::DxRenderer()
 DxRenderer::~DxRenderer() {
 }
 
+void DxRenderer::initialize() {
+}
+
+void DxRenderer::deinitialize() {
+}
+
 void DxRenderer::setClearColor(const Color4f& clearColor) {
     m_clearColor = clearColor;
 }

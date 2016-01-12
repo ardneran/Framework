@@ -12,7 +12,7 @@ Visual::Visual()
 : m_name(NULL)
 , m_positions(NULL)
 , m_normals(NULL)
-, m_texcoords(NULL)
+, m_textureCoordinates(NULL)
 , m_indices(NULL)
 , m_materialIds(NULL) {
 }
@@ -27,8 +27,8 @@ Visual::~Visual() {
     if (m_normals) {
         delete m_normals;
     }
-    if (m_texcoords) {
-        delete m_texcoords;
+    if (m_textureCoordinates) {
+        delete m_textureCoordinates;
     }
     if (m_indices) {
         delete m_indices;
@@ -91,12 +91,12 @@ void Visual::setNormals(const std::vector<float>& normals) {
     }
 }
 
-void Visual::setTexcoords(const std::vector<float>& texcoords) {
-    m_texcoordsSize = texcoords.size();
-    m_texcoords = new float[m_texcoordsSize];
+void Visual::setTextureCoordinates(const std::vector<float>& texcoords) {
+    m_textureCoordinatesSize = texcoords.size();
+    m_textureCoordinates = new float[m_textureCoordinatesSize];
     unsigned int i = 0;
     for (auto it = texcoords.begin(); it != texcoords.end(); ++it) {
-        m_texcoords[i++] = *it;
+        m_textureCoordinates[i++] = *it;
     }
 }
 

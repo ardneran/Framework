@@ -25,7 +25,7 @@ std::list<Visual*> ObjMeshLoader::load(const std::string& filepath, const std::s
             visual->setName(it->name);
             visual->setPositions(it->mesh.positions);
             visual->setNormals(it->mesh.normals);
-            visual->setTexcoords(it->mesh.texcoords);
+            visual->setTextureCoordinates(it->mesh.texcoords);
             visual->setIndices(it->mesh.indices);
             visual->setMaterialIds(it->mesh.material_ids);
             visuals.push_back(visual);

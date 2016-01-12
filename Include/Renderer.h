@@ -46,6 +46,9 @@ public:
     void setWindow(void* const window);
     void* getWindow() const;
 
+    virtual void initialize() = 0;
+    virtual void deinitialize() = 0;
+
     virtual void setClearColor(const Color4f& clearColor) = 0;
     virtual Color4f getClearColor() const = 0;
     virtual void setClearDepth(const float& clearDepth) = 0;

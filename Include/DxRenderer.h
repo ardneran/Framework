@@ -21,6 +21,9 @@ public:
     DxRenderer(const int& width, const int& height);
     virtual ~DxRenderer();
 
+    void initialize();
+    void deinitialize();
+
     void setClearColor(const Color4f& clearColor);
     Color4f getClearColor() const;
     void setClearDepth(const float& clearDepth);

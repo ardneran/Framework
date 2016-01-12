@@ -10,11 +10,13 @@
 
 SampleWindow::SampleWindow(Parameters& parameters)
 : Window(parameters) {
+    m_renderer->initialize();
     createScene();
 }
 
 SampleWindow::~SampleWindow() {
     destroyScene();
+    m_renderer->deinitialize();
 }
 
 void SampleWindow::onIdle() {

@@ -11,9 +11,15 @@
 
 #if defined(__APPLE__) || defined(__linux__)
 
+#define BUFFER_OFFSET(offset) (void*)((char*)NULL + offset)
 #define GL_GLEXT_PROTOTYPES 1
 #include "SDL_opengl.h"
 #include "Renderer.h"
+
+//----------------------------------------------------------------------------//
+#include "GlProgram.h"
+#include "GlShader.h"
+//----------------------------------------------------------------------------//
 
 //namespace Engine {
 
@@ -22,6 +28,9 @@ class GlRenderer : public Renderer {
 public:
     GlRenderer();
     virtual ~GlRenderer();
+
+    void initialize();
+    void deinitialize();
 
     void setClearColor(const Color4f& clearColor);
     Color4f getClearColor() const;
@@ -46,6 +55,11 @@ public:
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
     void draw(Visual* visual);
+
+    //------------------------------------------------------------------------//
+private:
+    std::vector<GLuint> m_shaderPrograms;
+    //------------------------------------------------------------------------//
 };
 
 //}

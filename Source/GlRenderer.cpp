@@ -20,6 +20,41 @@ GlRenderer::GlRenderer()
 GlRenderer::~GlRenderer() {
 }
 
+void GlRenderer::initialize() {
+    //------------------------------------------------------------------------//
+    std::vector<GLuint> smoothShaders;
+    std::vector<GLuint> gouraudShaders;
+    std::vector<GLuint> phongShaders;
+
+    smoothShaders.push_back(GlShader::loadShader("smooth.vert", GL_VERTEX_SHADER));
+    smoothShaders.push_back(GlShader::loadShader("smooth.frag", GL_FRAGMENT_SHADER));
+    gouraudShaders.push_back(GlShader::loadShader("gouraud.vert", GL_VERTEX_SHADER));
+    gouraudShaders.push_back(GlShader::loadShader("gouraud.frag", GL_FRAGMENT_SHADER));
+    phongShaders.push_back(GlShader::loadShader("phong.vert", GL_VERTEX_SHADER));
+    phongShaders.push_back(GlShader::loadShader("phong.frag", GL_FRAGMENT_SHADER));
+
+    m_shaderPrograms.push_back(GlProgram::createProgram(smoothShaders));
+    m_shaderPrograms.push_back(GlProgram::createProgram(gouraudShaders));
+    m_shaderPrograms.push_back(GlProgram::createProgram(phongShaders));
+
+    // TODO Update eye position when camera moves
+    Vec3 eyePosition; // = m_camera->getPosition();
+    for (auto it = m_shaderPrograms.begin(); it != m_shaderPrograms.end(); ++it) {
+        GLint eyePositionLocation = glGetUniformLocation(*it, "eyePosition");
+        glUniform3fv(eyePositionLocation, 1, (float*)&eyePosition);
+    }
+    //------------------------------------------------------------------------//
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW); // GL_CW or GL_CCW
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // GL_FILL or GL_LINE
+}
+
+void GlRenderer::deinitialize() {
+}
+
 void GlRenderer::setClearColor(const Color4f& clearColor) {
     m_clearColor = clearColor;
     glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
@@ -146,6 +181,73 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
 void GlRenderer::draw(Visual* visual) {
+
+    glUseProgram(m_shaderPrograms[0]);
+
+    //------------------------------------------------------------------------//
+
+    enum Ebo { EboTriangles,
+               EboCount };
+    enum Vao { VaoTriangles,
+               VaoCount };
+    enum Vbo { VboTriangles,
+               VboCount };
+
+    enum AttributeType { AttributePosition,
+                         AttributeNormal,
+                         AttributeTexcoord,
+                         AttributeCount };
+    enum TextureType { TextureAmbient,
+                       TextureDiffuse,
+                       TextureSpecular,
+                       TextureNormal,
+                       TextureCount };
+
+    GLuint m_ebos[EboCount];
+    GLuint m_vaos[VaoCount];
+    GLuint m_vbos[VboCount];
+
+    const float* positions = visual->getPositions();
+    const float* normals = visual->getNormals();
+    const float* texcoords = visual->getTextureCoordinates();
+    const unsigned int* indices = visual->getIndices();
+
+    const unsigned int sizeOfPositions = sizeof(positions[0]) * visual->getPositionsSize();
+    const unsigned int sizeOfNormals = sizeof(normals[0]) * visual->getNormalsSize();
+    const unsigned int sizeOfTexcoords = sizeof(texcoords[0]) * visual->getTexcoordsSize();
+    const unsigned int sizeOfIndices = sizeof(indices[0]) * visual->getIndicesSize();
+
+    glGenBuffers(EboCount, m_ebos);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebos[EboTriangles]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, &indices[0], GL_STATIC_DRAW);
+    //No Vertex Attrib Pointer for Index buffer
+
+    glGenVertexArrays(VaoCount, m_vaos);
+    glBindVertexArray(m_vaos[VaoTriangles]);
+
+    glGenBuffers(VboCount, m_vbos);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbos[VboTriangles]);
+    glBufferData(GL_ARRAY_BUFFER, sizeOfPositions + sizeOfNormals + sizeOfTexcoords, NULL, GL_STATIC_DRAW);
+
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeOfPositions, &positions[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeOfPositions, sizeOfNormals, &normals[0]);
+    glBufferSubData(GL_ARRAY_BUFFER, sizeOfPositions + sizeOfNormals, sizeOfTexcoords, &texcoords[0]);
+
+    glVertexAttribPointer(AttributePosition, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+    glVertexAttribPointer(AttributeNormal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizeOfPositions));
+    glVertexAttribPointer(AttributeTexcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeOfPositions + sizeOfNormals));
+
+    glEnableVertexAttribArray(AttributePosition);
+    glEnableVertexAttribArray(AttributeNormal);
+    glEnableVertexAttribArray(AttributeTexcoord);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+
+    //------------------------------------------------------------------------//
+
+    glUseProgram(0);
 }
 
 //}
