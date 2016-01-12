@@ -20,10 +20,10 @@ void Spatial::update() {
 void Spatial::setBoundingBox(const Space& space, const BoundingBox& boundingBox) {
     if (space == Spatial::Local) {
         m_localBoundingBox = boundingBox;
-        m_worldBoundingBox = boundingBox.transform(m_worldTransform.getMatrix());
+        m_worldBoundingBox = boundingBox.transform(m_worldTransform.getStraightMatrix());
     } else {
         m_worldBoundingBox = boundingBox;
-        m_localBoundingBox = boundingBox.transform(m_worldTransform.getMatrix().inverse());
+        m_localBoundingBox = boundingBox.transform(m_worldTransform.getInvertedMatrix());
     }
 }
 

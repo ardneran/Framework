@@ -18,8 +18,10 @@ public:
     Transform(const Vec3& translate, const Quat& rotate, const Vec3& scale);
     virtual ~Transform();
 
-	void setMatrix(const Mat4& matrix);
-	Mat4 getMatrix();
+    void setStraightMatrix(const Mat4& matrix);
+    Mat4 getStraightMatrix();
+    void setInvertedMatrix(const Mat4& matrix);
+    Mat4 getInvertedMatrix();
     void setTranslate(const Vec3& translate);
     Vec3 getTranslate();
     void setRotate(const Quat& rotate);
@@ -33,10 +35,11 @@ public:
     Transform operator*=(const Transform& other);
 
 private:
-    void compose();
-    void decompose();
+    void composeStraightMatrix();
+    void decomposeStraightMatrix();
 
-    Mat4 m_matrix;
+    Mat4 m_straightMatrix;
+    Mat4 m_invertedMatrix;
     Vec3 m_translate;
     Quat m_rotate;
     Vec3 m_scale;
