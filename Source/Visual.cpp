@@ -51,7 +51,6 @@ void Visual::setPositions(const std::vector<float>& positions) {
     for (auto it = positions.begin(); it != positions.end(); ++it) {
         m_positions[i++] = *it;
     }
-
     // TODO move bounding box calculation to a better place
     Vec3 bbmin = Vec3::max;
     Vec3 bbmax = Vec3::min;
@@ -79,8 +78,8 @@ void Visual::setPositions(const std::vector<float>& positions) {
         }
         j++;
     }
-
-    setBoundingBox(Space::Local, BoundingBox(bbmin, bbmax));
+    m_startBoundingBox.updateMinMax(bbmin, bbmax);
+    updateBoundingBox(Space::Local);
 }
 
 void Visual::setNormals(const std::vector<float>& normals) {

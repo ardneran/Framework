@@ -17,51 +17,42 @@ Spatial::~Spatial() {
 void Spatial::update() {
 }
 
-void Spatial::setBoundingBox(const Space& space, const BoundingBox& boundingBox) {
+void Spatial::updateBoundingBox(const Space& space) {
     if (space == Space::Local) {
-        m_localBoundingBox = boundingBox;
-        m_worldBoundingBox = boundingBox.transform(m_worldTransform.getStraightMatrix());
+        m_localBoundingBox = m_startBoundingBox.transform(m_localTransform.getStraightMatrix());
+        m_worldBoundingBox = m_localBoundingBox.transform(m_worldTransform.getStraightMatrix());
     } else {
-        m_worldBoundingBox = boundingBox;
-        m_localBoundingBox = boundingBox.transform(m_worldTransform.getInvertedMatrix());
+        m_worldBoundingBox = m_localBoundingBox.transform(m_worldTransform.getStraightMatrix());
     }
 }
 
 void Spatial::setTranslate(const Space& space, const Vec3& translate) {
     if (space == Space::Local) {
         m_localTransform.setTranslate(translate);
-        // TODO Bounding Box
+        updateBoundingBox(space);
     } else {
         m_worldTransform.setTranslate(translate);
-        // TODO Bounding Box
+        updateBoundingBox(space);
     }
 }
 
 void Spatial::setRotate(const Space& space, const Quat& rotate) {
     if (space == Space::Local) {
         m_localTransform.setRotate(rotate);
-        // TODO Bounding Box
+        updateBoundingBox(space);
     } else {
         m_worldTransform.setRotate(rotate);
-        // TODO Bounding Box
+        updateBoundingBox(space);
     }
 }
 
 void Spatial::setScale(const Space& space, const Vec3& scale) {
     if (space == Space::Local) {
         m_localTransform.setScale(scale);
-        // TODO Bounding Box
+        updateBoundingBox(space);
     } else {
         m_worldTransform.setScale(scale);
-        // TODO Bounding Box
-    }
-}
-
-BoundingBox Spatial::getBoundingBox(const Space& space) {
-    if (space == Space::Local) {
-        return m_localBoundingBox;
-    } else {
-        return m_worldBoundingBox;
+        updateBoundingBox(space);
     }
 }
 
@@ -87,4 +78,12 @@ Vec3 Spatial::getScale(const Space& space) {
     } else {
         return m_worldTransform.getScale();
     }
+}
+
+BoundingBox Spatial::getBoundingBox(const Space& space) {
+	if (space == Space::Local) {
+		return m_localBoundingBox;
+	} else {
+		return m_worldBoundingBox;
+	}
 }
