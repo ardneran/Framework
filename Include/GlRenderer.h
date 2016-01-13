@@ -16,11 +16,6 @@
 #include "SDL_opengl.h"
 #include "Renderer.h"
 
-//----------------------------------------------------------------------------//
-#include "GlProgram.h"
-#include "GlShader.h"
-//----------------------------------------------------------------------------//
-
 //namespace Engine {
 
 class GlRenderer : public Renderer {
@@ -55,11 +50,6 @@ public:
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
     void draw(Visual* visual);
-
-    //------------------------------------------------------------------------//
-private:
-    std::vector<GLuint> m_shaderPrograms;
-    //------------------------------------------------------------------------//
 };
 
 //}

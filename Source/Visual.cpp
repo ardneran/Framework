@@ -14,7 +14,8 @@ Visual::Visual()
 , m_normals(NULL)
 , m_textureCoordinates(NULL)
 , m_indices(NULL)
-, m_materialIds(NULL) {
+, m_materialIds(NULL)
+, m_program(NULL) {
 }
 
 Visual::~Visual() {
@@ -35,6 +36,9 @@ Visual::~Visual() {
     }
     if (m_materialIds) {
         delete m_materialIds;
+    }
+    if (m_program) {
+        delete m_program;
     }
 }
 
@@ -116,4 +120,8 @@ void Visual::setMaterialIds(const std::vector<int>& materialIds) {
     for (auto it = materialIds.begin(); it != materialIds.end(); ++it) {
         m_materialIds[i++] = *it;
     }
+}
+
+void Visual::setProgram(GlProgram* program) {
+    m_program = program;
 }

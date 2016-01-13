@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+#include "GlProgram.h"
 #include "Spatial.h"
 
 class Visual : public Spatial {
@@ -24,6 +25,7 @@ public:
     void setTextureCoordinates(const std::vector<float>& texcoords);
     void setIndices(const std::vector<unsigned int>& indices);
     void setMaterialIds(const std::vector<int>& materialIds);
+    void setProgram(GlProgram* program);
 
     char* getName() { return m_name; }
     float* getPositions() { return m_positions; }
@@ -31,6 +33,7 @@ public:
     float* getTextureCoordinates() { return m_textureCoordinates; }
     unsigned int* getIndices() { return m_indices; }
     int* getMaterialIds() { return m_materialIds; }
+    GlProgram* getProgram() { return m_program; }
 
     unsigned int getNameSize() { return m_nameSize; }
     unsigned int getPositionsSize() { return m_positionsSize; }
@@ -46,6 +49,7 @@ private:
     float* m_textureCoordinates;
     unsigned int* m_indices;
     int* m_materialIds;
+    GlProgram* m_program;
 
     unsigned int m_nameSize;
     unsigned int m_positionsSize;

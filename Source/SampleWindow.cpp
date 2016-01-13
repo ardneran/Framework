@@ -40,21 +40,47 @@ void SampleWindow::createScene() {
     b.setScale(Vec3(1, 2, 3));
     Transform c = a * b;
 	*/
+
+    // TODO Update eye position when camera moves
+    Vec3 eyePosition; // = m_camera->getPosition();
+
+    const int programType = 1;
+
     for (int i = 0; i < 8; ++i) {
         std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
                                                                "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
         for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
             (*it)->setTranslate(Spatial::Space::World, getDirection(i) * 10);
+            GlProgram* program = NULL;
+            switch (programType) {
+                case 0:
+                    program = new GlProgram("gouraud.vert", "gouraud.frag");
+                    break;
+                case 1:
+                    program = new GlProgram("phong.vert", "phong.frag");
+                    break;
+            }
+            program->set3fv("eyePosition", 1, (float*)&eyePosition);
+            (*it)->setProgram(program);
             m_octree->insert(*it);
         }
-        /*
         std::list<Visual*> visualsTeapot = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/teapot.obj",
                                                                  "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/");
         for (std::list<Visual*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
             (*it)->setTranslate(Spatial::Space::World, getDirection(i) * 20);
+            GlProgram* program = NULL;
+            switch (programType) {
+                case 0:
+                    program = new GlProgram("gouraud.vert", "gouraud.frag");
+                    break;
+                case 1:
+                    program = new GlProgram("phong.vert", "phong.frag");
+                    break;
+            }
+            program->set3fv(program->getLocation("eyePosition"), 1, (float*)&eyePosition);
+            (*it)->setProgram(program);
             m_octree->insert(*it);
         }
-		*/
     }
 }
 

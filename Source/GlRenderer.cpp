@@ -21,29 +21,6 @@ GlRenderer::~GlRenderer() {
 }
 
 void GlRenderer::initialize() {
-    //------------------------------------------------------------------------//
-    std::vector<GLuint> smoothShaders;
-    std::vector<GLuint> gouraudShaders;
-    std::vector<GLuint> phongShaders;
-
-    smoothShaders.push_back(GlShader::loadShader("smooth.vert", GL_VERTEX_SHADER));
-    smoothShaders.push_back(GlShader::loadShader("smooth.frag", GL_FRAGMENT_SHADER));
-    gouraudShaders.push_back(GlShader::loadShader("gouraud.vert", GL_VERTEX_SHADER));
-    gouraudShaders.push_back(GlShader::loadShader("gouraud.frag", GL_FRAGMENT_SHADER));
-    phongShaders.push_back(GlShader::loadShader("phong.vert", GL_VERTEX_SHADER));
-    phongShaders.push_back(GlShader::loadShader("phong.frag", GL_FRAGMENT_SHADER));
-
-    m_shaderPrograms.push_back(GlProgram::createProgram(smoothShaders));
-    m_shaderPrograms.push_back(GlProgram::createProgram(gouraudShaders));
-    m_shaderPrograms.push_back(GlProgram::createProgram(phongShaders));
-
-    // TODO Update eye position when camera moves
-    Vec3 eyePosition; // = m_camera->getPosition();
-    for (auto it = m_shaderPrograms.begin(); it != m_shaderPrograms.end(); ++it) {
-        GLint eyePositionLocation = glGetUniformLocation(*it, "eyePosition");
-        glUniform3fv(eyePositionLocation, 1, (float*)&eyePosition);
-    }
-    //------------------------------------------------------------------------//
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
@@ -181,11 +158,8 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
 void GlRenderer::draw(Visual* visual) {
-
-    glUseProgram(m_shaderPrograms[0]);
-
+    glUseProgram(visual->getProgram()->getProgram());
     //------------------------------------------------------------------------//
-
     enum Ebo { EboTriangles,
                EboCount };
     enum Vao { VaoTriangles,
@@ -244,9 +218,7 @@ void GlRenderer::draw(Visual* visual) {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-
     //------------------------------------------------------------------------//
-
     glUseProgram(0);
 }
 
