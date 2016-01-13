@@ -82,8 +82,8 @@ void Visual::setPositions(const std::vector<float>& positions) {
         }
         j++;
     }
-    m_startBoundingBox.updateMinMax(bbmin, bbmax);
-    updateBoundingBox(Space::Local);
+    m_modelBoundingBox.updateMinMax(bbmin, bbmax);
+    updateBoundingBox();
 }
 
 void Visual::setNormals(const std::vector<float>& normals) {

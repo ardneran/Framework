@@ -50,7 +50,7 @@ void SampleWindow::createScene() {
         std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
                                                                "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
         for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
-            (*it)->setTranslate(Spatial::Space::World, getDirection(i) * 10);
+            (*it)->setTranslate(getDirection(i) * 10);
             GlProgram* program = NULL;
             switch (programType) {
                 case 0:
@@ -67,7 +67,7 @@ void SampleWindow::createScene() {
         std::list<Visual*> visualsTeapot = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/teapot.obj",
                                                                  "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/");
         for (std::list<Visual*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
-            (*it)->setTranslate(Spatial::Space::World, getDirection(i) * 20);
+            (*it)->setTranslate(getDirection(i) * 20);
             GlProgram* program = NULL;
             switch (programType) {
                 case 0:

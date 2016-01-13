@@ -19,30 +19,23 @@ public:
 
     virtual void update();
 
-    enum Space {
-        Local,
-        World
-    };
+    void setTranslate(const Vec3& translate);
+    void setRotate(const Quat& rotate);
+    void setScale(const Vec3& scale);
 
-    void setTranslate(const Space& space, const Vec3& translate);
-    void setRotate(const Space& space, const Quat& rotate);
-    void setScale(const Space& space, const Vec3& scale);
+    Vec3 getTranslate();
+    Quat getRotate();
+    Vec3 getScale();
 
-    Vec3 getTranslate(const Space& space);
-    Quat getRotate(const Space& space);
-    Vec3 getScale(const Space& space);
-
-    BoundingBox getBoundingBox(const Space& space);
+    BoundingBox getBoundingBox();
 
 protected:
-    void updateBoundingBox(const Space& space);
-    BoundingBox m_startBoundingBox;
+    void updateBoundingBox();
+    BoundingBox m_modelBoundingBox;
 
 private:
     BoundingBox m_worldBoundingBox;
-    BoundingBox m_localBoundingBox;
     Transform m_worldTransform;
-    Transform m_localTransform;
 };
 
 #endif /* Spatial_h */
