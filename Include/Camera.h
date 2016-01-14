@@ -14,9 +14,15 @@
 
 class Camera {
 public:
-    Camera();
+    enum Type {
+        Orthographic,
+        Perspective
+    };
+
+    Camera(const Type& type);
     virtual ~Camera();
 
+    void setType(const Type& type);
     void setFrame(const Vec3& position, const Vec3& right, const Vec3& up, const Vec3& front);
     void setPosition(const Vec3& position);
     void setAxes(const Vec3& right, const Vec3& up, const Vec3& front);
@@ -25,6 +31,7 @@ public:
     void setPreViewMatrix(const Mat4& preViewMatrix);
     void setPostProjectionMatrix(const Mat4& postProjectionMatrix);
 
+    Type getType();
     void getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front);
     void getPosition(Vec3& position);
     void getAxes(Vec3& right, Vec3& up, Vec3& front);
@@ -33,11 +40,15 @@ public:
     void getPreViewMatrix(Mat4& preViewMatrix);
     void getPostProjectionMatrix(Mat4& postProjectionMatrix);
 
+    Mat4 getViewMatrix();
+    Mat4 getViewProjectionMatrix();
+
 private:
     void updateViewMatrix();
     void updateProjectionMatrix();
     void updateViewProjectionMatrix();
 
+    Type m_type;
     Vec3 m_position;
     Vec3 m_right;
     Vec3 m_up;

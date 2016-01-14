@@ -8,8 +8,9 @@
 
 #include "Camera.h"
 
-Camera::Camera()
-: m_position(Vec3::zero)
+Camera::Camera(const Type& type)
+: m_type(type)
+, m_position(Vec3::zero)
 , m_right(Vec3::xxx)
 , m_up(Vec3::yyy)
 , m_front(Vec3::zzz)
@@ -36,6 +37,10 @@ Camera::Camera()
 Camera::~Camera() {
 }
 
+void Camera::setType(const Type& type) {
+    m_type = type;
+}
+
 void Camera::setFrame(const Vec3& position, const Vec3& right, const Vec3& up, const Vec3& front) {
     m_position = position;
     m_right = right;
@@ -60,11 +65,25 @@ void Camera::setAxes(const Vec3& right, const Vec3& up, const Vec3& front) {
 }
 
 void Camera::setFrustum(const float& upFovDegrees, const float& aspectRatio, const float& frontMin, const float& frontMax) {
+    m_upFovDegrees = upFovDegrees;
+    m_aspectRatio = aspectRatio;
+    m_frontMin = frontMin;
+    m_frontMax = frontMax;
+    m_upMax = frontMin * tan(0.5f * upFovDegrees * M_DEGREE_TO_RADIAN);
+    m_rightMax = aspectRatio * m_upMax;
+    m_upMin = -m_upMax;
+    m_rightMin = -m_rightMax;
     updateProjectionMatrix();
     updateViewProjectionMatrix();
 }
 
 void Camera::setFrustum(const float& rightMin, const float& rightMax, const float& upMin, const float& upMax, const float& frontMin, const float& frontMax) {
+    m_rightMin = rightMin;
+    m_rightMax = rightMax;
+    m_upMin = upMin;
+    m_upMax = upMax;
+    m_frontMin = frontMin;
+    m_frontMax = frontMax;
     updateProjectionMatrix();
     updateViewProjectionMatrix();
 }
@@ -77,6 +96,10 @@ void Camera::setPreViewMatrix(const Mat4& preViewMatrix) {
 void Camera::setPostProjectionMatrix(const Mat4& postProjectionMatrix) {
     m_postProjectionMatrix = postProjectionMatrix;
     updateViewProjectionMatrix();
+}
+
+Camera::Type Camera::getType() {
+    return m_type;
 }
 
 void Camera::getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front) {
@@ -142,58 +165,81 @@ void Camera::updateViewMatrix() {
 
 void Camera::updateProjectionMatrix() {
     // map x, y, z to [-1, 1], [-1, 1], [0, 1]
-    float invRDiff = 1.0f / (m_frontMax - m_frontMin);
+    float invRDiff = 1.0f / (m_rightMax - m_rightMin);
     float invUDiff = 1.0f / (m_upMax - m_upMin);
-    float invFDiff = 1.0f / (m_rightMax - m_rightMin);
+    float invFDiff = 1.0f / (m_frontMax - m_frontMin);
 
-    // update orthographic projection matrix
-    m_orthographicProjectionMatrix.d00 = 2.0f * invRDiff;
-    m_orthographicProjectionMatrix.d01 = 0.0f;
-    m_orthographicProjectionMatrix.d02 = 0.0f;
-    m_orthographicProjectionMatrix.d03 = -(m_rightMin + m_rightMax) * invRDiff;
-    m_orthographicProjectionMatrix.d10 = 0.0f;
-    m_orthographicProjectionMatrix.d11 = 2.0f * invUDiff;
-    m_orthographicProjectionMatrix.d12 = 0.0f;
-    m_orthographicProjectionMatrix.d13 = -(m_upMin + m_upMax) * invUDiff;
-    m_orthographicProjectionMatrix.d20 = 0.0f;
-    m_orthographicProjectionMatrix.d21 = 0.0f;
-    m_orthographicProjectionMatrix.d22 = invFDiff;
-    m_orthographicProjectionMatrix.d23 = -m_frontMin * invFDiff;
-    m_orthographicProjectionMatrix.d30 = 0.0f;
-    m_orthographicProjectionMatrix.d31 = 0.0f;
-    m_orthographicProjectionMatrix.d32 = 0.0f;
-    m_orthographicProjectionMatrix.d33 = 1.0f;
-
-    // update perspective projection matrix
-    m_perspectiveProjectionMatrix.d00 = 2.0f * m_frontMin * invRDiff;
-    m_perspectiveProjectionMatrix.d01 = 0.0f;
-    m_perspectiveProjectionMatrix.d02 = -(m_rightMin + m_rightMax) * invRDiff;
-    m_perspectiveProjectionMatrix.d03 = 0.0f;
-    m_perspectiveProjectionMatrix.d10 = 0.0f;
-    m_perspectiveProjectionMatrix.d11 = 2.0f * m_frontMin * invUDiff;
-    m_perspectiveProjectionMatrix.d12 = -(m_upMin + m_upMax) * invUDiff;
-    m_perspectiveProjectionMatrix.d13 = 0.0f;
-    m_perspectiveProjectionMatrix.d20 = 0.0f;
-    m_perspectiveProjectionMatrix.d21 = 0.0f;
-    m_perspectiveProjectionMatrix.d22 = m_frontMax * invFDiff;
-    m_perspectiveProjectionMatrix.d23 = -m_frontMin * m_frontMax * invFDiff;
-    m_perspectiveProjectionMatrix.d30 = 0.0f;
-    m_perspectiveProjectionMatrix.d31 = 0.0f;
-    m_perspectiveProjectionMatrix.d32 = 1.0f;
-    m_perspectiveProjectionMatrix.d33 = 0.0f;
+    if (m_type == Camera::Type::Orthographic) {
+        // update orthographic projection matrix
+        m_orthographicProjectionMatrix.d00 = 2.0f * invRDiff;
+        m_orthographicProjectionMatrix.d01 = 0.0f;
+        m_orthographicProjectionMatrix.d02 = 0.0f;
+        m_orthographicProjectionMatrix.d03 = -(m_rightMin + m_rightMax) * invRDiff;
+        m_orthographicProjectionMatrix.d10 = 0.0f;
+        m_orthographicProjectionMatrix.d11 = 2.0f * invUDiff;
+        m_orthographicProjectionMatrix.d12 = 0.0f;
+        m_orthographicProjectionMatrix.d13 = -(m_upMin + m_upMax) * invUDiff;
+        m_orthographicProjectionMatrix.d20 = 0.0f;
+        m_orthographicProjectionMatrix.d21 = 0.0f;
+        m_orthographicProjectionMatrix.d22 = invFDiff;
+        m_orthographicProjectionMatrix.d23 = -m_frontMin * invFDiff;
+        m_orthographicProjectionMatrix.d30 = 0.0f;
+        m_orthographicProjectionMatrix.d31 = 0.0f;
+        m_orthographicProjectionMatrix.d32 = 0.0f;
+        m_orthographicProjectionMatrix.d33 = 1.0f;
+    } else if (m_type == Camera::Type::Perspective) {
+        // update perspective projection matrix
+        m_perspectiveProjectionMatrix.d00 = 2.0f * m_frontMin * invRDiff;
+        m_perspectiveProjectionMatrix.d01 = 0.0f;
+        m_perspectiveProjectionMatrix.d02 = -(m_rightMin + m_rightMax) * invRDiff;
+        m_perspectiveProjectionMatrix.d03 = 0.0f;
+        m_perspectiveProjectionMatrix.d10 = 0.0f;
+        m_perspectiveProjectionMatrix.d11 = 2.0f * m_frontMin * invUDiff;
+        m_perspectiveProjectionMatrix.d12 = -(m_upMin + m_upMax) * invUDiff;
+        m_perspectiveProjectionMatrix.d13 = 0.0f;
+        m_perspectiveProjectionMatrix.d20 = 0.0f;
+        m_perspectiveProjectionMatrix.d21 = 0.0f;
+        m_perspectiveProjectionMatrix.d22 = m_frontMax * invFDiff;
+        m_perspectiveProjectionMatrix.d23 = -m_frontMin * m_frontMax * invFDiff;
+        m_perspectiveProjectionMatrix.d30 = 0.0f;
+        m_perspectiveProjectionMatrix.d31 = 0.0f;
+        m_perspectiveProjectionMatrix.d32 = 1.0f;
+        m_perspectiveProjectionMatrix.d33 = 0.0f;
+    }
 }
 
 void Camera::updateViewProjectionMatrix() {
-    m_viewOrthographicProjectionMatrix = m_orthographicProjectionMatrix * m_viewMatrix;
-    m_viewPerspectiveProjectionMatrix = m_perspectiveProjectionMatrix * m_viewMatrix;
+    if (m_type == Camera::Type::Orthographic) {
+        m_viewOrthographicProjectionMatrix = m_orthographicProjectionMatrix * m_viewMatrix;
+    } else if (m_type == Camera::Type::Perspective) {
+        m_viewPerspectiveProjectionMatrix = m_perspectiveProjectionMatrix * m_viewMatrix;
+    }
 
     if (m_postProjectionMatrix != Mat4::identity) {
-        m_viewOrthographicProjectionMatrix = m_postProjectionMatrix * m_viewOrthographicProjectionMatrix;
-        m_viewPerspectiveProjectionMatrix = m_postProjectionMatrix * m_viewPerspectiveProjectionMatrix;
+        if (m_type == Camera::Type::Orthographic) {
+            m_viewOrthographicProjectionMatrix = m_postProjectionMatrix * m_viewOrthographicProjectionMatrix;
+        } else if (m_type == Camera::Type::Perspective) {
+            m_viewPerspectiveProjectionMatrix = m_postProjectionMatrix * m_viewPerspectiveProjectionMatrix;
+        }
     }
 
     if (m_preViewMatrix != Mat4::identity) {
-        m_viewOrthographicProjectionMatrix = m_viewOrthographicProjectionMatrix * m_preViewMatrix;
-        m_viewPerspectiveProjectionMatrix = m_viewPerspectiveProjectionMatrix * m_preViewMatrix;
+        if (m_type == Camera::Type::Orthographic) {
+            m_viewOrthographicProjectionMatrix = m_viewOrthographicProjectionMatrix * m_preViewMatrix;
+        } else if (m_type == Camera::Type::Perspective) {
+            m_viewPerspectiveProjectionMatrix = m_viewPerspectiveProjectionMatrix * m_preViewMatrix;
+        }
+    }
+}
+
+Mat4 Camera::getViewMatrix() {
+    return m_viewMatrix;
+}
+
+Mat4 Camera::getViewProjectionMatrix() {
+    if (m_type == Camera::Type::Orthographic) {
+        return m_viewOrthographicProjectionMatrix;
+    } else {
+        return m_viewPerspectiveProjectionMatrix;
     }
 }
