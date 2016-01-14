@@ -18,22 +18,19 @@ public:
     virtual ~Spatial() = 0;
 
     virtual void update();
-
-    void setTranslate(const Vec3& translate);
-    void setRotate(const Quat& rotate);
-    void setScale(const Vec3& scale);
+    virtual void setTranslate(const Vec3& translate);
+    virtual void setRotate(const Quat& rotate);
+    virtual void setScale(const Vec3& scale);
 
     Vec3 getTranslate();
     Quat getRotate();
     Vec3 getScale();
 
-    BoundingBox getBoundingBox();
+    BoundingBox getWorldBoundingBox();
 
 protected:
-    void updateBoundingBox();
-    BoundingBox m_modelBoundingBox;
+    virtual void updateWorldBoundingBox();
 
-private:
     BoundingBox m_worldBoundingBox;
     Transform m_worldTransform;
 };

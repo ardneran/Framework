@@ -13,7 +13,6 @@ out vec4 vPosition;
 out vec3 vNormal;
 out vec2 vTexcoord;
 
-uniform mat3 norm;
 uniform mat4 modelViewPerspective;
 //uniform mat4 modelViewOrthographic;
 uniform sampler2D normalTextureSampler;
@@ -22,6 +21,6 @@ void main()
 {
 	vPosition = modelViewPerspective * vec4(position, 1.0);
 	gl_Position = vPosition;
-	vNormal = normalize(norm * normal);
+	vNormal = normal;
 	vTexcoord = texcoord;
 }

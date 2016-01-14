@@ -157,9 +157,17 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(m_window));
 }
 
+// TODO FIX THIS FUNCTION AS SOON AS POSSIBLE TERRIBLE LEAKS HERE
 void GlRenderer::draw(Visual* visual) {
-    glUseProgram(visual->getProgram()->getProgram());
+    GLuint program = visual->getProgram()->getProgram();
+    glUseProgram(program);
     //------------------------------------------------------------------------//
+    // Push World View Projection Matrix
+    Mat4 worldViewProjection = visual->getWorldViewProjectionMatrix();
+    GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
+    glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(worldViewProjection));
+    //------------------------------------------------------------------------//
+    // One Time Setup
     enum Ebo { EboTriangles,
                EboCount };
     enum Vao { VaoTriangles,
@@ -217,6 +225,13 @@ void GlRenderer::draw(Visual* visual) {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+    //------------------------------------------------------------------------//
+    // Draw
+    glBindVertexArray(m_vaos[VaoTriangles]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebos[EboTriangles]);
+    glDrawElements(GL_TRIANGLES, visual->getIndicesSize(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     //------------------------------------------------------------------------//
     glUseProgram(0);

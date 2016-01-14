@@ -11,7 +11,6 @@ layout( location = 2 ) in vec2 texcoord;
 
 out vec4 vColor;
 
-uniform mat3 norm;
 uniform mat4 modelViewPerspective;
 //uniform mat4 modelViewOrthographic;
 uniform vec3 eyePosition;
@@ -32,7 +31,7 @@ void main()
 	vec4 vPosition = modelViewPerspective * vec4(position, 1.0);
 	gl_Position = vPosition;
 	vec3 P = vPosition.xyz;
-	vec3 N = (norm * normal);
+	vec3 N = normal;
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, texcoord).rgb;
 	vec3 L = normalize(eyePosition - P);

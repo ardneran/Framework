@@ -17,23 +17,22 @@ Spatial::~Spatial() {
 void Spatial::update() {
 }
 
-void Spatial::updateBoundingBox() {
-    m_worldBoundingBox = m_modelBoundingBox.transform(m_worldTransform.getStraightMatrix());
+void Spatial::updateWorldBoundingBox() {
 }
 
 void Spatial::setTranslate(const Vec3& translate) {
     m_worldTransform.setTranslate(translate);
-    updateBoundingBox();
+    updateWorldBoundingBox();
 }
 
 void Spatial::setRotate(const Quat& rotate) {
     m_worldTransform.setRotate(rotate);
-    updateBoundingBox();
+    updateWorldBoundingBox();
 }
 
 void Spatial::setScale(const Vec3& scale) {
     m_worldTransform.setScale(scale);
-    updateBoundingBox();
+    updateWorldBoundingBox();
 }
 
 Vec3 Spatial::getTranslate() {
@@ -48,6 +47,6 @@ Vec3 Spatial::getScale() {
     return m_worldTransform.getScale();
 }
 
-BoundingBox Spatial::getBoundingBox() {
+BoundingBox Spatial::getWorldBoundingBox() {
     return m_worldBoundingBox;
 }

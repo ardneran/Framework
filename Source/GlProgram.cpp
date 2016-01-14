@@ -12,25 +12,25 @@
 //{
 
 GlProgram::GlProgram(const std::string& vsfilename, const std::string& fsfilename) {
-    GLuint program = glCreateProgram();
+    m_program = glCreateProgram();
     GLuint vsindex = loadShader(vsfilename, GL_VERTEX_SHADER);
     GLuint fsindex = loadShader(fsfilename, GL_FRAGMENT_SHADER);
-    glAttachShader(program, vsindex);
-    glAttachShader(program, fsindex);
-    glLinkProgram(program);
+    glAttachShader(m_program, vsindex);
+    glAttachShader(m_program, fsindex);
+    glLinkProgram(m_program);
     GLint status = GL_FALSE;
-    glGetProgramiv(program, GL_LINK_STATUS, &status);
+    glGetProgramiv(m_program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
         GLint logLenth;
-        glGetShaderiv(program, GL_INFO_LOG_LENGTH, &logLenth);
+        glGetShaderiv(m_program, GL_INFO_LOG_LENGTH, &logLenth);
         GLchar* logString = new GLchar[logLenth + 1];
-        glGetProgramInfoLog(program, logLenth, NULL, logString);
+        glGetProgramInfoLog(m_program, logLenth, NULL, logString);
         std::cout << "Link Error: " << logString;
         delete[] logString;
     }
-    glDetachShader(program, vsindex);
+    glDetachShader(m_program, vsindex);
     glDeleteShader(vsindex);
-    glDetachShader(program, fsindex);
+    glDetachShader(m_program, fsindex);
     glDeleteShader(fsindex);
 }
 

@@ -14,8 +14,8 @@ int main(int argc, char* argv[]) {
     parameters.title = "Framework";
     parameters.xOrigin = 0;
     parameters.yOrigin = 0;
-    parameters.xSize = 1920;
-    parameters.ySize = 1080;
+    parameters.xSize = 1280;
+    parameters.ySize = 720;
     parameters.renderer = new GlRenderer();
 
     SampleWindow* sampleWindow = new SampleWindow(parameters);

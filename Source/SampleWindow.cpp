@@ -11,6 +11,11 @@
 SampleWindow::SampleWindow(Parameters& parameters)
 : Window(parameters) {
     m_renderer->initialize();
+    m_renderer->setSize(parameters.xSize, parameters.ySize);
+    m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
+    if (m_camera->getType() == Camera::Type::Perspective) {
+        m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
+    }
     createScene();
 }
 
@@ -21,11 +26,16 @@ SampleWindow::~SampleWindow() {
 
 void SampleWindow::onIdle() {
     m_renderer->clearBuffers();
-    m_renderer->displayColorBuffer(0);
     std::list<Spatial*> spatials = m_culler->cull(m_camera, m_octree);
     for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
-        m_renderer->draw(static_cast<Visual*>(*it));
+        Visual* visual = dynamic_cast<Visual*>(*it);
+        if (visual) {
+            visual->setViewMatrix(m_camera->getViewMatrix());
+            visual->setViewProjectionMatrix(m_camera->getViewProjectionMatrix());
+            m_renderer->draw(visual);
+        }
     }
+    m_renderer->displayColorBuffer(0);
 }
 
 void SampleWindow::createScene() {
@@ -41,11 +51,30 @@ void SampleWindow::createScene() {
     Transform c = a * b;
 	*/
 
-    // TODO Update eye position when camera moves
-    Vec3 eyePosition; // = m_camera->getPosition();
+    const int programType = 2;
+#define TEST
+#ifdef TEST
+    std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
+                                                           "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
+    for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
+        GlProgram* program = NULL;
+        switch (programType) {
+            case 0:
+                program = new GlProgram("gouraud.vert", "gouraud.frag");
+                break;
+            case 1:
+                program = new GlProgram("phong.vert", "phong.frag");
+                break;
+            case 2:
+            default:
+                program = new GlProgram("smooth.vert", "smooth.frag");
+                break;
+        }
+        (*it)->setProgram(program);
+        m_octree->insert(*it);
+    }
 
-    const int programType = 1;
-
+#else
     for (int i = 0; i < 8; ++i) {
         std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
                                                                "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
@@ -59,8 +88,11 @@ void SampleWindow::createScene() {
                 case 1:
                     program = new GlProgram("phong.vert", "phong.frag");
                     break;
+                case 2:
+                default:
+                    program = new GlProgram("smooth.vert", "smooth.frag");
+                    break;
             }
-            program->set3fv("eyePosition", 1, (float*)&eyePosition);
             (*it)->setProgram(program);
             m_octree->insert(*it);
         }
@@ -76,12 +108,16 @@ void SampleWindow::createScene() {
                 case 1:
                     program = new GlProgram("phong.vert", "phong.frag");
                     break;
+                case 2:
+                default:
+                    program = new GlProgram("smooth.vert", "smooth.frag");
+                    break;
             }
-            program->set3fv(program->getLocation("eyePosition"), 1, (float*)&eyePosition);
             (*it)->setProgram(program);
             m_octree->insert(*it);
         }
     }
+#endif
 }
 
 void SampleWindow::destroyScene() {
