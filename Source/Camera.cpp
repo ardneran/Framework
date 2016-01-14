@@ -164,13 +164,13 @@ void Camera::updateViewMatrix() {
 }
 
 void Camera::updateProjectionMatrix() {
-    // map x, y, z to [-1, 1], [-1, 1], [0, 1]
     float invRDiff = 1.0f / (m_rightMax - m_rightMin);
     float invUDiff = 1.0f / (m_upMax - m_upMin);
     float invFDiff = 1.0f / (m_frontMax - m_frontMin);
 
     if (m_type == Camera::Type::Orthographic) {
         // update orthographic projection matrix
+        // TODO fix this matrix so that it works
         m_orthographicProjectionMatrix.d00 = 2.0f * invRDiff;
         m_orthographicProjectionMatrix.d01 = 0.0f;
         m_orthographicProjectionMatrix.d02 = 0.0f;
@@ -199,11 +199,11 @@ void Camera::updateProjectionMatrix() {
         m_perspectiveProjectionMatrix.d13 = 0.0f;
         m_perspectiveProjectionMatrix.d20 = 0.0f;
         m_perspectiveProjectionMatrix.d21 = 0.0f;
-        m_perspectiveProjectionMatrix.d22 = m_frontMax * invFDiff;
-        m_perspectiveProjectionMatrix.d23 = -m_frontMin * m_frontMax * invFDiff;
+        m_perspectiveProjectionMatrix.d22 = -(m_frontMax)*invFDiff; // previously m_frontMax * invFDiff;
+        m_perspectiveProjectionMatrix.d23 = -2.0f * m_frontMin * m_frontMax * invFDiff; // previously -m_frontMin * m_frontMax * invFDiff;
         m_perspectiveProjectionMatrix.d30 = 0.0f;
         m_perspectiveProjectionMatrix.d31 = 0.0f;
-        m_perspectiveProjectionMatrix.d32 = 1.0f;
+        m_perspectiveProjectionMatrix.d32 = -1.0f; // previously 1.0f;
         m_perspectiveProjectionMatrix.d33 = 0.0f;
     }
 }
