@@ -12,6 +12,8 @@
 #include "Quaternion.h"
 #include "Matrix.h"
 
+//#define SUPPORT_INVERTED
+
 class Transform {
 public:
     Transform();
@@ -20,8 +22,10 @@ public:
 
     void setStraightMatrix(const Mat4& matrix);
     Mat4 getStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     void setInvertedMatrix(const Mat4& matrix);
     Mat4 getInvertedMatrix();
+#endif // defined(SUPPORT_INVERTED)
     void setTranslate(const Vec3& translate);
     Vec3 getTranslate();
     void setRotate(const Quat& rotate);
@@ -39,7 +43,9 @@ private:
     void decomposeStraightMatrix();
 
     Mat4 m_straightMatrix;
+#if defined(SUPPORT_INVERTED)
     Mat4 m_invertedMatrix;
+#endif // defined(SUPPORT_INVERTED)
     Vec3 m_translate;
     Quat m_rotate;
     Vec3 m_scale;

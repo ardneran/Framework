@@ -13,7 +13,9 @@ Transform::Transform()
 , m_rotate(Quat::identity)
 , m_scale(Vec3::one) {
     composeStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
 }
 
 Transform::Transform(const Vec3& translate, const Quat& rotate, const Vec3& scale)
@@ -21,7 +23,9 @@ Transform::Transform(const Vec3& translate, const Quat& rotate, const Vec3& scal
 , m_rotate(rotate)
 , m_scale(scale) {
     composeStraightMatrix();
-    m_invertedMatrix = m_straightMatrix.inverse();
+#if defined(SUPPORT_INVERTED)
+	m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
 }
 
 Transform::~Transform() {
@@ -29,14 +33,16 @@ Transform::~Transform() {
 
 void Transform::setStraightMatrix(const Mat4& matrix) {
     m_straightMatrix = matrix;
-    m_invertedMatrix = m_straightMatrix.inverse();
+#if defined(SUPPORT_INVERTED)
+	m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
     decomposeStraightMatrix();
 }
 
 Mat4 Transform::getStraightMatrix() {
     return m_straightMatrix;
 }
-
+#if defined(SUPPORT_INVERTED)
 void Transform::setInvertedMatrix(const Mat4& matrix) {
     m_invertedMatrix = matrix;
     m_straightMatrix = m_invertedMatrix.inverse();
@@ -46,11 +52,13 @@ void Transform::setInvertedMatrix(const Mat4& matrix) {
 Mat4 Transform::getInvertedMatrix() {
     return m_invertedMatrix;
 }
-
+#endif // defined(SUPPORT_INVERTED)
 void Transform::setTranslate(const Vec3& translate) {
     m_translate = translate;
     composeStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
 }
 
 Vec3 Transform::getTranslate() {
@@ -60,7 +68,9 @@ Vec3 Transform::getTranslate() {
 void Transform::setRotate(const Quat& rotate) {
     m_rotate = rotate;
     composeStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
 }
 
 Quat Transform::getRotate() {
@@ -70,7 +80,9 @@ Quat Transform::getRotate() {
 void Transform::setScale(const Vec3& scale) {
     m_scale = scale;
     composeStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
 }
 
 Vec3 Transform::getScale() {
@@ -82,7 +94,9 @@ void Transform::setTranslateRotateScale(const Vec3& translate, const Quat& rotat
     m_rotate = rotate;
     m_scale = scale;
     composeStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
 }
 
 void Transform::getTranslateRotateScale(Vec3& translate, Quat& rotate, Vec3& scale) {
@@ -95,7 +109,9 @@ void Transform::getTranslateRotateScale(Vec3& translate, Quat& rotate, Vec3& sca
 Transform Transform::operator*(const Transform& other) {
     Transform t;
     t.m_straightMatrix = m_straightMatrix * other.m_straightMatrix;
+#if defined(SUPPORT_INVERTED)
     t.m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
     t.decomposeStraightMatrix();
     return t;
 }
@@ -108,7 +124,9 @@ Transform Transform::operator*(const Transform& other) {
     t.m_rotate = m_rotate * other.m_rotate; // Fix this
     t.m_scale = m_scale * other.m_scale; // Fix this
     t.composeStraightMatrix();
+#if defined(SUPPORT_INVERTED)
     t.m_invertedMatrix = m_straightMatrix.inverse();
+#endif // defined(SUPPORT_INVERTED)
     return t;
 }
 #endif
