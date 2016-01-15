@@ -163,9 +163,9 @@ void GlRenderer::draw(Visual* visual) {
     glUseProgram(program);
     //------------------------------------------------------------------------//
     // Push World View Projection Matrix
-    Mat4 worldViewProjection = visual->getWorldViewProjectionMatrix();
+    Mat4 worldViewProjectionMatrix = visual->getWorldViewProjectionMatrix();
     GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
-    glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(worldViewProjection));
+    glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(worldViewProjectionMatrix));
     //------------------------------------------------------------------------//
     // One Time Setup
     enum Ebo { EboTriangles,
