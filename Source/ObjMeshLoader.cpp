@@ -22,10 +22,9 @@ std::list<Visual*> ObjMeshLoader::load(const std::string& filepath, const std::s
     if (LoadObj(shapes, materials, error, filepath.c_str(), filebase.c_str())) {
         for (std::vector<tinyobj::shape_t>::iterator it = shapes.begin(); it != shapes.end(); ++it) {
             Visual* visual = new Visual();
-            VertexBuffer* vb = visual->getVertexBuffer();
-            vb->initialize(it->mesh.positions, it->mesh.normals, it->mesh.texcoords);
-            IndexBuffer* ib = visual->getIndexBuffer();
-            ib->initialize(it->mesh.indices);
+            visual->getVertexBuffer()->initialize(it->mesh.positions, it->mesh.normals, it->mesh.texcoords);
+            visual->getIndexBuffer()->initialize(it->mesh.indices);
+            visual->setModelBoundingBox(it->mesh.positions);
             visuals.push_back(visual);
         }
     } else {
