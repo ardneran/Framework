@@ -29,6 +29,9 @@
 #define ContextObj WGLContextObj
 #endif //defined(_WIN32)
 
+#include "Buffer.h"
+#include "VisualEffect.h"
+
 //namespace Engine {
 
 class Renderer {
@@ -72,6 +75,7 @@ public:
     virtual void clearBuffers(const int& x, const int& y, const int& w, const int& h) = 0;
     virtual void displayColorBuffer(const int& syncInterval) = 0;
     virtual void draw(Visual* visual) = 0;
+    virtual void draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) = 0;
 
 protected:
     int m_width;

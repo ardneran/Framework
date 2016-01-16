@@ -101,6 +101,9 @@ void DxRenderer::displayColorBuffer(const int& syncInterval) {
 void DxRenderer::draw(Visual* visual) {
 }
 
+void DxRenderer::draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) {
+}
+
 //}
 
 #endif // defined(_WIN32)

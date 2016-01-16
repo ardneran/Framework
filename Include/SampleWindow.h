@@ -21,9 +21,15 @@ public:
     virtual void onIdle();
 
 private:
+    void createEffects();
     void createScene();
+    void destroyEffects();
     void destroyScene();
-    Vec3 getDirection(const unsigned int& octant);
+
+	Vec3 getDirection(const unsigned int& octant);
+	void testTransform();
+
+    VisualEffect* m_visualEffects[3];
 };
 
 #endif

@@ -50,6 +50,7 @@ public:
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
     void draw(Visual* visual);
+    void draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect);
 };
 
 //}

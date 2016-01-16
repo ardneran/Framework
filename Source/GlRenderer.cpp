@@ -157,8 +157,25 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
     SDL_GL_SwapWindow(static_cast<SDL_Window*>(m_window));
 }
 
-// TODO FIX THIS FUNCTION AS SOON AS POSSIBLE TERRIBLE LEAKS HERE
 void GlRenderer::draw(Visual* visual) {
+    draw(visual->getVertexBuffer(), visual->getIndexBuffer(), visual->getVisualEffect());
+}
+
+void GlRenderer::draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) {
+    if (vBuffer != NULL && iBuffer != NULL && vEffect != NULL) {
+        GLuint program = vEffect->getProgram()->getProgram();
+        glUseProgram(program);
+        vBuffer->bind();
+        iBuffer->bind();
+        glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
+        iBuffer->unbind();
+        vBuffer->unbind();
+        glUseProgram(0);
+    }
+}
+
+// TODO FIX THIS FUNCTION AS SOON AS POSSIBLE TERRIBLE LEAKS HERE
+/*void GlRenderer::draw(Visual* visual) {
     GLuint program = visual->getProgram()->getProgram();
     glUseProgram(program);
     //------------------------------------------------------------------------//
@@ -235,7 +252,7 @@ void GlRenderer::draw(Visual* visual) {
     glBindVertexArray(0);
     //------------------------------------------------------------------------//
     glUseProgram(0);
-}
+}*/
 
 //}
 
