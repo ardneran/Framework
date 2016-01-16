@@ -9,6 +9,17 @@
 #include "Visual.h"
 
 Visual::Visual()
+: m_vertexBuffer(new VertexBuffer())
+, m_indexBuffer(new IndexBuffer())
+, m_visualEffect(NULL)
+, m_modelBoundingBox()
+, m_modelNormals() {
+}
+
+Visual::~Visual() {
+}
+/*
+Visual::Visual()
 : m_name(NULL)
 , m_positions(NULL)
 , m_normals(NULL)
@@ -39,7 +50,7 @@ Visual::~Visual() {
         delete m_materialIds;
     }
 }
-
+*/
 void Visual::update() {
 }
 
@@ -47,7 +58,7 @@ void Visual::updateWorldBoundingBox() {
     m_worldBoundingBox = m_modelBoundingBox.transform(m_worldTransform.getStraightMatrix());
 }
 
-void Visual::updateWorldNormals() {
+void Visual::updateWorldViewMatrix() {
     m_normMatrix = (m_viewMatrix * m_worldTransform.getStraightMatrix()).inverse().transpose();
     // TODO
 }
@@ -59,28 +70,28 @@ void Visual::updateWorldViewProjectionMatrix() {
 void Visual::setTranslate(const Vec3& translate) {
     m_worldTransform.setTranslate(translate);
     updateWorldBoundingBox();
-    updateWorldNormals(); // does translate affect normals ??
+    updateWorldViewMatrix();
     updateWorldViewProjectionMatrix();
 }
 
 void Visual::setRotate(const Quat& rotate) {
     m_worldTransform.setRotate(rotate);
     updateWorldBoundingBox();
-    updateWorldNormals();
+    updateWorldViewMatrix();
     updateWorldViewProjectionMatrix();
 }
 
 void Visual::setScale(const Vec3& scale) {
     m_worldTransform.setScale(scale);
     updateWorldBoundingBox();
-    updateWorldNormals();
+    updateWorldViewMatrix();
     updateWorldViewProjectionMatrix();
 }
 
 void Visual::setViewMatrix(const Mat4& viewMatrix) {
     if (m_viewMatrix != viewMatrix) {
         m_viewMatrix = viewMatrix;
-        updateWorldNormals();
+        updateWorldViewMatrix();
     }
 }
 
@@ -90,7 +101,7 @@ void Visual::setViewProjectionMatrix(const Mat4& viewProjectionMatrix) {
         updateWorldViewProjectionMatrix();
     }
 }
-
+/*
 void Visual::setName(const std::string& name) {
     m_nameSize = name.size() + 1;
     m_name = new char[m_nameSize];
@@ -143,7 +154,6 @@ void Visual::setNormals(const std::vector<float>& normals) {
     for (auto it = normals.begin(); it != normals.end(); ++it) {
         m_normals[i++] = *it;
     }
-    updateWorldNormals();
 }
 
 void Visual::setTextureCoordinates(const std::vector<float>& texcoords) {
@@ -172,3 +182,4 @@ void Visual::setMaterialIds(const std::vector<int>& materialIds) {
         m_materialIds[i++] = *it;
     }
 }
+*/

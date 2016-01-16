@@ -31,7 +31,8 @@ public:
     void setViewMatrix(const Mat4& viewMatrix);
     void setViewProjectionMatrix(const Mat4& viewProjectionMatrix);
 
-    void setName(const std::string& name);
+    /*
+	void setName(const std::string& name);
     void setPositions(const std::vector<float>& positions);
     void setNormals(const std::vector<float>& normals);
     void setTextureCoordinates(const std::vector<float>& texcoords);
@@ -51,6 +52,7 @@ public:
     unsigned int getTexcoordsSize() { return m_textureCoordinatesSize; }
     unsigned int getIndicesSize() { return m_indicesSize; }
     unsigned int getMaterialIdsSize() { return m_materialIdsSize; }
+	*/
 
     Mat4 getNormMatrix() { return m_normMatrix; }
     Mat4 getWorldViewProjectionMatrix() { return m_worldViewProjectionMatrix; }
@@ -65,10 +67,11 @@ public:
 
 protected:
     void updateWorldBoundingBox();
-    void updateWorldNormals();
+    void updateWorldViewMatrix();
     void updateWorldViewProjectionMatrix();
 
 private:
+    /*
     char* m_name;
     float* m_positions;
     float* m_normals;
@@ -76,24 +79,25 @@ private:
     unsigned int* m_indices;
     int* m_materialIds;
 
-    BoundingBox m_modelBoundingBox;
-    std::vector<float> m_modelNormals;
-
     unsigned int m_nameSize;
     unsigned int m_positionsSize;
     unsigned int m_normalsSize;
     unsigned int m_textureCoordinatesSize;
     unsigned int m_indicesSize;
     unsigned int m_materialIdsSize;
+	*/
+
+    VertexBuffer* m_vertexBuffer;
+    IndexBuffer* m_indexBuffer;
+    VisualEffect* m_visualEffect;
+
+    BoundingBox m_modelBoundingBox;
+    std::vector<float> m_modelNormals;
 
     Mat4 m_viewMatrix;
     Mat4 m_normMatrix;
     Mat4 m_viewProjectionMatrix;
     Mat4 m_worldViewProjectionMatrix;
-
-    VertexBuffer* m_vertexBuffer;
-    IndexBuffer* m_indexBuffer;
-    VisualEffect* m_visualEffect;
 };
 
 #endif /* Visual_h */
