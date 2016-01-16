@@ -39,7 +39,7 @@ public:
         Vec3 bbmin = Vec3::max;
         Vec3 bbmax = Vec3::min;
         unsigned int j = 0;
-        unsigned int positionsCount;
+        unsigned int positionsCount = positions.size();
         for (j = 0; j < positionsCount;) {
             if (bbmin.x > positions[j]) {
                 bbmin.x = positions[j];
