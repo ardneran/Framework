@@ -12,6 +12,7 @@
 #include <list>
 #include "MeshLoader.h"
 #include "tiny_obj_loader.h"
+#include "tiny_obj_helper.h"
 
 class ObjMeshLoader : public MeshLoader {
 public:

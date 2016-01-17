@@ -50,8 +50,8 @@ void SampleWindow::createScene() {
     const int visualEffectType = 2;
 #define TEST
 #ifdef TEST
-    std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
-                                                           "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
+    std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cornell_box/cornell_box_multimaterial.obj",
+                                                           "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cornell_box/");
     for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
         m_octree->insert(*it);
