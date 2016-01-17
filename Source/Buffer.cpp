@@ -46,15 +46,17 @@ void VertexBuffer::initialize(const std::vector<float>& positions, const std::ve
     m_size = m_count * sizeof(float);
     m_vertexData = new float[m_count];
     unsigned int vertexCount = positions.size() / 3.0f;
+    bool fillNormals = normals.size() > 0;
+    bool fillTexcoords = texcoords.size() > 0;
     for (unsigned int i = 0; i < vertexCount; ++i) {
         m_vertexData[i * 8 + 0] = positions.at(i * 3 + 0);
         m_vertexData[i * 8 + 1] = positions.at(i * 3 + 1);
         m_vertexData[i * 8 + 2] = positions.at(i * 3 + 2);
-        m_vertexData[i * 8 + 3] = normals.at(i * 3 + 0);
-        m_vertexData[i * 8 + 4] = normals.at(i * 3 + 1);
-        m_vertexData[i * 8 + 5] = normals.at(i * 3 + 2);
-        m_vertexData[i * 8 + 6] = texcoords.at(i * 2 + 0);
-        m_vertexData[i * 8 + 7] = texcoords.at(i * 2 + 1);
+        m_vertexData[i * 8 + 3] = fillNormals ? normals.at(i * 3 + 0) : 0.0f;
+        m_vertexData[i * 8 + 4] = fillNormals ? normals.at(i * 3 + 1) : 0.0f;
+        m_vertexData[i * 8 + 5] = fillNormals ? normals.at(i * 3 + 2) : 0.0f;
+        m_vertexData[i * 8 + 6] = fillTexcoords ? texcoords.at(i * 2 + 0) : 0.0f;
+        m_vertexData[i * 8 + 7] = fillTexcoords ? texcoords.at(i * 2 + 1) : 0.0f;
     }
 }
 
