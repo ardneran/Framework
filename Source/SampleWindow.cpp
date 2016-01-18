@@ -32,8 +32,8 @@ void SampleWindow::onIdle() {
     for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
         Visual* visual = dynamic_cast<Visual*>(*it);
         if (visual) {
-            visual->setViewMatrix(m_camera->getViewMatrix());
             visual->setViewProjectionMatrix(m_camera->getViewProjectionMatrix());
+            visual->setViewMatrix(m_camera->getViewMatrix());
             m_renderer->draw(visual);
         }
     }

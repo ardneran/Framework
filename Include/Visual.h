@@ -67,8 +67,8 @@ public:
         updateWorldBoundingBox();
     }
 
-    Mat4 getWorldViewMatrix() { return m_worldViewMatrix; }
-    Mat4 getWorldViewProjectionMatrix() { return m_worldViewProjectionMatrix; }
+    Mat4& getWorldViewMatrix() { return m_worldViewMatrix; }
+    Mat4& getWorldViewProjectionMatrix() { return m_worldViewProjectionMatrix; }
     VertexBuffer* getVertexBuffer() { return m_vertexBuffer; }
     IndexBuffer* getIndexBuffer() { return m_indexBuffer; }
     VisualEffect* getVisualEffect() { return m_visualEffect; }

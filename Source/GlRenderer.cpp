@@ -158,20 +158,34 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
 void GlRenderer::draw(Visual* visual) {
-    draw(visual->getVertexBuffer(), visual->getIndexBuffer(), visual->getVisualEffect());
+    VertexBuffer* vBuffer = visual->getVertexBuffer();
+    IndexBuffer* iBuffer = visual->getIndexBuffer();
+    VisualEffect* vEffect = visual->getVisualEffect();
+    if (vBuffer != NULL && iBuffer != NULL && vEffect != NULL) {
+        // Set Program
+        GLuint program = vEffect->getProgram()->getProgram();
+        glUseProgram(program);
+        // Set World View Matrix
+        GLint worldViewMatrixLocation = glGetUniformLocation(program, "worldView");
+        glUniformMatrix3fv(worldViewMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewMatrix()));
+        // Set World View Projection Matrix
+        GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
+        glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewProjectionMatrix()));
+        draw(vBuffer, iBuffer, vEffect);
+        // Unset Program
+        glUseProgram(0);
+    }
 }
 
 void GlRenderer::draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) {
-    if (vBuffer != NULL && iBuffer != NULL && vEffect != NULL) {
-        GLuint program = vEffect->getProgram()->getProgram();
-        glUseProgram(program);
-        vBuffer->bind();
-        iBuffer->bind();
-        glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
-        iBuffer->unbind();
-        vBuffer->unbind();
-        glUseProgram(0);
-    }
+    // Bind
+    vBuffer->bind();
+    iBuffer->bind();
+    // Draw
+    glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
+    // Unbind
+    iBuffer->unbind();
+    vBuffer->unbind();
 }
 
 // TODO FIX THIS FUNCTION AS SOON AS POSSIBLE TERRIBLE LEAKS HERE
