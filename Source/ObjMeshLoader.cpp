@@ -16,14 +16,11 @@ ObjMeshLoader::~ObjMeshLoader() {
 
 std::list<Visual*> ObjMeshLoader::load(const std::string& filepath, const std::string& filebase) {
     std::list<Visual*> visuals;
-    std::vector<tinyobj::shape_t> oldshapes;
-    std::vector<tinyobj::material_t> oldmaterials;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
     std::string error;
-    if (LoadObj(oldshapes, oldmaterials, error, filepath.c_str(), filebase.c_str())) {
-        std::vector<tinyobj::shape_t> newshapes;
-        std::vector<tinyobj::material_t> newmaterials;
-        SortShapes(newshapes, newmaterials, oldshapes, oldmaterials);
-        for (std::vector<tinyobj::shape_t>::iterator it = newshapes.begin(); it != newshapes.end(); ++it) {
+    if (LoadObj(shapes, materials, error, filepath.c_str(), filebase.c_str())) {
+        for (std::vector<tinyobj::shape_t>::iterator it = shapes.begin(); it != shapes.end(); ++it) {
             Visual* visual = new Visual();
             visual->getVertexBuffer()->initialize(it->mesh.positions, it->mesh.normals, it->mesh.texcoords);
             visual->getIndexBuffer()->initialize(it->mesh.indices);
