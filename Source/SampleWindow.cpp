@@ -50,8 +50,8 @@ void SampleWindow::createScene() {
     const int visualEffectType = 2;
 #define TEST
 #ifdef TEST
-    std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cornell_box/cornell_box_multimaterial.obj",
-                                                           "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cornell_box/");
+    std::list<Visual*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cornell_box/cornell_box_multimaterial.obj"),
+                                                           Utils::findBasePath("cornell_box/cornell_box_multimaterial.obj"));
     for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
         m_octree->insert(*it);
@@ -59,15 +59,15 @@ void SampleWindow::createScene() {
 
 #else
     for (int i = 0; i < 8; ++i) {
-        std::list<Visual*> visualsCube = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/cube.obj",
-                                                               "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/cube/");
+        std::list<Visual*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
+                                                               Utils::findBasePath("cube/cube.obj"));
         for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
             (*it)->setTranslate(getDirection(i) * 10);
             (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
             m_octree->insert(*it);
         }
-        std::list<Visual*> visualsTeapot = m_objMeshLoader->load("/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/teapot.obj",
-                                                                 "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/teapot/");
+        std::list<Visual*> visualsTeapot = m_objMeshLoader->load(Utils::findFilePath("teapot/teapot.obj"),
+                                                                 Utils::findFilePath("teapot/teapot.obj"));
         for (std::list<Visual*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
             (*it)->setTranslate(getDirection(i) * 20);
             (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
