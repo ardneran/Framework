@@ -238,7 +238,7 @@ void Window::initializeOpenGL() {
 void Window::initializeOther() {
     m_camera = new Camera(Camera::Type::Perspective);
     m_culler = new Culler();
-    m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
+    m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
     m_objMeshLoader = new ObjMeshLoader();
 }
 
