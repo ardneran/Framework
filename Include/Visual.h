@@ -67,7 +67,7 @@ public:
         updateWorldBoundingBox();
     }
 
-    Mat4 getNormMatrix() { return m_normMatrix; }
+    Mat4 getWorldViewMatrix() { return m_worldViewMatrix; }
     Mat4 getWorldViewProjectionMatrix() { return m_worldViewProjectionMatrix; }
     VertexBuffer* getVertexBuffer() { return m_vertexBuffer; }
     IndexBuffer* getIndexBuffer() { return m_indexBuffer; }
@@ -86,7 +86,7 @@ private:
     BoundingBox m_modelBoundingBox;
 
     Mat4 m_viewMatrix;
-    Mat4 m_normMatrix;
+    Mat4 m_worldViewMatrix;
     Mat4 m_viewProjectionMatrix;
     Mat4 m_worldViewProjectionMatrix;
 };

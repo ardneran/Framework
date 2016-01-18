@@ -26,7 +26,7 @@ void Visual::updateWorldBoundingBox() {
 }
 
 void Visual::updateWorldViewMatrix() {
-    m_normMatrix = (m_viewMatrix * m_worldTransform.getStraightMatrix()).inverse().transpose();
+    m_worldViewMatrix = m_viewMatrix * m_worldTransform.getStraightMatrix();
 }
 
 void Visual::updateWorldViewProjectionMatrix() {
