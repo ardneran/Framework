@@ -9,6 +9,10 @@
 #ifndef Buffer_h
 #define Buffer_h
 
+#define BUFFER_OFFSET(offset) (void*)((char*)NULL + offset)
+#define GL_GLEXT_PROTOTYPES 1
+#include "SDL_opengl.h"
+
 #include <vector>
 
 class Buffer {
@@ -23,6 +27,7 @@ public:
     virtual void unbind() = 0;
 
 protected:
+    unsigned int m_buffer;
     unsigned int m_count;
     unsigned int m_size;
 };
@@ -36,9 +41,6 @@ public:
     void unbind();
     void initialize(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texcoords);
     void deinitialize();
-
-private:
-    float* m_vertexData;
 };
 
 class IndexBuffer : public Buffer {
@@ -50,9 +52,6 @@ public:
     void unbind();
     void initialize(const std::vector<unsigned int>& indices);
     void deinitialize();
-
-private:
-    unsigned int* m_indexData;
 };
 
 #endif /* Buffer_h */

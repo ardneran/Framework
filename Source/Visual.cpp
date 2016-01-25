@@ -16,6 +16,14 @@ Visual::Visual()
 }
 
 Visual::~Visual() {
+    if (m_vertexBuffer) {
+        m_vertexBuffer->deinitialize();
+        delete m_vertexBuffer;
+    }
+    if (m_indexBuffer) {
+        m_indexBuffer->deinitialize();
+        delete m_indexBuffer;
+    }
 }
 
 void Visual::update() {
