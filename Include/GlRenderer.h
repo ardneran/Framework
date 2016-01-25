@@ -14,6 +14,7 @@
 #define BUFFER_OFFSET(offset) (void*)((char*)NULL + offset)
 #define GL_GLEXT_PROTOTYPES 1
 #include "SDL_opengl.h"
+
 #include "Renderer.h"
 
 //namespace Engine {
