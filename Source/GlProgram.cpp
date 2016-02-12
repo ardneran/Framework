@@ -54,11 +54,12 @@ GLuint GlProgram::loadShader(const std::string& shaderFilename, const GLenum& sh
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
             GLchar* logString = new GLchar[logLength + 1];
             glGetProgramInfoLog(shader, logLength, NULL, logString);
-
             fprintf(stderr, "Compile Error: %s\n%s", shaderFilename.c_str(), logString);
             delete[] logString;
+            return 0;
+        } else {
+            return shader;
         }
-        return shader;
     } else {
         fprintf(stderr, "File Missing: %s\n", shaderFilename.c_str());
         return 0;
