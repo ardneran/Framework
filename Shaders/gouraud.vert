@@ -12,7 +12,7 @@ layout( location = 2 ) in vec2 texcoord;
 out vec4 vColor;
 
 uniform mat4 worldViewProjection;
-uniform mat3 worldView;
+uniform mat4 worldView;
 uniform vec3 eyePosition;
 uniform vec3 ambient;
 uniform vec3 diffuse;

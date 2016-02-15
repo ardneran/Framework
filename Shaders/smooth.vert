@@ -9,7 +9,7 @@ out vec3 vNormal;
 out vec2 vTexcoord;
 
 uniform mat4 worldViewProjection;
-uniform mat3 worldView;
+uniform mat4 worldView;
 
 void main()
 {
