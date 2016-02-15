@@ -168,7 +168,7 @@ void Camera::updateProjectionMatrix() {
     float invUDiff = 1.0f / (m_upMax - m_upMin);
     float invFDiff = 1.0f / (m_frontMax - m_frontMin);
 
-    if (m_type == Camera::Type::Orthographic) {
+    if (m_type == Camera::Orthographic) {
         // update orthographic projection matrix
         // TODO fix this matrix so that it works
         m_orthographicProjectionMatrix.d00 = 2.0f * invRDiff;
@@ -187,7 +187,7 @@ void Camera::updateProjectionMatrix() {
         m_orthographicProjectionMatrix.d31 = 0.0f;
         m_orthographicProjectionMatrix.d32 = 0.0f;
         m_orthographicProjectionMatrix.d33 = 1.0f;
-    } else if (m_type == Camera::Type::Perspective) {
+    } else if (m_type == Camera::Perspective) {
         // update perspective projection matrix
         m_perspectiveProjectionMatrix.d00 = 2.0f * m_frontMin * invRDiff;
         m_perspectiveProjectionMatrix.d01 = 0.0f;
@@ -209,24 +209,24 @@ void Camera::updateProjectionMatrix() {
 }
 
 void Camera::updateViewProjectionMatrix() {
-    if (m_type == Camera::Type::Orthographic) {
+    if (m_type == Camera::Orthographic) {
         m_viewOrthographicProjectionMatrix = m_orthographicProjectionMatrix * m_viewMatrix;
-    } else if (m_type == Camera::Type::Perspective) {
+    } else if (m_type == Camera::Perspective) {
         m_viewPerspectiveProjectionMatrix = m_perspectiveProjectionMatrix * m_viewMatrix;
     }
 
     if (m_postProjectionMatrix != Mat4::identity) {
-        if (m_type == Camera::Type::Orthographic) {
+        if (m_type == Camera::Orthographic) {
             m_viewOrthographicProjectionMatrix = m_postProjectionMatrix * m_viewOrthographicProjectionMatrix;
-        } else if (m_type == Camera::Type::Perspective) {
+        } else if (m_type == Camera::Perspective) {
             m_viewPerspectiveProjectionMatrix = m_postProjectionMatrix * m_viewPerspectiveProjectionMatrix;
         }
     }
 
     if (m_preViewMatrix != Mat4::identity) {
-        if (m_type == Camera::Type::Orthographic) {
+        if (m_type == Camera::Orthographic) {
             m_viewOrthographicProjectionMatrix = m_viewOrthographicProjectionMatrix * m_preViewMatrix;
-        } else if (m_type == Camera::Type::Perspective) {
+        } else if (m_type == Camera::Perspective) {
             m_viewPerspectiveProjectionMatrix = m_viewPerspectiveProjectionMatrix * m_preViewMatrix;
         }
     }
@@ -237,7 +237,7 @@ Mat4 Camera::getViewMatrix() {
 }
 
 Mat4 Camera::getViewProjectionMatrix() {
-    if (m_type == Camera::Type::Orthographic) {
+    if (m_type == Camera::Orthographic) {
         return m_viewOrthographicProjectionMatrix;
     } else {
         return m_viewPerspectiveProjectionMatrix;

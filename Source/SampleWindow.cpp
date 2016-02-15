@@ -9,11 +9,11 @@
 #include "SampleWindow.h"
 
 SampleWindow::SampleWindow(Parameters& parameters)
-: Window(parameters) {
+: AbstractWindow(parameters) {
     m_renderer->initialize();
     m_renderer->setSize(parameters.xSize, parameters.ySize);
     m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
-    if (m_camera->getType() == Camera::Type::Perspective) {
+    if (m_camera->getType() == Camera::Perspective) {
         m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
     }
     createEffects();
@@ -30,7 +30,7 @@ void SampleWindow::onIdle() {
     m_renderer->clearBuffers();
     std::list<Spatial*> spatials = m_culler->cull(m_camera, m_octree);
     for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
-        Visual* visual = dynamic_cast<Visual*>(*it);
+        VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
         if (visual) {
             visual->setViewProjectionMatrix(m_camera->getViewProjectionMatrix());
             visual->setViewMatrix(m_camera->getViewMatrix());
@@ -50,25 +50,25 @@ void SampleWindow::createScene() {
     const int visualEffectType = 0;
 #define TEST
 #ifdef TEST
-    std::list<Visual*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cornell_box/cornell_box_multimaterial.obj"),
-                                                           Utils::findBasePath("cornell_box/cornell_box_multimaterial.obj"));
-    for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
+    std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cornell_box/cornell_box_multimaterial.obj"),
+                                                                  Utils::findBasePath("cornell_box/cornell_box_multimaterial.obj"));
+    for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
         m_octree->insert(*it);
     }
 
 #else
     for (int i = 0; i < 8; ++i) {
-        std::list<Visual*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
+        std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
                                                                Utils::findBasePath("cube/cube.obj"));
-        for (std::list<Visual*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
+        for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
             (*it)->setTranslate(getDirection(i) * 10);
             (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
             m_octree->insert(*it);
         }
-        std::list<Visual*> visualsTeapot = m_objMeshLoader->load(Utils::findFilePath("teapot/teapot.obj"),
+        std::list<VisualSpatial*> visualsTeapot = m_objMeshLoader->load(Utils::findFilePath("teapot/teapot.obj"),
                                                                  Utils::findFilePath("teapot/teapot.obj"));
-        for (std::list<Visual*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
+        for (std::list<VisualSpatial*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
             (*it)->setTranslate(getDirection(i) * 20);
             (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
             m_octree->insert(*it);

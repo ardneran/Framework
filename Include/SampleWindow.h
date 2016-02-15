@@ -11,9 +11,9 @@
 
 #include <list>
 #include "Spatial.h"
-#include "Window.h"
+#include "AbstractWindow.h"
 
-class SampleWindow : public Window {
+class SampleWindow : public AbstractWindow {
 public:
     SampleWindow(Parameters& parameters);
     virtual ~SampleWindow();

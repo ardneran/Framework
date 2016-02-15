@@ -14,7 +14,7 @@ MeshLoader::MeshLoader() {
 MeshLoader::~MeshLoader() {
 }
 
-std::list<Visual*> MeshLoader::load(const std::string& filepath, const std::string& filebase) {
-    std::list<Visual*> visuals;
+std::list<VisualSpatial*> MeshLoader::load(const std::string& filepath, const std::string& filebase) {
+    std::list<VisualSpatial*> visuals;
     return visuals;
 }

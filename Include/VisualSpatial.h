@@ -1,13 +1,13 @@
 //
-//  Visual.h
+//  VisualSpatial.h
 //  Framework
 //
 //  Created by Narendra Umate on 8/28/15.
 //
 //
 
-#ifndef Visual_h
-#define Visual_h
+#ifndef VisualSpatial_h
+#define VisualSpatial_h
 
 #include <string>
 #include <vector>
@@ -17,10 +17,10 @@
 #include "Buffer.h"
 #include "VisualEffect.h"
 
-class Visual : public Spatial {
+class VisualSpatial : public Spatial {
 public:
-    Visual();
-    virtual ~Visual();
+    VisualSpatial();
+    virtual ~VisualSpatial();
 
     void update();
 
@@ -34,7 +34,7 @@ public:
     // TODO move definitions to cpp
     void setVertexBuffer(VertexBuffer* vertexBuffer) { m_vertexBuffer = vertexBuffer; }
     void setIndexBuffer(IndexBuffer* indexBuffer) { m_indexBuffer = indexBuffer; }
-    void setVisualEffect(VisualEffect* visualEffect) { m_visualEffect = visualEffect; }
+    void setVisualEffect(VisualEffect* VisualEffect) { m_visualEffect = VisualEffect; }
     void setModelBoundingBox(const std::vector<float>& positions) {
         Vec3 bbmin = Vec3::max;
         Vec3 bbmax = Vec3::min;
@@ -91,4 +91,4 @@ private:
     Mat4 m_worldViewProjectionMatrix;
 };
 
-#endif /* Visual_h */
+#endif /* VisualSpatial_h */

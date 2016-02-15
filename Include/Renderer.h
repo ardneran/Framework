@@ -15,7 +15,7 @@
 #include "Camera.h"
 #include "Color.h"
 #include "Matrix.h"
-#include "Visual.h"
+#include "VisualSpatial.h"
 
 #if defined(__APPLE__)
 #include <OpenGL/OpenGL.h>
@@ -74,7 +74,7 @@ public:
     virtual void clearStencilBuffer(const int& x, const int& y, const int& w, const int& h) = 0;
     virtual void clearBuffers(const int& x, const int& y, const int& w, const int& h) = 0;
     virtual void displayColorBuffer(const int& syncInterval) = 0;
-    virtual void draw(Visual* visual) = 0;
+    virtual void draw(VisualSpatial* visual) = 0;
     virtual void draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) = 0;
 
 protected:

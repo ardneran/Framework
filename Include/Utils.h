@@ -17,8 +17,8 @@
 #define GLOBAL_MESHES_DIR "/Users/ardneran/Documents/Projects/GitHub/Framework/Meshes/"
 #define GLOBAL_SHADERS_DIR "/Users/ardneran/Documents/Projects/GitHub/Framework/Shaders/"
 #elif defined(__linux__)
-#define GLOBAL_MESHES_DIR "/home/ardneran/Documents/Projects/GitHub/Framework/Meshes/"
-#define GLOBAL_SHADERS_DIR "/home/ardneran/Documents/Projects/GitHub/Framework/Shaders/"
+#define GLOBAL_MESHES_DIR "/home/numate/GitHub/Framework/Meshes/"
+#define GLOBAL_SHADERS_DIR "/home/numate/GitHub/Framework/Shaders/"
 #elif defined(_WIN32)
 #define GLOBAL_MESHES_DIR "/Meshes/" //TODO
 #define GLOBAL_SHADERS_DIR "/Shaders/" //TODO

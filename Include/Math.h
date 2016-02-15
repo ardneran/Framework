@@ -11,7 +11,10 @@
 
 #include <float.h>
 
-// Use this with SDL
+#if defined(__linux__)
+#include <math.h>
+#endif //defined(__linux__)
+
 #include "SDL.h"
 
 #if defined(__APPLE__)

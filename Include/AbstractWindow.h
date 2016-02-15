@@ -1,13 +1,13 @@
 //
-//  Window.h
+//  AbstractWindow.h
 //
 //
 //  Created by Narendra Umate on 8/17/15.
 //
 //
 
-#ifndef ____Window__
-#define ____Window__
+#ifndef ____AbstractWindow__
+#define ____AbstractWindow__
 
 #include <cassert>
 #include <iostream>
@@ -15,11 +15,12 @@
 #include "GlRenderer.h"
 #include "ObjMeshLoader.h"
 #include "Octree.h"
+
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 
-class Window {
+class AbstractWindow {
 public:
     struct Parameters {
         Parameters()
@@ -38,7 +39,7 @@ public:
         GlRenderer* renderer;
     };
 
-    virtual ~Window() = 0;
+    virtual ~AbstractWindow() = 0;
 
     inline void setTitle(const std::string& title) { m_title = title; }
     inline std::string getTitle() { return m_title; }
@@ -66,7 +67,7 @@ public:
     virtual void onIdle();
 
 protected:
-    Window(Parameters& parameters); // Abstract base class
+    AbstractWindow(Parameters& parameters); // Abstract base class
 
     std::string m_title;
     int m_xOrigin;
@@ -104,4 +105,4 @@ private:
     SDL_GLContext m_sdlContext;
 };
 
-#endif /* defined(____Window__) */
+#endif /* defined(____AbstractWindow__) */

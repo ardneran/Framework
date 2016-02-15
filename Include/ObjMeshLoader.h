@@ -19,7 +19,7 @@ public:
     ObjMeshLoader();
     virtual ~ObjMeshLoader();
 
-    std::list<Visual*> load(const std::string& filepath, const std::string& filebase);
+    std::list<VisualSpatial*> load(const std::string& filepath, const std::string& filebase);
 };
 
 #endif /* ObjMeshLoader_h */

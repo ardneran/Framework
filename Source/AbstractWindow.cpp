@@ -1,14 +1,14 @@
 //
-//  Window.cpp
+//  AbstractWindow.cpp
 //
 //
 //  Created by Narendra Umate on 8/17/15.
 //
 //
 
-#include "Window.h"
+#include "AbstractWindow.h"
 
-Window::Window(Parameters& parameters)
+AbstractWindow::AbstractWindow(Parameters& parameters)
 : m_title(parameters.title)
 , m_xOrigin(parameters.xOrigin)
 , m_yOrigin(parameters.yOrigin)
@@ -26,7 +26,7 @@ Window::Window(Parameters& parameters)
     initializeOther();
 }
 
-Window::~Window() {
+AbstractWindow::~AbstractWindow() {
     deinitializeOther();
     deinitializeOpenGL();
     deinitializeSDLttf();
@@ -34,7 +34,7 @@ Window::~Window() {
     deinitializeSDL();
 }
 
-void Window::handlePollEvent() {
+void AbstractWindow::handlePollEvent() {
     while (SDL_PollEvent(&m_sdlEvent)) {
         switch (m_sdlEvent.type) {
             case SDL_WINDOWEVENT: {
@@ -53,12 +53,12 @@ void Window::handlePollEvent() {
     }
 }
 
-void Window::onMove(const int& x, const int& y) {
+void AbstractWindow::onMove(const int& x, const int& y) {
     m_xOrigin = x;
     m_yOrigin = y;
 }
 
-bool Window::onResize(const int& xSize, const int& ySize) {
+bool AbstractWindow::onResize(const int& xSize, const int& ySize) {
     m_minimized = false;
     m_maximized = false;
 
@@ -75,42 +75,42 @@ bool Window::onResize(const int& xSize, const int& ySize) {
     return false;
 }
 
-void Window::onMinimize() {
+void AbstractWindow::onMinimize() {
     m_minimized = true;
     m_maximized = false;
 }
 
-void Window::onMaximize() {
+void AbstractWindow::onMaximize() {
     m_minimized = false;
     m_maximized = true;
 }
 
-void Window::onRestore() {
+void AbstractWindow::onRestore() {
     m_minimized = false;
     m_maximized = false;
 }
 
-void Window::onDisplay() {
+void AbstractWindow::onDisplay() {
 }
 
-void Window::onIdle() {
+void AbstractWindow::onIdle() {
 }
 
-void Window::initializeSDL() {
+void AbstractWindow::initializeSDL() {
     unsigned int flags = SDL_INIT_VIDEO;
     assert(SDL_Init(flags) == 0);
 }
 
-void Window::initializeSDLimage() {
+void AbstractWindow::initializeSDLimage() {
     unsigned int flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF;
     assert(IMG_Init(flags) == flags);
 }
 
-void Window::initializeSDLttf() {
+void AbstractWindow::initializeSDLttf() {
     assert(TTF_Init() == 0);
 }
 
-void Window::initializeOpenGL() {
+void AbstractWindow::initializeOpenGL() {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 2);
@@ -235,32 +235,32 @@ void Window::initializeOpenGL() {
     m_renderer->setWindow(m_sdlWindow);
 }
 
-void Window::initializeOther() {
-    m_camera = new Camera(Camera::Type::Perspective);
+void AbstractWindow::initializeOther() {
+    m_camera = new Camera(Camera::Perspective);
     m_culler = new Culler();
     m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
     m_objMeshLoader = new ObjMeshLoader();
 }
 
-void Window::deinitializeSDL() {
+void AbstractWindow::deinitializeSDL() {
     SDL_Quit();
 }
 
-void Window::deinitializeSDLimage() {
+void AbstractWindow::deinitializeSDLimage() {
     IMG_Quit();
 }
 
-void Window::deinitializeSDLttf() {
+void AbstractWindow::deinitializeSDLttf() {
     TTF_Quit();
 }
 
-void Window::deinitializeOpenGL() {
+void AbstractWindow::deinitializeOpenGL() {
     if (m_sdlWindow != NULL) {
         SDL_DestroyWindow(m_sdlWindow);
     }
 }
 
-void Window::deinitializeOther() {
+void AbstractWindow::deinitializeOther() {
     if (m_objMeshLoader != NULL) {
         delete m_objMeshLoader;
     }
@@ -275,7 +275,7 @@ void Window::deinitializeOther() {
     }
 }
 
-void Window::handleWindowEvent() {
+void AbstractWindow::handleWindowEvent() {
     switch (m_sdlEvent.window.event) {
         case SDL_WINDOWEVENT_MOVED:
             onMove(m_sdlEvent.window.data1, m_sdlEvent.window.data2);
@@ -298,7 +298,7 @@ void Window::handleWindowEvent() {
     }
 }
 
-void Window::handleKeyUpEvent() {
+void AbstractWindow::handleKeyUpEvent() {
     switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             break;
@@ -307,7 +307,7 @@ void Window::handleKeyUpEvent() {
     }
 }
 
-void Window::handleKeyDownEvent() {
+void AbstractWindow::handleKeyDownEvent() {
     switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             m_active = false;

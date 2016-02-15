@@ -98,7 +98,7 @@ void DxRenderer::clearBuffers(const int& x, const int& y, const int& w, const in
 void DxRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
-void DxRenderer::draw(Visual* visual) {
+void DxRenderer::draw(VisualSpatial* visual) {
 }
 
 void DxRenderer::draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) {

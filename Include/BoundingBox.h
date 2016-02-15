@@ -10,6 +10,7 @@
 #define TEST_BoundingBox_H
 
 #include <list>
+#include "Math.h"
 #include "Vector.h"
 
 class BoundingBox {

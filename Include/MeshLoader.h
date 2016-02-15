@@ -9,14 +9,14 @@
 #ifndef MeshLoader_h
 #define MeshLoader_h
 
-#include "Visual.h"
+#include "VisualSpatial.h"
 
 class MeshLoader {
 public:
     MeshLoader();
     virtual ~MeshLoader() = 0;
 
-    virtual std::list<Visual*> load(const std::string& filepath, const std::string& filebase) = 0;
+    virtual std::list<VisualSpatial*> load(const std::string& filepath, const std::string& filebase) = 0;
 };
 
 #endif /* MeshLoader_h */

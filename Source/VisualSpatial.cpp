@@ -1,21 +1,21 @@
 //
-//  Visual.cpp
+//  VisualSpatial.cpp
 //  Framework
 //
 //  Created by Narendra Umate on 8/28/15.
 //
 //
 
-#include "Visual.h"
+#include "VisualSpatial.h"
 
-Visual::Visual()
+VisualSpatial::VisualSpatial()
 : m_vertexBuffer(new VertexBuffer())
 , m_indexBuffer(new IndexBuffer())
 , m_visualEffect(NULL)
 , m_modelBoundingBox() {
 }
 
-Visual::~Visual() {
+VisualSpatial::~VisualSpatial() {
     if (m_vertexBuffer) {
         m_vertexBuffer->deinitialize();
         delete m_vertexBuffer;
@@ -26,50 +26,50 @@ Visual::~Visual() {
     }
 }
 
-void Visual::update() {
+void VisualSpatial::update() {
 }
 
-void Visual::updateWorldBoundingBox() {
+void VisualSpatial::updateWorldBoundingBox() {
     m_worldBoundingBox = m_modelBoundingBox.transform(m_worldTransform.getStraightMatrix());
 }
 
-void Visual::updateWorldViewMatrix() {
+void VisualSpatial::updateWorldViewMatrix() {
     m_worldViewMatrix = m_viewMatrix * m_worldTransform.getStraightMatrix();
 }
 
-void Visual::updateWorldViewProjectionMatrix() {
+void VisualSpatial::updateWorldViewProjectionMatrix() {
     m_worldViewProjectionMatrix = m_viewProjectionMatrix * m_worldTransform.getStraightMatrix();
 }
 
-void Visual::setTranslate(const Vec3& translate) {
+void VisualSpatial::setTranslate(const Vec3& translate) {
     m_worldTransform.setTranslate(translate);
     updateWorldBoundingBox();
     updateWorldViewMatrix();
     updateWorldViewProjectionMatrix();
 }
 
-void Visual::setRotate(const Quat& rotate) {
+void VisualSpatial::setRotate(const Quat& rotate) {
     m_worldTransform.setRotate(rotate);
     updateWorldBoundingBox();
     updateWorldViewMatrix();
     updateWorldViewProjectionMatrix();
 }
 
-void Visual::setScale(const Vec3& scale) {
+void VisualSpatial::setScale(const Vec3& scale) {
     m_worldTransform.setScale(scale);
     updateWorldBoundingBox();
     updateWorldViewMatrix();
     updateWorldViewProjectionMatrix();
 }
 
-void Visual::setViewMatrix(const Mat4& viewMatrix) {
+void VisualSpatial::setViewMatrix(const Mat4& viewMatrix) {
     if (m_viewMatrix != viewMatrix) {
         m_viewMatrix = viewMatrix;
         updateWorldViewMatrix();
     }
 }
 
-void Visual::setViewProjectionMatrix(const Mat4& viewProjectionMatrix) {
+void VisualSpatial::setViewProjectionMatrix(const Mat4& viewProjectionMatrix) {
     if (m_viewProjectionMatrix != viewProjectionMatrix) {
         m_viewProjectionMatrix = viewProjectionMatrix;
         updateWorldViewProjectionMatrix();

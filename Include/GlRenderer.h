@@ -12,8 +12,14 @@
 #if defined(__APPLE__) || defined(__linux__)
 
 #define BUFFER_OFFSET(offset) (void*)((char*)NULL + offset)
-#define GL_GLEXT_PROTOTYPES 1
+
+#if defined(__linux__)
+#define GL3_PROTOTYPES
+#include "SDL2/SDL.h"
+#elif defined(__APPLE__)
+#define GL_GLEXT_PROTOTYPES
 #include "SDL_opengl.h"
+#endif //defined(__APPLE__)
 
 #include "Renderer.h"
 
@@ -50,7 +56,7 @@ public:
     void clearStencilBuffer(const int& x, const int& y, const int& w, const int& h);
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
-    void draw(Visual* visual);
+    void draw(VisualSpatial* visual);
     void draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect);
 };
 

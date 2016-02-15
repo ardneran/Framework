@@ -10,10 +10,16 @@
 #define Buffer_h
 
 #define BUFFER_OFFSET(offset) (void*)((char*)NULL + offset)
-#define GL_GLEXT_PROTOTYPES 1
-#include "SDL_opengl.h"
+#define GL_GLEXT_PROTOTYPES
 
 #include <vector>
+
+#if defined(__linux__)
+#include <GL/gl.h> // sudo apt-get install mesa-common-dev mesa-utils freeglut3 freeglut3-dev
+#include <GL/glx.h>
+#elif defined(__APPLE__)
+#include "SDL_opengl.h"
+#endif //defined(__APPLE__)
 
 class Buffer {
 public:
@@ -41,6 +47,9 @@ public:
     void unbind();
     void initialize(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texcoords);
     void deinitialize();
+
+private:
+    unsigned int m_vertexArray;
 };
 
 class IndexBuffer : public Buffer {

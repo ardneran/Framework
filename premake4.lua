@@ -9,7 +9,7 @@ solution "Framework"
 	excludes { "Library/**" }
 
 	-- Additional includedirs here
-	includedirs { "Include" }
+	includedirs { "Include", "External/**/Include" }
 
 	-- A project defines one build target
 	project "Framework"
@@ -50,6 +50,6 @@ solution "Framework"
 
 		configuration "linux"
 			buildoptions { "-I/usr/include/SDL2" }
-			linkoptions { "-lGL", "-lGLU", "-lSDL2", "-lSDL2_image", "-lSDL2_ttf", "-L/usr/lib/nvidia-358/" } -- hack for nvidia driver
+			linkoptions { "-lGL", "-lGLU", "-lSDL2", "-lSDL2_image", "-lSDL2_ttf", "-L/usr/lib/nvidia-352/" } -- hack for nvidia driver with which graphics debugger works
 			files { }
 			excludes { "**/Windows/**", "**/MacOS/**" }
