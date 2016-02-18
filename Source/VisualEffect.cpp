@@ -13,7 +13,10 @@ VisualEffect::VisualEffect(GlProgram* program)
 }
 
 VisualEffect::~VisualEffect() {
-    m_program = NULL;
+    if (m_program) {
+        delete m_program;
+        m_program = NULL;
+    }
 }
 
 void VisualEffect::setProgram(GlProgram* program) {

@@ -165,12 +165,12 @@ void GlRenderer::draw(VisualSpatial* visual) {
         // Set Program
         GLuint program = vEffect->getProgram()->getProgram();
         glUseProgram(program);
+        // Set World View Norm Matrix
+        GLint worldViewNormMatrixLocation = glGetUniformLocation(program, "worldViewNorm");
+        glUniformMatrix3fv(worldViewNormMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewNormMatrix()));
         // Set World View Projection Matrix
         GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
         glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewProjectionMatrix()));
-        // Set World View Matrix
-        GLint worldViewMatrixLocation = glGetUniformLocation(program, "worldView");
-        glUniformMatrix4fv(worldViewMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewMatrix()));
         draw(vBuffer, iBuffer, vEffect);
         // Unset Program
         glUseProgram(0);

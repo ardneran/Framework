@@ -67,7 +67,7 @@ public:
         updateWorldBoundingBox();
     }
 
-    Mat4& getWorldViewMatrix() { return m_worldViewMatrix; }
+    Mat3& getWorldViewNormMatrix() { return m_worldViewNormMatrix; }
     Mat4& getWorldViewProjectionMatrix() { return m_worldViewProjectionMatrix; }
     VertexBuffer* getVertexBuffer() { return m_vertexBuffer; }
     IndexBuffer* getIndexBuffer() { return m_indexBuffer; }
@@ -76,7 +76,7 @@ public:
 
 protected:
     void updateWorldBoundingBox();
-    void updateWorldViewMatrix();
+    void updateWorldViewNormMatrix();
     void updateWorldViewProjectionMatrix();
 
 private:
@@ -85,8 +85,9 @@ private:
     VisualEffect* m_visualEffect;
     BoundingBox m_modelBoundingBox;
 
+    Mat3 m_worldViewNormMatrix;
+
     Mat4 m_viewMatrix;
-    Mat4 m_worldViewMatrix;
     Mat4 m_viewProjectionMatrix;
     Mat4 m_worldViewProjectionMatrix;
 };

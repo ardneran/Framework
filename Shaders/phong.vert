@@ -13,13 +13,13 @@ out vec4 vPosition;
 out vec3 vNormal;
 out vec2 vTexcoord;
 
+uniform mat3 worldViewNorm;
 uniform mat4 worldViewProjection;
-uniform mat4 worldView;
 
 void main()
 {
-	gl_position = worldViewProjection * vec4(position, 1.0);
-	vPosition = gl_position;
-	vNormal = mat3(worldView) * normal;
+	gl_Position = worldViewProjection * vec4(position, 1.0);
+	vPosition = gl_Position;
+	vNormal = worldViewNorm * normal;
 	vTexcoord = texcoord;
 }

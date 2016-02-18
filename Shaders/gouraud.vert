@@ -11,8 +11,8 @@ layout( location = 2 ) in vec2 texcoord;
 
 out vec4 vColor;
 
+uniform mat3 worldViewNorm;
 uniform mat4 worldViewProjection;
-uniform mat4 worldView;
 uniform vec3 eyePosition;
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -28,10 +28,10 @@ uniform sampler2D normalTextureSampler;
 
 void main()
 {
-	gl_position = worldViewProjection * vec4(position, 1.0);
-	vec3 vPosition = gl_position;
+	gl_Position = worldViewProjection * vec4(position, 1.0);
+	vec3 vPosition = gl_Position;
 	vec3 P = vPosition.xyz;
-	vec3 N = mat3(worldView) * normal;
+	vec3 N = worldViewNorm * normal;
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, texcoord).rgb;
 	vec3 L = normalize(eyePosition - P);
