@@ -19,6 +19,5 @@ void main()
 	//fColor = ambient;
 	//fColor = diffuse;
 	//fColor = specular;
-	//fColor = vec4(vNormal, 1.0);
-	fColor = vec4(vPosition, 1.0);
+	fColor = vec4(vNormal, 1.0);
 }
