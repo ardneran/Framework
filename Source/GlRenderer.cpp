@@ -171,22 +171,17 @@ void GlRenderer::draw(VisualSpatial* visual) {
         // Set World View Projection Matrix
         GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
         glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewProjectionMatrix()));
+		// Bind
+		vBuffer->bind();
+		iBuffer->bind();
 		// Draw
-		draw(vBuffer, iBuffer, vEffect);
+		glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
+		// Unbind
+		iBuffer->unbind();
+		vBuffer->unbind();
         // Unset Program
         glUseProgram(0);
     }
-}
-
-void GlRenderer::draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect* vEffect) {
-    // Bind
-    vBuffer->bind();
-    iBuffer->bind();
-    // Draw
-    glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
-    // Unbind
-    iBuffer->unbind();
-    vBuffer->unbind();
 }
 
 //}
