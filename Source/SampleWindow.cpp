@@ -12,6 +12,7 @@ SampleWindow::SampleWindow(Parameters& parameters)
 : AbstractWindow(parameters) {
     m_renderer->initialize();
     m_renderer->setSize(parameters.xSize, parameters.ySize);
+    m_renderer->setClearColor(Color::Gray);
     m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
     if (m_camera->getType() == Camera::Perspective) {
         m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
@@ -60,14 +61,14 @@ void SampleWindow::createScene() {
 #else
     for (int i = 0; i < 8; ++i) {
         std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
-                                                               Utils::findBasePath("cube/cube.obj"));
+                                                                      Utils::findBasePath("cube/cube.obj"));
         for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
             (*it)->setTranslate(getDirection(i) * 10);
             (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
             m_octree->insert(*it);
         }
         std::list<VisualSpatial*> visualsTeapot = m_objMeshLoader->load(Utils::findFilePath("teapot/teapot.obj"),
-                                                                 Utils::findFilePath("teapot/teapot.obj"));
+                                                                        Utils::findFilePath("teapot/teapot.obj"));
         for (std::list<VisualSpatial*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
             (*it)->setTranslate(getDirection(i) * 20);
             (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
@@ -79,15 +80,12 @@ void SampleWindow::createScene() {
 
 void SampleWindow::destroyEffects() {
     if (m_visualEffects[0]) {
-        delete m_visualEffects[0]->getProgram();
         delete m_visualEffects[0];
     }
     if (m_visualEffects[1]) {
-        delete m_visualEffects[1]->getProgram();
         delete m_visualEffects[1];
     }
     if (m_visualEffects[2]) {
-        delete m_visualEffects[2]->getProgram();
         delete m_visualEffects[2];
     }
 }
