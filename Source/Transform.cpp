@@ -136,12 +136,14 @@ Transform Transform::operator*=(const Transform& other) {
 
 void Transform::composeStraightMatrix() {
     // Unoptimized.
-    //Mat4 translate = Mat4::translate(m_translate);
-    //Mat4 rotate = Mat4::rotate(m_rotate);
-    //Mat4 scale = Mat4::scale(m_scale);
-    //m_straightMatrix = translate * rotate * scale;
+    Mat4 translate = Mat4::translate(m_translate);
+    Mat4 rotate = Mat4::rotate(m_rotate);
+    Mat4 scale = Mat4::scale(m_scale);
+    m_straightMatrix = translate * rotate * scale;
 
     // Optimized.
+	/*
+	// TODO Fix this code so that it works as above.
     m_straightMatrix.d03 = 0.0f;
     m_straightMatrix.d13 = 0.0f;
     m_straightMatrix.d23 = 0.0f;
@@ -170,6 +172,7 @@ void Transform::composeStraightMatrix() {
     const float wy2 = m_rotate.w * y2;
     m_straightMatrix.d20 = (xz2 + wy2) * m_scale.z;
     m_straightMatrix.d02 = (xz2 - wy2) * m_scale.x;
+	*/
 }
 
 void Transform::decomposeStraightMatrix() {
