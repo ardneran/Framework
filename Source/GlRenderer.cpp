@@ -171,7 +171,8 @@ void GlRenderer::draw(VisualSpatial* visual) {
         // Set World View Projection Matrix
         GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
         glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewProjectionMatrix()));
-        draw(vBuffer, iBuffer, vEffect);
+		// Draw
+		draw(vBuffer, iBuffer, vEffect);
         // Unset Program
         glUseProgram(0);
     }
@@ -187,86 +188,6 @@ void GlRenderer::draw(VertexBuffer* vBuffer, IndexBuffer* iBuffer, VisualEffect*
     iBuffer->unbind();
     vBuffer->unbind();
 }
-
-// TODO FIX THIS FUNCTION AS SOON AS POSSIBLE TERRIBLE LEAKS HERE
-/*void GlRenderer::draw(VisualSpatial* visual) {
-    GLuint program = visual->getProgram()->getProgram();
-    glUseProgram(program);
-    //------------------------------------------------------------------------//
-    // Push World View Projection Matrix
-    Mat4 worldViewProjectionMatrix = visual->getWorldViewProjectionMatrix();
-    GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
-    glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(worldViewProjectionMatrix));
-    //------------------------------------------------------------------------//
-    // One Time Setup
-    enum Ebo { EboTriangles,
-               EboCount };
-    enum Vao { VaoTriangles,
-               VaoCount };
-    enum Vbo { VboTriangles,
-               VboCount };
-
-    enum AttributeType { AttributePosition,
-                         AttributeNormal,
-                         AttributeTexcoord,
-                         AttributeCount };
-    enum TextureType { TextureAmbient,
-                       TextureDiffuse,
-                       TextureSpecular,
-                       TextureNormal,
-                       TextureCount };
-
-    GLuint m_ebos[EboCount];
-    GLuint m_vaos[VaoCount];
-    GLuint m_vbos[VboCount];
-
-    const float* positions = visual->getPositions();
-    const float* normals = visual->getNormals();
-    const float* texcoords = visual->getTextureCoordinates();
-    const unsigned int* indices = visual->getIndices();
-
-    const unsigned int sizeOfPositions = sizeof(positions[0]) * visual->getPositionsSize();
-    const unsigned int sizeOfNormals = sizeof(normals[0]) * visual->getNormalsSize();
-    const unsigned int sizeOfTexcoords = sizeof(texcoords[0]) * visual->getTexcoordsSize();
-    const unsigned int sizeOfIndices = sizeof(indices[0]) * visual->getIndicesSize();
-
-    glGenBuffers(EboCount, m_ebos);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebos[EboTriangles]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeOfIndices, &indices[0], GL_STATIC_DRAW);
-    //No Vertex Attrib Pointer for Index buffer
-
-    glGenVertexArrays(VaoCount, m_vaos);
-    glBindVertexArray(m_vaos[VaoTriangles]);
-
-    glGenBuffers(VboCount, m_vbos);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbos[VboTriangles]);
-    glBufferData(GL_ARRAY_BUFFER, sizeOfPositions + sizeOfNormals + sizeOfTexcoords, NULL, GL_STATIC_DRAW);
-
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeOfPositions, &positions[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, sizeOfPositions, sizeOfNormals, &normals[0]);
-    glBufferSubData(GL_ARRAY_BUFFER, sizeOfPositions + sizeOfNormals, sizeOfTexcoords, &texcoords[0]);
-
-    glVertexAttribPointer(AttributePosition, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-    glVertexAttribPointer(AttributeNormal, 3, GL_FLOAT, GL_TRUE, 0, BUFFER_OFFSET(sizeOfPositions));
-    glVertexAttribPointer(AttributeTexcoord, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(sizeOfPositions + sizeOfNormals));
-
-    glEnableVertexAttribArray(AttributePosition);
-    glEnableVertexAttribArray(AttributeNormal);
-    glEnableVertexAttribArray(AttributeTexcoord);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    //------------------------------------------------------------------------//
-    // Draw
-    glBindVertexArray(m_vaos[VaoTriangles]);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebos[EboTriangles]);
-    glDrawElements(GL_TRIANGLES, visual->getIndicesSize(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-    //------------------------------------------------------------------------//
-    glUseProgram(0);
-}*/
 
 //}
 
