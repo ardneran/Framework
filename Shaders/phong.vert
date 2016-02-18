@@ -20,6 +20,6 @@ void main()
 {
 	gl_Position = worldViewProjection * vec4(position, 1.0);
 	vPosition = gl_Position;
-	vNormal = worldViewNorm * normal;
+	vNormal = normalize(worldViewNorm * normal);
 	vTexcoord = texcoord;
 }

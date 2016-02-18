@@ -31,7 +31,7 @@ void main()
 	gl_Position = worldViewProjection * vec4(position, 1.0);
 	vec3 vPosition = gl_Position;
 	vec3 P = vPosition.xyz;
-	vec3 N = worldViewNorm * normal;
+	vec3 N = normalize(worldViewNorm * normal);
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, texcoord).rgb;
 	vec3 L = normalize(eyePosition - P);
