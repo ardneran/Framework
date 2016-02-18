@@ -43,16 +43,16 @@ void SampleWindow::onIdle() {
 
 void SampleWindow::createEffects() {
     m_visualEffects[0] = new VisualEffect(new GlProgram("smooth.vert", "smooth.frag"));
-    //m_visualEffects[1] = new VisualEffect(new GlProgram("gouraud.vert", "gouraud.frag"));
-    //m_visualEffects[2] = new VisualEffect(new GlProgram("phong.vert", "phong.frag"));
+    m_visualEffects[1] = new VisualEffect(new GlProgram("gouraud.vert", "gouraud.frag"));
+    m_visualEffects[2] = new VisualEffect(new GlProgram("phong.vert", "phong.frag"));
 }
 
 void SampleWindow::createScene() {
     const int visualEffectType = 0;
 #define TEST
 #ifdef TEST
-    std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cornell_box/cornell_box_multimaterial.obj"),
-                                                                  Utils::findBasePath("cornell_box/cornell_box_multimaterial.obj"));
+    std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
+                                                                  Utils::findBasePath("cube/cube.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
         m_octree->insert(*it);
