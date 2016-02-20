@@ -136,43 +136,44 @@ Transform Transform::operator*=(const Transform& other) {
 
 void Transform::composeStraightMatrix() {
     // Unoptimized.
-    Mat4 translate = Mat4::translate(m_translate);
-    Mat4 rotate = Mat4::rotate(m_rotate);
-    Mat4 scale = Mat4::scale(m_scale);
-    m_straightMatrix = translate * rotate * scale;
+    // Mat4 translate = Mat4::translate(m_translate);
+    // Mat4 rotate = Mat4::rotate(m_rotate);
+    // Mat4 scale = Mat4::scale(m_scale);
+    // m_straightMatrix = translate * rotate * scale;
 
-    // Optimized.
-	/*
-	// TODO Fix this code so that it works as above.
-    m_straightMatrix.d03 = 0.0f;
-    m_straightMatrix.d13 = 0.0f;
-    m_straightMatrix.d23 = 0.0f;
-    m_straightMatrix.d33 = 1.0f;
-    m_straightMatrix.d30 = m_translate.x;
-    m_straightMatrix.d31 = m_translate.y;
-    m_straightMatrix.d32 = m_translate.z;
-    const float x2 = m_rotate.x + m_rotate.x;
-    const float y2 = m_rotate.y + m_rotate.y;
-    const float z2 = m_rotate.z + m_rotate.z;
-    const float xx2 = m_rotate.x * x2;
-    const float yy2 = m_rotate.y * y2;
-    const float zz2 = m_rotate.z * z2;
-    m_straightMatrix.d00 = (1.0f - yy2 - zz2) * m_scale.x;
-    m_straightMatrix.d11 = (1.0f - xx2 - zz2) * m_scale.y;
-    m_straightMatrix.d22 = (1.0f - xx2 - yy2) * m_scale.z;
-    const float yz2 = m_rotate.y * z2;
-    const float wx2 = m_rotate.w * x2;
-    m_straightMatrix.d21 = (yz2 - wx2) * m_scale.z;
-    m_straightMatrix.d12 = (yz2 + wx2) * m_scale.y;
-    const float xy2 = m_rotate.x * y2;
-    const float wz2 = m_rotate.w * z2;
-    m_straightMatrix.d10 = (xy2 - wz2) * m_scale.y;
-    m_straightMatrix.d01 = (xy2 + wz2) * m_scale.x;
-    const float xz2 = m_rotate.x * z2;
-    const float wy2 = m_rotate.w * y2;
-    m_straightMatrix.d20 = (xz2 + wy2) * m_scale.z;
-    m_straightMatrix.d02 = (xz2 - wy2) * m_scale.x;
-	*/
+	// Optimized.
+	const float x2 = m_rotate.x + m_rotate.x;
+	const float y2 = m_rotate.y + m_rotate.y;
+	const float z2 = m_rotate.z + m_rotate.z;
+	const float xx2 = m_rotate.x * x2;
+	const float yy2 = m_rotate.y * y2;
+	const float zz2 = m_rotate.z * z2;
+	const float xy2 = m_rotate.x * y2;
+	const float xz2 = m_rotate.x * z2;
+	const float yz2 = m_rotate.y * z2;
+	const float wx2 = m_rotate.w * x2;
+	const float wz2 = m_rotate.w * z2;
+	const float wy2 = m_rotate.w * y2;
+
+	m_straightMatrix.d00 = (1.0f - yy2 - zz2) * m_scale.x;
+	m_straightMatrix.d01 = (xy2 - wz2) * m_scale.y;
+	m_straightMatrix.d02 = (xz2 + wy2) * m_scale.z;
+	m_straightMatrix.d03 =m_translate.x;//
+
+	m_straightMatrix.d10 = (xy2 + wz2) * m_scale.x;
+	m_straightMatrix.d11 = (1.0f - xx2 - zz2) * m_scale.y;
+	m_straightMatrix.d12 = (yz2 - wx2) * m_scale.z;
+	m_straightMatrix.d13 = m_translate.y;//
+
+	m_straightMatrix.d20 = (xz2 - wy2) * m_scale.x;
+	m_straightMatrix.d21 = (yz2 + wx2) * m_scale.y;
+	m_straightMatrix.d22 = (1.0f - xx2 - yy2) * m_scale.z;
+	m_straightMatrix.d23 = m_translate.z;//
+
+	m_straightMatrix.d30 = 0.0f;
+	m_straightMatrix.d31 = 0.0f;
+	m_straightMatrix.d32 = 0.0f;
+	m_straightMatrix.d33 = 1.0f;
 }
 
 void Transform::decomposeStraightMatrix() {
