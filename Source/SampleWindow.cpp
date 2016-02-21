@@ -11,10 +11,11 @@
 SampleWindow::SampleWindow(Parameters& parameters)
 : AbstractWindow(parameters) {
     m_renderer->initialize();
-    m_renderer->setSize(parameters.xSize, parameters.ySize);
     m_renderer->setClearColor(Color::Gray);
     m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
-    if (m_camera->getType() == Camera::Perspective) {
+	if (m_camera->getType() == Camera::Orthographic) {
+		m_camera->setFrustum(float(parameters.xSize) / 2.0f, -float(parameters.xSize) / 2.0f, float(parameters.ySize) / 2.0f, -float(parameters.ySize) / 2.0f, 1.0f, 100.0f);
+	} else if (m_camera->getType() == Camera::Perspective) {
         m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
     }
     createEffects();
@@ -51,11 +52,12 @@ void SampleWindow::createScene() {
     const int visualEffectType = 0;
 //#define TEST
 #ifdef TEST
-    std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
-                                                                  Utils::findBasePath("cube/cube.obj"));
+    std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("house/house.obj"),
+                                                                  Utils::findBasePath("house/house.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
-		(*it)->setTranslate(Vec3(0,0,5));
+		(*it)->setTranslate(Vec3(0, -2.5, 0));
+		(*it)->setScale(Vec3(0.09f, 0.09f, 0.09f));
         m_octree->insert(*it);
     }
 
