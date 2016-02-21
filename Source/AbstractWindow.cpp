@@ -96,6 +96,14 @@ void AbstractWindow::onDisplay() {
 void AbstractWindow::onIdle() {
 }
 
+void AbstractWindow::setSwapInterval(const int& syncInterval) {
+	SDL_GL_SetSwapInterval(syncInterval);
+}
+
+void AbstractWindow::swapWindow() {
+	SDL_GL_SwapWindow(m_sdlWindow);
+}
+
 void AbstractWindow::initializeSDL() {
     unsigned int flags = SDL_INIT_VIDEO;
     assert(SDL_Init(flags) == 0);
@@ -232,7 +240,7 @@ void AbstractWindow::initializeOpenGL() {
         std::cout << "]" << std::endl;
     }
 
-    m_renderer->setWindow(m_sdlWindow);
+	m_renderer->setWindow(this);
 }
 
 void AbstractWindow::initializeOther() {

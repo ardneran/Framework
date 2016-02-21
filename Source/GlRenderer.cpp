@@ -153,8 +153,8 @@ void GlRenderer::clearBuffers(const int& x, const int& y, const int& w, const in
 }
 
 void GlRenderer::displayColorBuffer(const int& syncInterval) {
-    SDL_GL_SetSwapInterval(syncInterval);
-    SDL_GL_SwapWindow(static_cast<SDL_Window*>(m_window));
+	m_window->setSwapInterval(syncInterval);
+	m_window->swapWindow();
 }
 
 void GlRenderer::draw(VisualSpatial* visual) {

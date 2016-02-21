@@ -11,14 +11,17 @@
 
 #include <cassert>
 #include <iostream>
+
 #include "Culler.h"
-#include "GlRenderer.h"
+#include "Renderer.h"
 #include "ObjMeshLoader.h"
 #include "Octree.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+
+class Renderer;
 
 class AbstractWindow {
 public:
@@ -36,9 +39,10 @@ public:
         int yOrigin;
         int xSize;
         int ySize;
-        GlRenderer* renderer;
+        Renderer* renderer;
     };
 
+	AbstractWindow(Parameters& parameters); // Abstract base class
     virtual ~AbstractWindow() = 0;
 
     inline void setTitle(const std::string& title) { m_title = title; }
@@ -66,15 +70,17 @@ public:
     virtual void onDisplay();
     virtual void onIdle();
 
+	virtual void setSwapInterval(const int& syncInterval);
+	virtual void swapWindow();
+
 protected:
-    AbstractWindow(Parameters& parameters); // Abstract base class
 
     std::string m_title;
     int m_xOrigin;
     int m_yOrigin;
     int m_xSize;
     int m_ySize;
-    GlRenderer* m_renderer;
+    Renderer* m_renderer;
 
     bool m_minimized;
     bool m_maximized;

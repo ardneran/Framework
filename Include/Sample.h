@@ -6,4 +6,9 @@
 //
 //
 
+#include "DxRenderer.h"
+#include "GlRenderer.h"
 #include "SampleWindow.h"
+
+class DxRenderer;
+class GlRenderer;

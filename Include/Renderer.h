@@ -12,9 +12,12 @@
 #include <iostream>
 #include <string.h>
 
+#include "AbstractWindow.h"
+#include "Buffer.h"
 #include "Camera.h"
 #include "Color.h"
 #include "Matrix.h"
+#include "VisualEffect.h"
 #include "VisualSpatial.h"
 
 #if defined(__APPLE__)
@@ -29,10 +32,9 @@
 #define ContextObj WGLContextObj
 #endif //defined(_WIN32)
 
-#include "Buffer.h"
-#include "VisualEffect.h"
-
 //namespace Engine {
+
+class AbstractWindow;
 
 class Renderer {
 
@@ -46,8 +48,8 @@ public:
     void setHeight(const int& height);
     int getHeight();
 
-    void setWindow(void* const window);
-    void* getWindow() const;
+    void setWindow(AbstractWindow* const window);
+    AbstractWindow* getWindow() const;
 
     virtual void initialize() = 0;
     virtual void deinitialize() = 0;
@@ -82,7 +84,7 @@ protected:
     Color4f m_clearColor;
     float m_clearDepth;
     unsigned int m_clearStencil;
-    void* m_window;
+    AbstractWindow* m_window;
 };
 //}
 
