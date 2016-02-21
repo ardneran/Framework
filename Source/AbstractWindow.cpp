@@ -70,6 +70,10 @@ bool AbstractWindow::onResize(const int& xSize, const int& ySize) {
             m_renderer->setSize(xSize, ySize);
         }
 
+		if (m_camera) {
+			m_camera->setSize(xSize, ySize);
+		}
+
         return true;
     }
     return false;
@@ -301,6 +305,9 @@ void AbstractWindow::handleWindowEvent() {
         case SDL_WINDOWEVENT_RESTORED:
             onRestore();
             break;
+		case SDL_WINDOWEVENT_SHOWN:
+			onDisplay();
+			break;
         default:
             break;
     }

@@ -11,9 +11,9 @@
 //namespace Engine
 //{
 
-Renderer::Renderer()
-: m_width(0)
-, m_height(0)
+Renderer::Renderer(const int& width, const int& height)
+: m_width(width)
+, m_height(height)
 , m_clearColor(Color4f(0.5f, 0.5f, 0.5f, 1.0f))
 , m_clearDepth(10)
 , m_clearStencil(10) {

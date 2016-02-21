@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     parameters.yOrigin = 0;
     parameters.xSize = 1280;
     parameters.ySize = 720;
-    parameters.renderer = new GlRenderer();
+    parameters.renderer = new GlRenderer(parameters.xSize, parameters.ySize);
 
     SampleWindow* sampleWindow = new SampleWindow(parameters);
 

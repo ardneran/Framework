@@ -28,7 +28,7 @@
 class GlRenderer : public Renderer {
 
 public:
-    GlRenderer();
+    GlRenderer(const int& width, const int& height);
     virtual ~GlRenderer();
 
     void initialize();

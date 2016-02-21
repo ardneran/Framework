@@ -39,6 +39,8 @@ Camera::~Camera() {
 
 void Camera::setType(const Type& type) {
     m_type = type;
+	updateProjectionMatrix();
+	updateViewProjectionMatrix();
 }
 
 void Camera::setFrame(const Vec3& position, const Vec3& right, const Vec3& up, const Vec3& front) {
@@ -64,6 +66,17 @@ void Camera::setAxes(const Vec3& right, const Vec3& up, const Vec3& front) {
     updateViewProjectionMatrix();
 }
 
+void Camera::setFrustum(const float& rightMin, const float& rightMax, const float& upMin, const float& upMax, const float& frontMin, const float& frontMax) {
+	m_rightMin = rightMin;
+	m_rightMax = rightMax;
+	m_upMin = upMin;
+	m_upMax = upMax;
+	m_frontMin = frontMin;
+	m_frontMax = frontMax;
+	updateProjectionMatrix();
+	updateViewProjectionMatrix();
+}
+
 void Camera::setFrustum(const float& upFovDegrees, const float& aspectRatio, const float& frontMin, const float& frontMax) {
     m_upFovDegrees = upFovDegrees;
     m_aspectRatio = aspectRatio;
@@ -77,15 +90,13 @@ void Camera::setFrustum(const float& upFovDegrees, const float& aspectRatio, con
     updateViewProjectionMatrix();
 }
 
-void Camera::setFrustum(const float& rightMin, const float& rightMax, const float& upMin, const float& upMax, const float& frontMin, const float& frontMax) {
-    m_rightMin = rightMin;
-    m_rightMax = rightMax;
-    m_upMin = upMin;
-    m_upMax = upMax;
-    m_frontMin = frontMin;
-    m_frontMax = frontMax;
-    updateProjectionMatrix();
-    updateViewProjectionMatrix();
+void Camera::setSize(const int& screenWidth, const int& screenHeight) {
+    if (m_type == Camera::Orthographic) {
+		// TODO Verify that this works
+		setFrustum(-float(screenWidth) / 2.0f, float(screenWidth) / 2.0f, -float(screenHeight) / 2.0f, float(screenHeight) / 2.0f, m_frontMin, m_frontMax);
+    } else if (m_type == Camera::Perspective) {
+		setFrustum(m_upFovDegrees, float(screenWidth) / float(screenHeight), m_frontMin, m_frontMax);
+	}
 }
 
 void Camera::setPreViewMatrix(const Mat4& preViewMatrix) {
@@ -119,6 +130,15 @@ void Camera::getAxes(Vec3& right, Vec3& up, Vec3& front) {
     front = m_front;
 }
 
+void Camera::getFrustum(float& rightMin, float& rightMax, float& upMin, float& upMax, float& frontMin, float& frontMax) {
+	rightMin = m_rightMin;
+	rightMax = m_rightMax;
+	upMin = m_upMin;
+	upMax = m_upMax;
+	frontMin = m_frontMin;
+	frontMax = m_frontMax;
+}
+
 void Camera::getFrustum(float& upFovDegrees, float& aspectRatio, float& frontMin, float& frontMax) {
     upFovDegrees = m_upFovDegrees;
     aspectRatio = m_aspectRatio;
@@ -126,13 +146,9 @@ void Camera::getFrustum(float& upFovDegrees, float& aspectRatio, float& frontMin
     frontMax = m_frontMax;
 }
 
-void Camera::getFrustum(float& rightMin, float& rightMax, float& upMin, float& upMax, float& frontMin, float& frontMax) {
-    rightMin = m_rightMin;
-    rightMax = m_rightMax;
-    upMin = m_upMin;
-    upMax = m_upMax;
-    frontMin = m_frontMin;
-    frontMax = m_frontMax;
+void Camera::getSize(int& screenWidth, int& screenHeight) {
+	screenWidth = m_rightMax - m_rightMin;
+	screenHeight = m_upMax - m_upMin;
 }
 
 void Camera::getPreViewMatrix(Mat4& preViewMatrix) {

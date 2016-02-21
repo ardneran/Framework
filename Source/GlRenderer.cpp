@@ -13,8 +13,8 @@
 //namespace Engine
 //{
 
-GlRenderer::GlRenderer()
-: Renderer() {
+GlRenderer::GlRenderer(const int& width, const int& height)
+: Renderer(width, height) {
 }
 
 GlRenderer::~GlRenderer() {

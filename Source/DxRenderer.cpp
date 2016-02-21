@@ -13,8 +13,8 @@
 //namespace Engine
 //{
 
-DxRenderer::DxRenderer()
-: Renderer() {
+DxRenderer::DxRenderer(const int& width, const int& height)
+: Renderer(width, height) {
 }
 
 DxRenderer::~DxRenderer() {

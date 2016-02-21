@@ -39,7 +39,7 @@ class AbstractWindow;
 class Renderer {
 
 public:
-    Renderer();
+    Renderer(const int& width, const int& height);
     virtual ~Renderer() = 0;
 
     void setWidth(const int& width);
