@@ -20,7 +20,7 @@
 #elif defined(__APPLE__)
 #include "SDL_opengl.h"
 #endif //defined(__APPLE__)
-
+////////////////////////////////////////////////////////////////////////////////
 class Buffer {
 public:
     Buffer();
@@ -37,7 +37,7 @@ protected:
     unsigned int m_count;
     unsigned int m_size;
 };
-
+////////////////////////////////////////////////////////////////////////////////
 class VertexBuffer : public Buffer {
 public:
     VertexBuffer();
@@ -51,7 +51,7 @@ public:
 private:
     unsigned int m_vertexArray;
 };
-
+////////////////////////////////////////////////////////////////////////////////
 class IndexBuffer : public Buffer {
 public:
     IndexBuffer();
@@ -62,5 +62,28 @@ public:
     void initialize(const std::vector<unsigned int>& indices);
     void deinitialize();
 };
+////////////////////////////////////////////////////////////////////////////////
+class Texture {
+public:
+	Texture();
+	virtual ~Texture() = 0;
 
+	virtual void bind() = 0;
+	virtual void unbind() = 0;
+
+protected:
+	unsigned int m_texture;
+};
+////////////////////////////////////////////////////////////////////////////////
+class Texture2D : public Texture {
+public:
+	Texture2D();
+	virtual ~Texture2D();
+
+	void bind();
+	void unbind();
+	void initialize();
+	void deinitialize();
+};
+////////////////////////////////////////////////////////////////////////////////
 #endif /* Buffer_h */

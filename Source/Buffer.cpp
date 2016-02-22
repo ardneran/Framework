@@ -135,3 +135,43 @@ void IndexBuffer::deinitialize() {
     m_count = 0;
     m_size = 0;
 }
+////////////////////////////////////////////////////////////////////////////////
+Texture::Texture()
+: m_texture(0) {
+	glGenTextures(1, &m_texture);
+}
+
+Texture::~Texture() {
+	glDeleteTextures(1, &m_texture);
+}
+
+void Texture::bind() {
+}
+
+void Texture::unbind() {
+}
+////////////////////////////////////////////////////////////////////////////////
+Texture2D::Texture2D() {
+}
+
+Texture2D::~Texture2D() {
+}
+
+void Texture2D::bind() {
+	glBindTexture(GL_TEXTURE_2D, m_texture);
+	glEnable(GL_TEXTURE_2D);
+}
+
+void Texture2D::unbind() {
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
+}
+
+void Texture2D::initialize() {
+	// TODO
+}
+
+void Texture2D::deinitialize() {
+	// TODO
+}
+////////////////////////////////////////////////////////////////////////////////
