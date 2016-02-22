@@ -10,7 +10,7 @@
 
 int main(int argc, char* argv[]) {
 
-    SDLWindow::Parameters parameters;
+    Parameters parameters;
     parameters.title = "Framework";
     parameters.xOrigin = 0;
     parameters.yOrigin = 0;

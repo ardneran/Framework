@@ -18,16 +18,14 @@ public:
     SampleWindow(Parameters& parameters);
     virtual ~SampleWindow();
 
-    virtual void onIdle();
-
 private:
     void createEffects();
     void createScene();
     void destroyEffects();
     void destroyScene();
 
-	Vec3 getDirection(const unsigned int& octant);
-	void testTransform();
+	Vec3 getDirection(const unsigned int& octant); // TODO Remove
+	void testTransform(); // TODO Remove
 
     VisualEffect* m_visualEffects[3];
 };

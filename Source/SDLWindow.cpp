@@ -9,25 +9,14 @@
 #include "SDLWindow.h"
 
 SDLWindow::SDLWindow(Parameters& parameters)
-: m_title(parameters.title)
-, m_xOrigin(parameters.xOrigin)
-, m_yOrigin(parameters.yOrigin)
-, m_xSize(parameters.xSize)
-, m_ySize(parameters.ySize)
-, m_renderer(parameters.renderer)
-, m_minimized(false)
-, m_maximized(false)
-, m_active(true)
-, m_camera(NULL) {
+: AbstractWindow(parameters) {
     initializeSDL();
     initializeSDLimage();
     initializeSDLttf();
     initializeOpenGL();
-    initializeOther();
 }
 
 SDLWindow::~SDLWindow() {
-    deinitializeOther();
     deinitializeOpenGL();
     deinitializeSDLttf();
     deinitializeSDLimage();
@@ -51,53 +40,6 @@ void SDLWindow::handlePollEvent() {
             } break;
         }
     }
-}
-
-void SDLWindow::onMove(const int& x, const int& y) {
-    m_xOrigin = x;
-    m_yOrigin = y;
-}
-
-bool SDLWindow::onResize(const int& xSize, const int& ySize) {
-    m_minimized = false;
-    m_maximized = false;
-
-    if (m_xSize != xSize || m_ySize != ySize) {
-        m_xSize = xSize;
-        m_ySize = ySize;
-
-        if (m_renderer) {
-            m_renderer->setSize(xSize, ySize);
-        }
-
-		if (m_camera) {
-			m_camera->setSize(xSize, ySize);
-		}
-
-        return true;
-    }
-    return false;
-}
-
-void SDLWindow::onMinimize() {
-    m_minimized = true;
-    m_maximized = false;
-}
-
-void SDLWindow::onMaximize() {
-    m_minimized = false;
-    m_maximized = true;
-}
-
-void SDLWindow::onRestore() {
-    m_minimized = false;
-    m_maximized = false;
-}
-
-void SDLWindow::onDisplay() {
-}
-
-void SDLWindow::onIdle() {
 }
 
 void SDLWindow::setSwapInterval(const int& syncInterval) {
@@ -247,13 +189,6 @@ void SDLWindow::initializeOpenGL() {
 	m_renderer->setWindow(this);
 }
 
-void SDLWindow::initializeOther() {
-    m_camera = new Camera(Camera::Perspective);
-    m_culler = new Culler();
-    m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
-    m_objMeshLoader = new ObjMeshLoader();
-}
-
 void SDLWindow::deinitializeSDL() {
     SDL_Quit();
 }
@@ -269,21 +204,6 @@ void SDLWindow::deinitializeSDLttf() {
 void SDLWindow::deinitializeOpenGL() {
     if (m_sdlWindow != NULL) {
         SDL_DestroyWindow(m_sdlWindow);
-    }
-}
-
-void SDLWindow::deinitializeOther() {
-    if (m_objMeshLoader != NULL) {
-        delete m_objMeshLoader;
-    }
-    if (m_octree != NULL) {
-        delete m_octree;
-    }
-    if (m_culler != NULL) {
-        delete m_culler;
-    }
-    if (m_camera != NULL) {
-        delete m_camera;
     }
 }
 
