@@ -9,7 +9,7 @@
 #include "SampleWindow.h"
 
 SampleWindow::SampleWindow(Parameters& parameters)
-: AbstractWindow(parameters) {
+: SDLWindow(parameters) {
     m_renderer->initialize();
     m_renderer->setClearColor(Color::Gray);
     m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));

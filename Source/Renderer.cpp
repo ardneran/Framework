@@ -40,11 +40,11 @@ int Renderer::getHeight() {
     return m_height;
 }
 
-void Renderer::setWindow(AbstractWindow* const window) {
+void Renderer::setWindow(SDLWindow* const window) {
     m_window = window;
 }
 
-AbstractWindow* Renderer::getWindow() const {
+SDLWindow* Renderer::getWindow() const {
     return m_window;
 }
 

@@ -12,7 +12,7 @@
 #include <iostream>
 #include <string.h>
 
-#include "AbstractWindow.h"
+#include "SDLWindow.h"
 #include "Buffer.h"
 #include "Camera.h"
 #include "Color.h"
@@ -34,7 +34,7 @@
 
 //namespace Engine {
 
-class AbstractWindow;
+class SDLWindow;
 
 class Renderer {
 
@@ -48,8 +48,8 @@ public:
     void setHeight(const int& height);
     int getHeight();
 
-    void setWindow(AbstractWindow* const window);
-    AbstractWindow* getWindow() const;
+    void setWindow(SDLWindow* const window);
+    SDLWindow* getWindow() const;
 
     virtual void initialize() = 0;
     virtual void deinitialize() = 0;
@@ -84,7 +84,7 @@ protected:
     Color4f m_clearColor;
     float m_clearDepth;
     unsigned int m_clearStencil;
-    AbstractWindow* m_window;
+    SDLWindow* m_window;
 };
 //}
 

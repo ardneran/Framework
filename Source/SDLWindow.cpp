@@ -1,14 +1,14 @@
 //
-//  AbstractWindow.cpp
+//  SDLWindow.cpp
 //
 //
 //  Created by Narendra Umate on 8/17/15.
 //
 //
 
-#include "AbstractWindow.h"
+#include "SDLWindow.h"
 
-AbstractWindow::AbstractWindow(Parameters& parameters)
+SDLWindow::SDLWindow(Parameters& parameters)
 : m_title(parameters.title)
 , m_xOrigin(parameters.xOrigin)
 , m_yOrigin(parameters.yOrigin)
@@ -26,7 +26,7 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
     initializeOther();
 }
 
-AbstractWindow::~AbstractWindow() {
+SDLWindow::~SDLWindow() {
     deinitializeOther();
     deinitializeOpenGL();
     deinitializeSDLttf();
@@ -34,7 +34,7 @@ AbstractWindow::~AbstractWindow() {
     deinitializeSDL();
 }
 
-void AbstractWindow::handlePollEvent() {
+void SDLWindow::handlePollEvent() {
     while (SDL_PollEvent(&m_sdlEvent)) {
         switch (m_sdlEvent.type) {
             case SDL_WINDOWEVENT: {
@@ -53,12 +53,12 @@ void AbstractWindow::handlePollEvent() {
     }
 }
 
-void AbstractWindow::onMove(const int& x, const int& y) {
+void SDLWindow::onMove(const int& x, const int& y) {
     m_xOrigin = x;
     m_yOrigin = y;
 }
 
-bool AbstractWindow::onResize(const int& xSize, const int& ySize) {
+bool SDLWindow::onResize(const int& xSize, const int& ySize) {
     m_minimized = false;
     m_maximized = false;
 
@@ -79,50 +79,50 @@ bool AbstractWindow::onResize(const int& xSize, const int& ySize) {
     return false;
 }
 
-void AbstractWindow::onMinimize() {
+void SDLWindow::onMinimize() {
     m_minimized = true;
     m_maximized = false;
 }
 
-void AbstractWindow::onMaximize() {
+void SDLWindow::onMaximize() {
     m_minimized = false;
     m_maximized = true;
 }
 
-void AbstractWindow::onRestore() {
+void SDLWindow::onRestore() {
     m_minimized = false;
     m_maximized = false;
 }
 
-void AbstractWindow::onDisplay() {
+void SDLWindow::onDisplay() {
 }
 
-void AbstractWindow::onIdle() {
+void SDLWindow::onIdle() {
 }
 
-void AbstractWindow::setSwapInterval(const int& syncInterval) {
+void SDLWindow::setSwapInterval(const int& syncInterval) {
 	SDL_GL_SetSwapInterval(syncInterval);
 }
 
-void AbstractWindow::swapWindow() {
+void SDLWindow::swapWindow() {
 	SDL_GL_SwapWindow(m_sdlWindow);
 }
 
-void AbstractWindow::initializeSDL() {
+void SDLWindow::initializeSDL() {
     unsigned int flags = SDL_INIT_VIDEO;
     assert(SDL_Init(flags) == 0);
 }
 
-void AbstractWindow::initializeSDLimage() {
+void SDLWindow::initializeSDLimage() {
     unsigned int flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF;
     assert(IMG_Init(flags) == flags);
 }
 
-void AbstractWindow::initializeSDLttf() {
+void SDLWindow::initializeSDLttf() {
     assert(TTF_Init() == 0);
 }
 
-void AbstractWindow::initializeOpenGL() {
+void SDLWindow::initializeOpenGL() {
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 2);
@@ -247,32 +247,32 @@ void AbstractWindow::initializeOpenGL() {
 	m_renderer->setWindow(this);
 }
 
-void AbstractWindow::initializeOther() {
+void SDLWindow::initializeOther() {
     m_camera = new Camera(Camera::Perspective);
     m_culler = new Culler();
     m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
     m_objMeshLoader = new ObjMeshLoader();
 }
 
-void AbstractWindow::deinitializeSDL() {
+void SDLWindow::deinitializeSDL() {
     SDL_Quit();
 }
 
-void AbstractWindow::deinitializeSDLimage() {
+void SDLWindow::deinitializeSDLimage() {
     IMG_Quit();
 }
 
-void AbstractWindow::deinitializeSDLttf() {
+void SDLWindow::deinitializeSDLttf() {
     TTF_Quit();
 }
 
-void AbstractWindow::deinitializeOpenGL() {
+void SDLWindow::deinitializeOpenGL() {
     if (m_sdlWindow != NULL) {
         SDL_DestroyWindow(m_sdlWindow);
     }
 }
 
-void AbstractWindow::deinitializeOther() {
+void SDLWindow::deinitializeOther() {
     if (m_objMeshLoader != NULL) {
         delete m_objMeshLoader;
     }
@@ -287,7 +287,7 @@ void AbstractWindow::deinitializeOther() {
     }
 }
 
-void AbstractWindow::handleWindowEvent() {
+void SDLWindow::handleWindowEvent() {
     switch (m_sdlEvent.window.event) {
         case SDL_WINDOWEVENT_MOVED:
             onMove(m_sdlEvent.window.data1, m_sdlEvent.window.data2);
@@ -313,7 +313,7 @@ void AbstractWindow::handleWindowEvent() {
     }
 }
 
-void AbstractWindow::handleKeyUpEvent() {
+void SDLWindow::handleKeyUpEvent() {
     switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             break;
@@ -322,7 +322,7 @@ void AbstractWindow::handleKeyUpEvent() {
     }
 }
 
-void AbstractWindow::handleKeyDownEvent() {
+void SDLWindow::handleKeyDownEvent() {
     switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             m_active = false;

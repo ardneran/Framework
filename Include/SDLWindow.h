@@ -1,13 +1,13 @@
 //
-//  AbstractWindow.h
+//  SDLWindow.h
 //
 //
 //  Created by Narendra Umate on 8/17/15.
 //
 //
 
-#ifndef ____AbstractWindow__
-#define ____AbstractWindow__
+#ifndef ____SDLWindow__
+#define ____SDLWindow__
 
 #include <cassert>
 #include <iostream>
@@ -23,7 +23,7 @@
 
 class Renderer;
 
-class AbstractWindow {
+class SDLWindow {
 public:
     struct Parameters {
         Parameters()
@@ -42,8 +42,8 @@ public:
         Renderer* renderer;
     };
 
-	AbstractWindow(Parameters& parameters); // Abstract base class
-    virtual ~AbstractWindow() = 0;
+	SDLWindow(Parameters& parameters); // Abstract base class
+    virtual ~SDLWindow() = 0;
 
     inline void setTitle(const std::string& title) { m_title = title; }
     inline std::string getTitle() { return m_title; }
@@ -111,4 +111,4 @@ private:
     SDL_GLContext m_sdlContext;
 };
 
-#endif /* defined(____AbstractWindow__) */
+#endif /* defined(____SDLWindow__) */
