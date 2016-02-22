@@ -14,9 +14,11 @@ SDLWindow::SDLWindow(Parameters& parameters)
     initializeSDLimage();
     initializeSDLttf();
     initializeOpenGL();
+	m_renderer->initialize(); // Called here after the context is created.
 }
 
 SDLWindow::~SDLWindow() {
+	m_renderer->deinitialize(); // Called here before the context is destroyed.
     deinitializeOpenGL();
     deinitializeSDLttf();
     deinitializeSDLimage();

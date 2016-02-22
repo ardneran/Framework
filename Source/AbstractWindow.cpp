@@ -29,17 +29,9 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 	m_culler = new Culler();
 	m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
 	m_objMeshLoader = new ObjMeshLoader();
-	if (m_renderer) {
-		m_renderer->initialize();
-		m_renderer->setClearColor(Color::Gray);
-		m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
-	}
 }
 
 AbstractWindow::~AbstractWindow() {
-	if (m_renderer) {
-		m_renderer->deinitialize();
-	}
 	if (m_objMeshLoader != NULL) {
 		delete m_objMeshLoader;
 	}
