@@ -19,6 +19,13 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 , m_maximized(false)
 , m_active(true) {
 	m_camera = new Camera(Camera::Perspective);
+	if (m_camera) {
+		if (m_camera->getType() == Camera::Orthographic) {
+			m_camera->setFrustum(float(parameters.xSize) / 2.0f, -float(parameters.xSize) / 2.0f, float(parameters.ySize) / 2.0f, -float(parameters.ySize) / 2.0f, 1.0f, 100.0f);
+		} else if (m_camera->getType() == Camera::Perspective) {
+			m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
+		}
+	}
 	m_culler = new Culler();
 	m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
 	m_objMeshLoader = new ObjMeshLoader();
@@ -27,19 +34,9 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 		m_renderer->setClearColor(Color::Gray);
 		m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
 	}
-	if (m_camera) {
-		if (m_camera->getType() == Camera::Orthographic) {
-			m_camera->setFrustum(float(parameters.xSize) / 2.0f, -float(parameters.xSize) / 2.0f, float(parameters.ySize) / 2.0f, -float(parameters.ySize) / 2.0f, 1.0f, 100.0f);
-		} else if (m_camera->getType() == Camera::Perspective) {
-			m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
-		}
-	}
 }
 
 AbstractWindow::~AbstractWindow() {
-	if (m_camera) {
-		// Deinitialize camera.
-	}
 	if (m_renderer) {
 		m_renderer->deinitialize();
 	}
