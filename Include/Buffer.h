@@ -82,7 +82,7 @@ public:
 
 	void bind();
 	void unbind();
-	void initialize();
+	void initialize(const int& width, const int& height, void* const data);
 	void deinitialize();
 };
 ////////////////////////////////////////////////////////////////////////////////

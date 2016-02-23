@@ -32,3 +32,7 @@ std::list<VisualSpatial*> ObjMeshLoader::load(const std::string& filepath, const
     }
     return visuals;
 }
+
+void ObjMeshLoader::loadMaterial(const tinyobj::material_t& material) {
+    // TODO
+}

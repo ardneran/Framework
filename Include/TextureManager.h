@@ -15,17 +15,16 @@
 
 class TextureManager {
 public:
-	TextureManager(const std::string& basePath);
+	TextureManager();
 	~TextureManager();
 
-	void loadTexture(const std::string& textureName);
-	int getSizeX(const std::string& textureName);
-	int getSizeY(const std::string& textureName);
-	void* getPixels(const std::string& textureName);
+	void loadTexture(const std::string& path);
+	int getSizeX(const std::string& path);
+	int getSizeY(const std::string& path);
+	void* getPixels(const std::string& path);
 
 private:
-	std::string m_basePath;
-	std::map<std::string, Image*> m_nameImageMap;
+	std::map<std::string, Image*> m_pathImageMap;
 };
 
 #endif /* defined(__Application__TextureManager__) */

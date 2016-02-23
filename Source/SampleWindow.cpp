@@ -10,7 +10,7 @@
 
 SampleWindow::SampleWindow(Parameters& parameters)
 : SDLWindow(parameters) {
-	m_renderer->setClearColor(Color::Gray);
+	m_renderer->setClearColor(Gray);
 	m_camera->setPosition(Vec3(0.0f, 0.0f, 10.0f));
     createEffects();
     createScene();

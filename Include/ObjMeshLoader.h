@@ -20,6 +20,9 @@ public:
     virtual ~ObjMeshLoader();
 
     std::list<VisualSpatial*> load(const std::string& filepath, const std::string& filebase);
+    
+private:
+    void loadMaterial(const tinyobj::material_t& material);
 };
 
 #endif /* ObjMeshLoader_h */

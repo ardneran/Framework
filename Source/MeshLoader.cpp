@@ -8,10 +8,12 @@
 
 #include "MeshLoader.h"
 
-MeshLoader::MeshLoader() {
+MeshLoader::MeshLoader()
+: m_textureManager(new TextureManager()){
 }
 
 MeshLoader::~MeshLoader() {
+    delete m_textureManager;
 }
 
 std::list<VisualSpatial*> MeshLoader::load(const std::string& filepath, const std::string& filebase) {

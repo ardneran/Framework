@@ -10,6 +10,7 @@
 #define MeshLoader_h
 
 #include "VisualSpatial.h"
+#include "TextureManager.h"
 
 class MeshLoader {
 public:
@@ -17,6 +18,9 @@ public:
     virtual ~MeshLoader() = 0;
 
     virtual std::list<VisualSpatial*> load(const std::string& filepath, const std::string& filebase) = 0;
+    
+protected:
+    TextureManager* m_textureManager;
 };
 
 #endif /* MeshLoader_h */
