@@ -86,4 +86,38 @@ public:
 	void deinitialize();
 };
 ////////////////////////////////////////////////////////////////////////////////
+class Material {
+public:
+	Material();
+	virtual ~Material();
+
+	void enable();
+	void disable();
+
+	void initialize();
+	void deinitialize();
+
+public:
+	////std::string name;
+	float ambient[3];
+	float diffuse[3];
+	float specular[3];
+	float transmittance[3];
+	float emission[3];
+	float shininess;
+	float ior;      // index of refraction
+	float dissolve; // 1 == opaque; 0 == fully transparent
+	int illum; 	// illumination model (see http://www.fileformat.info/format/material/)
+	int dummy; // Supress padding warning.
+
+	Texture2D ambient_texname;            // map_Ka
+	Texture2D diffuse_texname;            // map_Kd
+	Texture2D specular_texname;           // map_Ks
+	Texture2D specular_highlight_texname; // map_Ns
+	Texture2D bump_texname;               // map_bump, bump
+	Texture2D displacement_texname;       // disp
+	Texture2D alpha_texname;              // map_d
+	////std::map<std::string, std::string> unknown_parameter;
+};
+////////////////////////////////////////////////////////////////////////////////
 #endif /* Buffer_h */

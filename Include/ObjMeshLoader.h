@@ -22,7 +22,8 @@ public:
     std::list<VisualSpatial*> load(const std::string& filepath, const std::string& filebase);
     
 private:
-    void loadMaterial(const tinyobj::material_t& material);
+    void loadMaterial(VisualSpatial* const visual, const tinyobj::material_t& material, const std::string& filebase);
+	void loadTexture(const std::string& base, const std::string& name, Texture2D& texture);
 };
 
 #endif /* ObjMeshLoader_h */

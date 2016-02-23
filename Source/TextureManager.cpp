@@ -19,22 +19,12 @@ TextureManager::~TextureManager() {
 	}
 }
 
-void TextureManager::loadTexture(const std::string& path) {
+Image* TextureManager::loadTexture(const std::string& path) {
 	if (m_pathImageMap[path] == NULL)
 	{
-		m_pathImageMap[path] = new Image(path);
-		m_pathImageMap[path]->flipY();
+		Image* image = new Image(path);
+		image->flipY();
+		m_pathImageMap[path] = image;
 	}
-}
-
-int TextureManager::getSizeX(const std::string& path) {
-	return m_pathImageMap[path]->getSizeX();
-}
-
-int TextureManager::getSizeY(const std::string& path) {
-	return m_pathImageMap[path]->getSizeY();
-}
-
-void* TextureManager::getPixels(const std::string& path) {
-	return &(m_pathImageMap[path]->getPixels()[0]);
+	return m_pathImageMap[path];
 }

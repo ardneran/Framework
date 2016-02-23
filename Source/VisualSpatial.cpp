@@ -9,21 +9,26 @@
 #include "VisualSpatial.h"
 
 VisualSpatial::VisualSpatial()
-: m_vertexBuffer(new VertexBuffer())
+: m_visualEffect(NULL)
+, m_vertexBuffer(new VertexBuffer())
 , m_indexBuffer(new IndexBuffer())
-, m_visualEffect(NULL)
+, m_material(new Material())
 , m_modelBoundingBox() {
 }
 
 VisualSpatial::~VisualSpatial() {
+	if (m_indexBuffer) {
+		m_indexBuffer->deinitialize();
+		delete m_indexBuffer;
+	}
     if (m_vertexBuffer) {
         m_vertexBuffer->deinitialize();
         delete m_vertexBuffer;
     }
-    if (m_indexBuffer) {
-        m_indexBuffer->deinitialize();
-        delete m_indexBuffer;
-    }
+	if (m_material) {
+		m_material->deinitialize();
+		delete m_material;
+	}
 }
 
 void VisualSpatial::update() {

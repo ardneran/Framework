@@ -178,3 +178,21 @@ void Texture2D::deinitialize() {
 	// TODO
 }
 ////////////////////////////////////////////////////////////////////////////////
+Material::Material() {
+}
+
+Material::~Material() {
+}
+
+void Material::enable() {
+}
+
+void Material::disable() {
+}
+
+void Material::initialize() {
+}
+
+void Material::deinitialize() {
+}
+////////////////////////////////////////////////////////////////////////////////

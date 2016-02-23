@@ -18,10 +18,7 @@ public:
 	TextureManager();
 	~TextureManager();
 
-	void loadTexture(const std::string& path);
-	int getSizeX(const std::string& path);
-	int getSizeY(const std::string& path);
-	void* getPixels(const std::string& path);
+	Image* loadTexture(const std::string& path);
 
 private:
 	std::map<std::string, Image*> m_pathImageMap;

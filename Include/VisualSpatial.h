@@ -69,9 +69,12 @@ public:
 
     Mat3& getWorldViewNormMatrix() { return m_worldViewNormMatrix; }
     Mat4& getWorldViewProjectionMatrix() { return m_worldViewProjectionMatrix; }
+
+    VisualEffect* getVisualEffect() { return m_visualEffect; }
     VertexBuffer* getVertexBuffer() { return m_vertexBuffer; }
     IndexBuffer* getIndexBuffer() { return m_indexBuffer; }
-    VisualEffect* getVisualEffect() { return m_visualEffect; }
+	Material* getMaterial() { return m_material; }
+
     BoundingBox getModelBoudingBox() { return m_modelBoundingBox; }
 
 protected:
@@ -80,9 +83,11 @@ protected:
     void updateWorldViewProjectionMatrix();
 
 private:
+	VisualEffect* m_visualEffect;
     VertexBuffer* m_vertexBuffer;
     IndexBuffer* m_indexBuffer;
-    VisualEffect* m_visualEffect;
+	Material* m_material;
+
     BoundingBox m_modelBoundingBox;
 
     Mat3 m_worldViewNormMatrix;
