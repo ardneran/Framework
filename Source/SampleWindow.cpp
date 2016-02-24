@@ -28,7 +28,7 @@ void SampleWindow::createEffects() {
 }
 
 void SampleWindow::createScene() {
-    const int visualEffectType = 0;
+    const int visualEffectType = 2;
 #define TEST
 #ifdef TEST
     std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("house/house.obj"),

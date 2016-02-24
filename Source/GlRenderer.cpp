@@ -169,10 +169,19 @@ void GlRenderer::draw(VisualSpatial* visual) {
         // Set World View Norm Matrix
         GLint worldViewNormMatrixLocation = glGetUniformLocation(program, "worldViewNorm");
         glUniformMatrix3fv(worldViewNormMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewNormMatrix()));
-        // Set World View Projection Matrix
+        // Set World View Projection Matrix.
         GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
         glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewProjectionMatrix()));
-		// Set Textures
+		// Set Parameters
+		vEffect->getProgram()->set3fv("ambient", 1, material->ambient);
+		vEffect->getProgram()->set3fv("diffuse", 1, material->diffuse);
+		vEffect->getProgram()->set3fv("specular", 1, material->specular);
+		vEffect->getProgram()->set3fv("transmittance", 1, material->transmittance);
+		vEffect->getProgram()->set3fv("emission", 1, material->emission);
+		vEffect->getProgram()->set1f("shininess", material->shininess);
+		vEffect->getProgram()->set1f("ior", material->ior);
+		// Remove Set Textures
+		/*
 		glUniform1i(glGetUniformLocation(program, "ambientSampler"), 0); // ambient
 		glUniform1i(glGetUniformLocation(program, "diffuseSampler"), 1); // diffuse
 		glUniform1i(glGetUniformLocation(program, "specularSampler"), 2); // specular
@@ -180,6 +189,8 @@ void GlRenderer::draw(VisualSpatial* visual) {
 		glUniform1i(glGetUniformLocation(program, "bumpSampler"), 4); // bump
 		glUniform1i(glGetUniformLocation(program, "displacementSampler"), 5); // displacement
 		glUniform1i(glGetUniformLocation(program, "alphaSampler"), 6); // alpha
+		*/
+		// Remove Set Textures
 		// Bind
 		vBuffer->bind();
 		iBuffer->bind();
