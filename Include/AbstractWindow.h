@@ -82,6 +82,9 @@ protected:
 	Culler* m_culler;
 	Octree* m_octree;
 	ObjMeshLoader* m_objMeshLoader;
+
+	// TODO Convert to a list.
+	VisualEffect* m_visualEffects[3];
 };
 
 #endif /* AbstractWindow_h */

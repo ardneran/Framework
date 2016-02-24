@@ -26,8 +26,6 @@ private:
 
 	Vec3 getDirection(const unsigned int& octant); // TODO Remove
 	void testTransform(); // TODO Remove
-
-    VisualEffect* m_visualEffects[3];
 };
 
 #endif
