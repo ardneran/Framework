@@ -158,10 +158,11 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
 void GlRenderer::draw(VisualSpatial* visual) {
+    VisualEffect* vEffect = visual->getVisualEffect();
     VertexBuffer* vBuffer = visual->getVertexBuffer();
     IndexBuffer* iBuffer = visual->getIndexBuffer();
-    VisualEffect* vEffect = visual->getVisualEffect();
-    if (vBuffer != NULL && iBuffer != NULL && vEffect != NULL) {
+	Material* material = visual->getMaterial();
+    if (vEffect && vBuffer && iBuffer && material) {
         // Set Program
         GLuint program = vEffect->getProgram()->getProgram();
         glUseProgram(program);
@@ -171,12 +172,22 @@ void GlRenderer::draw(VisualSpatial* visual) {
         // Set World View Projection Matrix
         GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
         glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewProjectionMatrix()));
+		// Set Textures
+		glUniform1i(glGetUniformLocation(program, "ambientSampler"), 0); // ambient
+		glUniform1i(glGetUniformLocation(program, "diffuseSampler"), 1); // diffuse
+		glUniform1i(glGetUniformLocation(program, "specularSampler"), 2); // specular
+		glUniform1i(glGetUniformLocation(program, "specularHighlightSampler"), 3); // specular highlight
+		glUniform1i(glGetUniformLocation(program, "bumpSampler"), 4); // bump
+		glUniform1i(glGetUniformLocation(program, "displacementSampler"), 5); // displacement
+		glUniform1i(glGetUniformLocation(program, "alphaSampler"), 6); // alpha
 		// Bind
 		vBuffer->bind();
 		iBuffer->bind();
+		material->enable();
 		// Draw
 		glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
 		// Unbind
+		material->disable();
 		iBuffer->unbind();
 		vBuffer->unbind();
         // Unset Program
