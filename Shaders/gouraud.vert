@@ -28,7 +28,7 @@ uniform sampler2D specularTextureSampler;
 void main()
 {
 	gl_Position = worldViewProjection * vec4(position, 1.0);
-	vec3 vPosition = gl_Position;
+	vec4 vPosition = gl_Position;
 	vec3 P = vPosition.xyz;
 	vec3 N = normalize(worldViewNorm * normal);
 	vec3 emission_ = emission;
