@@ -92,6 +92,14 @@ void AbstractWindow::onDisplay() {
 
 void AbstractWindow::onIdle() {
 	m_renderer->clearBuffers();
+	// Push common uniforms to all shaders.
+	Vec3 cameraPosition;
+	m_camera->getPosition(cameraPosition);
+	// TODO Remove hardcoded loop limit.
+	for (int i = 0; i < 3; ++i) {
+		m_visualEffects[i]->getProgram()->set3fv("cameraPosition", 1, cameraPosition.data);
+	}
+	// Iterate and Draw.
 	std::list<Spatial*> spatials = m_culler->cull(m_camera, m_octree);
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
