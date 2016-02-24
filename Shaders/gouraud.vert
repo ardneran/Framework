@@ -13,7 +13,7 @@ out vec4 vColor;
 
 uniform mat3 worldViewNorm;
 uniform mat4 worldViewProjection;
-uniform vec3 eyePosition;
+uniform vec3 cameraPosition;
 uniform vec3 ambient;
 uniform vec3 diffuse;
 uniform vec3 specular;
@@ -24,7 +24,6 @@ uniform float shininess;
 uniform sampler2D ambientTextureSampler;
 uniform sampler2D diffuseTextureSampler;
 uniform sampler2D specularTextureSampler;
-uniform sampler2D normalTextureSampler;
 
 void main()
 {
@@ -34,10 +33,10 @@ void main()
 	vec3 N = normalize(worldViewNorm * normal);
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, texcoord).rgb;
-	vec3 L = normalize(eyePosition - P);
+	vec3 L = normalize(cameraPosition - P);
 	float diffuseLight = max(dot(N, L), 0);
 	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, texcoord).rgb * diffuseLight;
-	vec3 V = normalize(eyePosition - P);
+	vec3 V = normalize(cameraPosition - P);
 	vec3 H = normalize(L + V);
 	float specularLight = 0.0;
 	if (diffuseLight <= 0.0)
