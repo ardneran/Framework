@@ -14,7 +14,7 @@
 class VisualEffect {
 public:
     VisualEffect(GlProgram* program);
-    ~VisualEffect();
+    virtual ~VisualEffect();
 
     void setProgram(GlProgram* program);
     GlProgram* getProgram();
