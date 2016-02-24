@@ -136,25 +136,12 @@ void IndexBuffer::deinitialize() {
     m_size = 0;
 }
 ////////////////////////////////////////////////////////////////////////////////
-Texture::Texture()
-: m_texture(0) {
+Texture2D::Texture2D() {
 	glGenTextures(1, &m_texture);
 }
 
-Texture::~Texture() {
-	glDeleteTextures(1, &m_texture);
-}
-
-void Texture::bind() {
-}
-
-void Texture::unbind() {
-}
-////////////////////////////////////////////////////////////////////////////////
-Texture2D::Texture2D() {
-}
-
 Texture2D::~Texture2D() {
+	glDeleteTextures(1, &m_texture);
 }
 
 void Texture2D::bind() {
@@ -185,9 +172,39 @@ Material::~Material() {
 }
 
 void Material::enable() {
+	glActiveTexture(GL_TEXTURE0);
+	ambient_texname.bind();
+	glActiveTexture(GL_TEXTURE1);
+	diffuse_texname.bind();
+	glActiveTexture(GL_TEXTURE2);
+	specular_texname.bind();
+	glActiveTexture(GL_TEXTURE3);
+	specular_highlight_texname.bind();
+	glActiveTexture(GL_TEXTURE4);
+	bump_texname.bind();
+	glActiveTexture(GL_TEXTURE5);
+	displacement_texname.bind();
+	glActiveTexture(GL_TEXTURE6);
+	alpha_texname.bind();
+	glActiveTexture(0);
 }
 
 void Material::disable() {
+	glActiveTexture(GL_TEXTURE0);
+	ambient_texname.unbind();
+	glActiveTexture(GL_TEXTURE1);
+	diffuse_texname.unbind();
+	glActiveTexture(GL_TEXTURE2);
+	specular_texname.unbind();
+	glActiveTexture(GL_TEXTURE3);
+	specular_highlight_texname.unbind();
+	glActiveTexture(GL_TEXTURE4);
+	bump_texname.unbind();
+	glActiveTexture(GL_TEXTURE5);
+	displacement_texname.unbind();
+	glActiveTexture(GL_TEXTURE6);
+	alpha_texname.unbind();
+	glActiveTexture(0);
 }
 
 void Material::initialize() {

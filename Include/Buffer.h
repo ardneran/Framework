@@ -63,19 +63,7 @@ public:
     void deinitialize();
 };
 ////////////////////////////////////////////////////////////////////////////////
-class Texture {
-public:
-	Texture();
-	virtual ~Texture() = 0;
-
-	virtual void bind() = 0;
-	virtual void unbind() = 0;
-
-protected:
-	unsigned int m_texture;
-};
-////////////////////////////////////////////////////////////////////////////////
-class Texture2D : public Texture {
+class Texture2D {
 public:
 	Texture2D();
 	virtual ~Texture2D();
@@ -84,6 +72,9 @@ public:
 	void unbind();
 	void initialize(const int& width, const int& height, void* const data);
 	void deinitialize();
+
+private:
+	unsigned int m_texture;
 };
 ////////////////////////////////////////////////////////////////////////////////
 class Material {
