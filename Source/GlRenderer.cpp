@@ -190,7 +190,6 @@ void GlRenderer::draw(VisualSpatial* visual) {
 		glUniform1i(glGetUniformLocation(program, "displacementSampler"), 5); // displacement
 		glUniform1i(glGetUniformLocation(program, "alphaSampler"), 6); // alpha
 		*/
-		// Remove Set Textures
 		// Bind
 		vBuffer->bind();
 		iBuffer->bind();
