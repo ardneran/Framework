@@ -12,19 +12,21 @@ TextureManager::TextureManager() {
 }
 
 TextureManager::~TextureManager() {
-	for (std::map<std::string, Image*>::iterator it = m_pathImageMap.begin(); it != m_pathImageMap.end(); ++it)
+	for (std::map<std::string, Texture2D*>::iterator it = m_pathTextureMap.begin(); it != m_pathTextureMap.end(); ++it)
 	{
 		delete it->second;
 		it->second = NULL;
 	}
 }
 
-Image* TextureManager::loadTexture(const std::string& path) {
-	if (m_pathImageMap[path] == NULL)
+Texture2D* TextureManager::loadTexture(const std::string& path) {
+	if (m_pathTextureMap[path] == NULL)
 	{
-		Image* image = new Image(path);
-		image->flipY();
-		m_pathImageMap[path] = image;
+        Image image(path);
+        image.flipY();
+        Texture2D* texture = new Texture2D();
+        texture->initialize(image.getSizeX(), image.getSizeY(), image.getPixels());
+		m_pathTextureMap[path] = texture;
 	}
-	return m_pathImageMap[path];
+	return m_pathTextureMap[path];
 }

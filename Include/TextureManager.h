@@ -11,6 +11,7 @@
 
 #include <map>
 #include <string>
+#include "Buffer.h"
 #include "stb_image_helper.h"
 
 class TextureManager {
@@ -18,10 +19,10 @@ public:
 	TextureManager();
 	~TextureManager();
 
-	Image* loadTexture(const std::string& path);
+	Texture2D* loadTexture(const std::string& path);
 
 private:
-	std::map<std::string, Image*> m_pathImageMap;
+	std::map<std::string, Texture2D*> m_pathTextureMap;
 };
 
 #endif /* defined(__Application__TextureManager__) */

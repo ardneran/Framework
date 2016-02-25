@@ -163,46 +163,81 @@ void Texture2D::deinitialize() {
 	// TODO
 }
 ////////////////////////////////////////////////////////////////////////////////
-Material::Material() {
+Material::Material()
+: ambient_texname(NULL)
+, diffuse_texname(NULL)
+, specular_texname(NULL)
+, specular_highlight_texname(NULL)
+, bump_texname(NULL)
+, displacement_texname(NULL)
+, alpha_texname(NULL){
 }
 
 Material::~Material() {
 }
 
 void Material::enable() {
-	glActiveTexture(GL_TEXTURE0);
-	ambient_texname.bind();
-	glActiveTexture(GL_TEXTURE1);
-	diffuse_texname.bind();
-	glActiveTexture(GL_TEXTURE2);
-	specular_texname.bind();
-	glActiveTexture(GL_TEXTURE3);
-	specular_highlight_texname.bind();
-	glActiveTexture(GL_TEXTURE4);
-	bump_texname.bind();
-	glActiveTexture(GL_TEXTURE5);
-	displacement_texname.bind();
-	glActiveTexture(GL_TEXTURE6);
-	alpha_texname.bind();
+    if (ambient_texname) {
+        glActiveTexture(GL_TEXTURE0);
+        ambient_texname->bind();
+    }
+    if (diffuse_texname) {
+        glActiveTexture(GL_TEXTURE1);
+        diffuse_texname->bind();
+    }
+    if (specular_texname) {
+        glActiveTexture(GL_TEXTURE2);
+        specular_texname->bind();
+    }
+    if (specular_highlight_texname) {
+        glActiveTexture(GL_TEXTURE3);
+        specular_highlight_texname->bind();
+    }
+    if (bump_texname) {
+        glActiveTexture(GL_TEXTURE4);
+        bump_texname->bind();
+    }
+    if (displacement_texname) {
+        glActiveTexture(GL_TEXTURE5);
+        displacement_texname->bind();
+    }
+    if (alpha_texname) {
+        glActiveTexture(GL_TEXTURE6);
+        alpha_texname->bind();
+    }
 	glActiveTexture(0);
 }
 
 void Material::disable() {
-	glActiveTexture(GL_TEXTURE0);
-	ambient_texname.unbind();
-	glActiveTexture(GL_TEXTURE1);
-	diffuse_texname.unbind();
-	glActiveTexture(GL_TEXTURE2);
-	specular_texname.unbind();
-	glActiveTexture(GL_TEXTURE3);
-	specular_highlight_texname.unbind();
-	glActiveTexture(GL_TEXTURE4);
-	bump_texname.unbind();
-	glActiveTexture(GL_TEXTURE5);
-	displacement_texname.unbind();
-	glActiveTexture(GL_TEXTURE6);
-	alpha_texname.unbind();
-	glActiveTexture(0);
+    if (ambient_texname) {
+        glActiveTexture(GL_TEXTURE0);
+        ambient_texname->unbind();
+    }
+    if (diffuse_texname) {
+        glActiveTexture(GL_TEXTURE1);
+        diffuse_texname->unbind();
+    }
+    if (specular_texname) {
+        glActiveTexture(GL_TEXTURE2);
+        specular_texname->unbind();
+    }
+    if (specular_highlight_texname) {
+        glActiveTexture(GL_TEXTURE3);
+        specular_highlight_texname->unbind();
+    }
+    if (bump_texname) {
+        glActiveTexture(GL_TEXTURE4);
+        bump_texname->unbind();
+    }
+    if (displacement_texname) {
+        glActiveTexture(GL_TEXTURE5);
+        displacement_texname->unbind();
+    }
+    if (alpha_texname) {
+        glActiveTexture(GL_TEXTURE6);
+        alpha_texname->unbind();
+    }
+    glActiveTexture(0);
 }
 
 void Material::initialize() {

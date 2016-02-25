@@ -72,10 +72,10 @@ void ObjMeshLoader::loadMaterial(VisualSpatial* const visual, const tinyobj::mat
 	loadTexture(filebase, material.alpha_texname, currentMaterial->alpha_texname);
 }
 
-void ObjMeshLoader::loadTexture(const std::string& base, const std::string& name, Texture2D& texture) {
+void ObjMeshLoader::loadTexture(const std::string& base, const std::string& name, Texture2D*& texture) {
 	if (!base.empty() && !name.empty()) {
-		std::string filepath = base + name;
-		Image* image = m_textureManager->loadTexture(filepath);
-		texture.initialize(image->getSizeX(), image->getSizeY(), image->getPixels());
-	}
+        texture = m_textureManager->loadTexture(base + name);
+    } else {
+        texture = NULL;
+    }
 }

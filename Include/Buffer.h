@@ -101,13 +101,13 @@ public:
 	int illum; 	// illumination model (see http://www.fileformat.info/format/material/)
 	int dummy; // Supress padding warning.
 
-	Texture2D ambient_texname;            // map_Ka
-	Texture2D diffuse_texname;            // map_Kd
-	Texture2D specular_texname;           // map_Ks
-	Texture2D specular_highlight_texname; // map_Ns
-	Texture2D bump_texname;               // map_bump, bump
-	Texture2D displacement_texname;       // disp
-	Texture2D alpha_texname;              // map_d
+	Texture2D* ambient_texname;            // map_Ka
+	Texture2D* diffuse_texname;            // map_Kd
+	Texture2D* specular_texname;           // map_Ks
+	Texture2D* specular_highlight_texname; // map_Ns
+	Texture2D* bump_texname;               // map_bump, bump
+	Texture2D* displacement_texname;       // disp
+	Texture2D* alpha_texname;              // map_d
 	////std::map<std::string, std::string> unknown_parameter;
 };
 ////////////////////////////////////////////////////////////////////////////////
