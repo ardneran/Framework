@@ -180,16 +180,6 @@ void GlRenderer::draw(VisualSpatial* visual) {
 		vEffect->getProgram()->set3fv("emission", 1, material->emission);
 		vEffect->getProgram()->set1f("shininess", material->shininess);
 		vEffect->getProgram()->set1f("ior", material->ior);
-		// Remove Set Textures
-		/*
-		glUniform1i(glGetUniformLocation(program, "ambientSampler"), 0); // ambient
-		glUniform1i(glGetUniformLocation(program, "diffuseSampler"), 1); // diffuse
-		glUniform1i(glGetUniformLocation(program, "specularSampler"), 2); // specular
-		glUniform1i(glGetUniformLocation(program, "specularHighlightSampler"), 3); // specular highlight
-		glUniform1i(glGetUniformLocation(program, "bumpSampler"), 4); // bump
-		glUniform1i(glGetUniformLocation(program, "displacementSampler"), 5); // displacement
-		glUniform1i(glGetUniformLocation(program, "alphaSampler"), 6); // alpha
-		*/
 		// Bind
 		vBuffer->bind();
 		iBuffer->bind();
