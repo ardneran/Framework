@@ -26,7 +26,7 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 			m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
 		}
 	}
-	m_culler = new Culler();
+	m_culler = new Culler(m_camera);
 	m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
 	m_objMeshLoader = new ObjMeshLoader();
 }
@@ -100,7 +100,8 @@ void AbstractWindow::onIdle() {
 		m_visualEffects[i]->getProgram()->set3fv("cameraPosition", 1, cameraPosition.data);
 	}
 	// Iterate and Draw.
-	std::list<Spatial*> spatials = m_culler->cull(m_camera, m_octree);
+	std::list<Spatial*> spatials;
+	m_culler->cull(m_octree, spatials);
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
 		if (visual) {

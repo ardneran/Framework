@@ -11,6 +11,10 @@
 //namespace Engine
 //{
 
+float invsqrt(const float& value) {
+	return 1.0f / sqrtf(value);
+}
+
 // Is power of two
 // http://graphics.stanford.edu/~seander/bithacks.html
 // Determining if an integer is a power of 2 branch less

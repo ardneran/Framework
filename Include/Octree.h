@@ -21,7 +21,9 @@ public:
 
     bool insert(Spatial* spatial);
     void update();
-	std::list<Spatial*> collect();
+	void collectTree(std::list<Spatial*>& collection);
+	void collectNode(std::list<Spatial*>& collection);
+	Octree* node(const int& index);
 
 private:
     enum OctreeChildren {

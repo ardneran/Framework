@@ -59,6 +59,7 @@ typedef unsigned int UINT;
 typedef unsigned int uint;
 #endif //uint
 
+float invsqrt(const float& value);
 bool isp2(const int& value);
 int flp2(const int& value);
 int clp2(const int& value);

@@ -175,18 +175,21 @@ void Octree::update() {
     }
 }
 
-std::list<Spatial*> Octree::collect() {
-    std::list<Spatial*> allCollectedSpatials;
-    std::list<Spatial*> childCollectedSpatials;
-    if (subtreesArePresent()) {
-        for (int i = 0; i < 8; ++i) {
-            childCollectedSpatials = m_children[i]->collect();
-            allCollectedSpatials.splice(allCollectedSpatials.end(), childCollectedSpatials);
-        }
-    }
-    allCollectedSpatials.insert(allCollectedSpatials.end(), m_acceptedSpatials.begin(), m_acceptedSpatials.end());
-    allCollectedSpatials.insert(allCollectedSpatials.end(), m_rejectedSpatials.begin(), m_rejectedSpatials.end());
-    return allCollectedSpatials;
+void Octree::collectTree(std::list<Spatial*>& collection) {
+	if (subtreesArePresent()) {
+		for (int i = 0; i < 8; ++i) {
+			m_children[i]->collectTree(collection);
+		}
+	}
+	collectNode(collection);
+}
+
+void Octree::collectNode(std::list<Spatial*>& collection) {
+	collection.insert(collection.end(), m_acceptedSpatials.begin(), m_acceptedSpatials.end());
+}
+
+Octree* Octree::node(const int& index) {
+	return m_children[index];
 }
 
 bool Octree::treeIsEmpty() {
