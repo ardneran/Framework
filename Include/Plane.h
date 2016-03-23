@@ -16,8 +16,14 @@ public:
 	Plane();
 	~Plane();
 
-	void SetNormal(const Vec3& normal);
-	void SetConstant(const float& constant);
+	void setNormal(const Vec3& normal);
+	Vec3 getNormal();
+	void setConstant(const float& constant);
+	float getConstant();
+
+private:
+	Vec3 m_normal;
+	float m_constant;
 };
 
 #endif /* Plane_h */

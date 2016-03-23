@@ -43,12 +43,12 @@ void Culler::setFrustum() {
 	float dirDotEye = dot(position, front);
 
 	// Update the near plane.
-	m_plane[Camera::VF_DMIN].SetNormal(front);
-	m_plane[Camera::VF_DMIN].SetConstant(dirDotEye + frontMin);
+	m_plane[Camera::VF_DMIN].setNormal(front);
+	m_plane[Camera::VF_DMIN].setConstant(dirDotEye + frontMin);
 
 	// Update the far plane.
-	m_plane[Camera::VF_DMAX].SetNormal(-front);
-	m_plane[Camera::VF_DMAX].SetConstant(-(dirDotEye + frontMax));
+	m_plane[Camera::VF_DMAX].setNormal(-front);
+	m_plane[Camera::VF_DMAX].setConstant(-(dirDotEye + frontMax));
 
 	// Update the bottom plane
 	float invLength = invsqrt(fMin2 + uMin2);
@@ -56,8 +56,8 @@ void Culler::setFrustum() {
 	float c1 = +frontMin*invLength;  // U component
 	Vec3 normal = front * c0 + up * c1;
 	float constant = dot(position, normal);
-	m_plane[Camera::VF_UMIN].SetNormal(normal);
-	m_plane[Camera::VF_UMIN].SetConstant(constant);
+	m_plane[Camera::VF_UMIN].setNormal(normal);
+	m_plane[Camera::VF_UMIN].setConstant(constant);
 
 	// Update the top plane.
 	invLength = invsqrt(fMin2 + uMax2);
@@ -65,8 +65,8 @@ void Culler::setFrustum() {
 	c1 = -frontMin*invLength;  // U component
 	normal = front * c0 + up * c1;
 	constant = dot(position, normal);
-	m_plane[Camera::VF_UMAX].SetNormal(normal);
-	m_plane[Camera::VF_UMAX].SetConstant(constant);
+	m_plane[Camera::VF_UMAX].setNormal(normal);
+	m_plane[Camera::VF_UMAX].setConstant(constant);
 
 	// Update the left plane.
 	invLength = invsqrt(fMin2 + rMin2);
@@ -74,8 +74,8 @@ void Culler::setFrustum() {
 	c1 = +frontMin*invLength;  // R component
 	normal = front * c0 + right * c1;
 	constant = dot(position, normal);
-	m_plane[Camera::VF_RMIN].SetNormal(normal);
-	m_plane[Camera::VF_RMIN].SetConstant(constant);
+	m_plane[Camera::VF_RMIN].setNormal(normal);
+	m_plane[Camera::VF_RMIN].setConstant(constant);
 
 	// Update the right plane.
 	invLength = invsqrt(fMin2 + rMax2);
@@ -83,8 +83,8 @@ void Culler::setFrustum() {
 	c1 = -frontMin*invLength;  // R component
 	normal = front * c0 + right * c1;
 	constant = dot(position, normal);
-	m_plane[Camera::VF_RMAX].SetNormal(normal);
-	m_plane[Camera::VF_RMAX].SetConstant(constant);
+	m_plane[Camera::VF_RMAX].setNormal(normal);
+	m_plane[Camera::VF_RMAX].setConstant(constant);
 }
 
 void Culler::cull(Octree* octree, std::list<Spatial*>& spatials) {

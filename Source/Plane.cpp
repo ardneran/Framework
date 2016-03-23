@@ -8,14 +8,26 @@
 
 #include "Plane.h"
 
-Plane::Plane() {
+Plane::Plane()
+: m_normal(Vec3::zero)
+, m_constant(0.0f) {
 }
 
 Plane::~Plane() {
 }
 
-void Plane::SetNormal(const Vec3& normal) {
+void Plane::setNormal(const Vec3& normal) {
+	m_normal = normal;
 }
 
-void Plane::SetConstant(const float& constant) {
+Vec3 Plane::getNormal() {
+	return m_normal;
+}
+
+void Plane::setConstant(const float& constant) {
+	m_constant = constant;
+}
+
+float Plane::getConstant() {
+	return m_constant;
 }
