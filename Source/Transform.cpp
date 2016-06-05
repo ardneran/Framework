@@ -158,7 +158,7 @@ void Transform::composeStraightMatrix() {
 	m_straightMatrix.d00 = (1.0f - yy2 - zz2) * m_scale.x;
 	m_straightMatrix.d01 = (xy2 - wz2) * m_scale.y;
 	m_straightMatrix.d02 = (xz2 + wy2) * m_scale.z;
-	m_straightMatrix.d03 =m_translate.x;//
+	m_straightMatrix.d03 = m_translate.x;//
 
 	m_straightMatrix.d10 = (xy2 + wz2) * m_scale.x;
 	m_straightMatrix.d11 = (1.0f - xx2 - zz2) * m_scale.y;
