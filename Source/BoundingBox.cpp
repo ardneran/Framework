@@ -150,6 +150,12 @@ BoundingBox BoundingBox::transform(const Mat4& m) const {
     return boundingBox;
 }
 
+BoundingBox BoundingBox::transform(const Transform& t) const {
+	BoundingBox boundingBox;
+	boundingBox.updateMinMax(m_cornerMin * t.getMatrix(), m_cornerMax * t.getMatrix());
+	return boundingBox;
+}
+
 bool BoundingBox::operator==(const BoundingBox& other) const {
     return (m_center == other.m_center && m_extent == other.m_extent);
 }

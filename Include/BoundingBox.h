@@ -11,6 +11,7 @@
 
 #include <list>
 #include "Math.h"
+#include "Transform.h"
 #include "Vector.h"
 
 class BoundingBox {
@@ -37,6 +38,7 @@ public:
     bool contains(const BoundingBox& other) const;
     bool intersects(const BoundingBox& other) const;
     BoundingBox transform(const Mat4& m) const;
+	BoundingBox transform(const Transform& t) const;
 
     bool operator==(const BoundingBox& other) const;
     bool operator!=(const BoundingBox& other) const;

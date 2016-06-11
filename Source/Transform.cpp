@@ -30,7 +30,7 @@ void Transform::setMatrix(const Mat4& matrix) {
     decompose();
 }
 
-Mat4 Transform::getMatrix() {
+Mat4 Transform::getMatrix() const {
     return m_matrix;
 }
 
@@ -39,7 +39,7 @@ void Transform::setTranslate(const Vec3& translate) {
     compose();
 }
 
-Vec3 Transform::getTranslate() {
+Vec3 Transform::getTranslate() const {
     return m_translate;
 }
 
@@ -48,7 +48,7 @@ void Transform::setRotate(const Quat& rotate) {
     compose();
 }
 
-Quat Transform::getRotate() {
+Quat Transform::getRotate() const {
     return m_rotate;
 }
 
@@ -57,7 +57,7 @@ void Transform::setScale(const Vec3& scale) {
     compose();
 }
 
-Vec3 Transform::getScale() {
+Vec3 Transform::getScale() const {
     return m_scale;
 }
 
@@ -68,7 +68,7 @@ void Transform::setTranslateRotateScale(const Vec3& translate, const Quat& rotat
     compose();
 }
 
-void Transform::getTranslateRotateScale(Vec3& translate, Quat& rotate, Vec3& scale) {
+void Transform::getTranslateRotateScale(Vec3& translate, Quat& rotate, Vec3& scale) const {
     translate = m_translate;
     rotate = m_rotate;
     scale = m_scale;

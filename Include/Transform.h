@@ -19,15 +19,15 @@ public:
     virtual ~Transform();
 
     void setMatrix(const Mat4& matrix);
-    Mat4 getMatrix();
+    Mat4 getMatrix() const;
     void setTranslate(const Vec3& translate);
-    Vec3 getTranslate();
+    Vec3 getTranslate() const;
     void setRotate(const Quat& rotate);
-    Quat getRotate();
+    Quat getRotate() const;
     void setScale(const Vec3& scale);
-    Vec3 getScale();
+    Vec3 getScale() const;
     void setTranslateRotateScale(const Vec3& translate, const Quat& rotate, const Vec3& scale);
-    void getTranslateRotateScale(Vec3& translate, Quat& rotate, Vec3& scale);
+    void getTranslateRotateScale(Vec3& translate, Quat& rotate, Vec3& scale) const;
 
     Transform operator*(const Transform& other);
     Transform operator*=(const Transform& other);
