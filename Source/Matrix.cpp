@@ -38,6 +38,13 @@ Mat2::Mat2(const float& m00, const float& m01,
 , d11(m11) {
 }
 
+Mat2::Mat2(const Mat3& m)
+: d00(m.d00)
+, d01(m.d01)
+, d10(m.d10)
+, d11(m.d11) {
+}
+
 Mat2 Mat2::transpose() {
     return Mat2(d00, d10,
                 d01, d11);
@@ -113,6 +120,18 @@ Mat3::Mat3(const float& m00, const float& m01, const float& m02,
 , d20(m20)
 , d21(m21)
 , d22(m22) {
+}
+
+Mat3::Mat3(const Mat4& m)
+: d00(m.d00)
+, d01(m.d01)
+, d02(m.d02)
+, d10(m.d10)
+, d11(m.d11)
+, d12(m.d12)
+, d20(m.d20)
+, d21(m.d21)
+, d22(m.d22) {
 }
 
 Mat3 Mat3::translate(const float& tx, const float& ty) {

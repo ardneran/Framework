@@ -27,6 +27,9 @@
 class Vec2;
 class Vec3;
 class Vec4;
+class Mat3;
+class Mat3;
+class Mat4;
 class Quat;
 
 //  Mat2
@@ -44,6 +47,7 @@ public:
     Mat2(void);
     Mat2(const float& m00, const float& m01,
          const float& m10, const float& m11);
+	Mat2(const Mat3& m);
 
     Mat2 transpose();
     Mat2 inverse();
@@ -76,6 +80,7 @@ public:
     Mat3(const float& m00, const float& m01, const float& m02,
          const float& m10, const float& m11, const float& m12,
          const float& m20, const float& m21, const float& m22);
+	Mat3(const Mat4& m);
 
     static Mat3 translate(const float& tx, const float& ty);
     static Mat3 translate(const Vec2& v);
