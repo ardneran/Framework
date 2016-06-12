@@ -35,7 +35,7 @@ void VisualSpatial::update() {
 }
 
 void VisualSpatial::updateWorldBoundingBox() {
-    m_worldBoundingBox = m_modelBoundingBox.transform(m_worldTransform.getMatrix());
+    m_worldBoundingBox = m_modelBoundingBox.transform(m_worldTransform);
 }
 
 void VisualSpatial::updateWorldViewNormMatrix() {
