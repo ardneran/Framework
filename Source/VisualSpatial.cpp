@@ -39,16 +39,7 @@ void VisualSpatial::updateWorldBoundingBox() {
 }
 
 void VisualSpatial::updateWorldViewNormMatrix() {
-    Mat4 normalMatrix = m_viewMatrix * m_worldTransform.getMatrix(); // TODO Verify if inverse transpose is needed?
-    m_worldViewNormMatrix.d00 = normalMatrix.d00;
-    m_worldViewNormMatrix.d01 = normalMatrix.d01;
-    m_worldViewNormMatrix.d02 = normalMatrix.d02;
-    m_worldViewNormMatrix.d10 = normalMatrix.d10;
-    m_worldViewNormMatrix.d11 = normalMatrix.d11;
-    m_worldViewNormMatrix.d12 = normalMatrix.d12;
-    m_worldViewNormMatrix.d20 = normalMatrix.d20;
-    m_worldViewNormMatrix.d21 = normalMatrix.d21;
-    m_worldViewNormMatrix.d22 = normalMatrix.d22;
+	m_worldViewNormMatrix = Mat3(m_viewMatrix * m_worldTransform.getMatrix()).inverse().transpose();
 }
 
 void VisualSpatial::updateWorldViewProjectionMatrix() {
