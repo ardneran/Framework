@@ -45,16 +45,6 @@ public:
     Mat4 getViewMatrix();
     Mat4 getViewProjectionMatrix();
 
-	enum CameraPlane
-	{
-		VF_DMIN,
-		VF_DMAX,
-		VF_UMIN,
-		VF_UMAX,
-		VF_RMIN,
-		VF_RMAX,
-	};
-
 private:
     void updateViewMatrix();
     void updateProjectionMatrix();
