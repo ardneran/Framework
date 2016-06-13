@@ -28,8 +28,7 @@
 #define RGBA(r, g, b, a) (r << 24 | g << 16 | b << 8 | a) //  R8G8B8A8
 #endif
 
-//  Reference
-//  http://en.wikipedia.org/wiki/Webcolors
+// http://en.wikipedia.org/wiki/Webcolors
 
 //namespace Engine
 //{
