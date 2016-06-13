@@ -16,12 +16,9 @@ public:
 	Plane();
 	~Plane();
 
-	void setNormal(const Vec3& normal);
-	Vec3 getNormal();
-	void setConstant(const float& constant);
-	float getConstant();
+	void normalize();
+	float distance(const Vec3& point);
 
-private:
 	Vec3 m_normal;
 	float m_constant;
 };

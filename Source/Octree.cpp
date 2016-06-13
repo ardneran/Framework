@@ -188,6 +188,10 @@ void Octree::collectNode(std::list<Spatial*>& collection) {
 	collection.insert(collection.end(), m_acceptedSpatials.begin(), m_acceptedSpatials.end());
 }
 
+BoundingBox Octree::boundingBox() {
+	return m_boundingBox;
+}
+
 Octree* Octree::node(const int& index) {
 	return m_children[index];
 }

@@ -23,6 +23,7 @@ public:
     void update();
 	void collectTree(std::list<Spatial*>& collection);
 	void collectNode(std::list<Spatial*>& collection);
+	BoundingBox boundingBox();
 	Octree* node(const int& index);
 
 private:

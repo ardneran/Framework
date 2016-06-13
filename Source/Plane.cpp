@@ -16,18 +16,12 @@ Plane::Plane()
 Plane::~Plane() {
 }
 
-void Plane::setNormal(const Vec3& normal) {
-	m_normal = normal;
+void Plane::normalize() {
+	float length = m_normal.norm();
+	m_normal /= length;
+	m_constant /= length;
 }
 
-Vec3 Plane::getNormal() {
-	return m_normal;
-}
-
-void Plane::setConstant(const float& constant) {
-	m_constant = constant;
-}
-
-float Plane::getConstant() {
-	return m_constant;
+float Plane::distance(const Vec3& point) {
+	return dot(point, m_normal) + m_constant;
 }

@@ -20,17 +20,30 @@ public:
     Culler(Camera* camera);
     virtual ~Culler();
 
-	void setFrustum();
+	void updateFrustum();
     void cull(Octree* octree, std::list<Spatial*>& spatials);
 
 private:
 	enum Result {
-		Inside,
-		Outside,
+		In,
+		Out,
+		Part
 	};
-	Result test(Octree* octree);
+
+	Result test(const BoundingBox& boundingBox);
+	Result test(const Vec3& point);
 
 	Camera* m_camera;
+	Mat4 m_oldViewProjectionMatrix;
+
+	enum CullerPlane {
+		CP_FMIN,
+		CP_FMAX,
+		CP_UMIN,
+		CP_UMAX,
+		CP_RMIN,
+		CP_RMAX,
+	};
 
 	Plane m_plane[6];
 };
