@@ -101,6 +101,7 @@ void AbstractWindow::onIdle() {
 	}
 	// Iterate and Draw.
 	std::list<Spatial*> spatials;
+	m_culler->updateFrustum();
 	m_culler->cull(m_octree, spatials);
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
