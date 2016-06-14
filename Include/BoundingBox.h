@@ -13,6 +13,7 @@
 #include "Math.h"
 #include "Transform.h"
 #include "Vector.h"
+#include "VisualEffect.h"
 
 class BoundingBox {
 public:
@@ -42,6 +43,9 @@ public:
 
     bool operator==(const BoundingBox& other) const;
     bool operator!=(const BoundingBox& other) const;
+
+	// Hack
+	static VisualEffect* visualEffect;
 
 private:
     Vec3 m_center;
