@@ -28,19 +28,20 @@ void SampleWindow::createEffects() {
 }
 
 void SampleWindow::createScene() {
-    const int visualEffectType = 2;
+    const int visualEffectTypeSmooth = 0;
+	const int visualEffectTypePhong = 2;
+	BoundingBox::visualEffect = m_visualEffects[visualEffectTypeSmooth];
 #define TEST
 #ifdef TEST
     std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("house/house.obj"),
                                                                   Utils::findBasePath("house/house.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
-        (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
+        (*it)->setVisualEffect(m_visualEffects[visualEffectTypePhong]);
 		(*it)->setTranslate(Vec3(0, -1.25, 0));
 		(*it)->setRotate(Quat(0, 30 * M_DEGREE_TO_RADIAN, 0));
 		(*it)->setScale(Vec3(0.09f, 0.09f, 0.09f));
         m_octree->insert(*it);
     }
-
 #else
     for (int i = 0; i < 8; ++i) {
         std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
