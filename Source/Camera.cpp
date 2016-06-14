@@ -252,6 +252,10 @@ Mat4 Camera::getViewMatrix() {
     return m_viewMatrix;
 }
 
+Mat3 Camera::getViewNormMatrix() {
+	return Mat3(m_viewMatrix).inverse().transpose();
+}
+
 Mat4 Camera::getViewProjectionMatrix() {
     if (m_type == Camera::Orthographic) {
         return m_viewOrthographicProjectionMatrix;

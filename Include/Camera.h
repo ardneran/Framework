@@ -43,6 +43,7 @@ public:
     void getPostProjectionMatrix(Mat4& postProjectionMatrix);
 
     Mat4 getViewMatrix();
+	Mat3 getViewNormMatrix();
     Mat4 getViewProjectionMatrix();
 
 private:
