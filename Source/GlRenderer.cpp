@@ -199,7 +199,33 @@ void GlRenderer::draw(BoundingBox* boundingBox) {
 	// Hack
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // GL_FILL or GL_LINE
 
+	VisualEffect* vEffect = BoundingBox::visualEffect;
+	VertexBuffer* vBuffer = 0; // TODO Populate
+	IndexBuffer* iBuffer = 0; // TODO Populate
 
+    if (vEffect && vBuffer && iBuffer) {
+		// Set Program
+		GLuint program = BoundingBox::visualEffect->getProgram()->getProgram();
+		glUseProgram(program);
+		// Set World View Norm Matrix
+		Mat3 viewNorm = getWindow()->getCamera()->getViewNormMatrix();
+		GLint worldViewNormMatrixLocation = glGetUniformLocation(program, "worldViewNorm");
+		glUniformMatrix3fv(worldViewNormMatrixLocation, 1, GL_FALSE, (float*)&(viewNorm));
+		// Set World View Projection Matrix.
+		Mat4 viewProjection = getWindow()->getCamera()->getViewProjectionMatrix();
+		GLint worldViewProjectionMatrixLocation = glGetUniformLocation(program, "worldViewProjection");
+		glUniformMatrix4fv(worldViewProjectionMatrixLocation, 1, GL_FALSE, (float*)&(viewProjection));
+		// Bind
+		vBuffer->bind();
+		iBuffer->bind();
+		// Draw
+		glDrawElements(GL_TRIANGLES, iBuffer->getCount(), GL_UNSIGNED_INT, BUFFER_OFFSET(0));
+		// Unbind
+		vBuffer->bind();
+		iBuffer->bind();
+		// Unset Program
+		glUseProgram(0);
+	}
 
 	// Hack
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // GL_FILL or GL_LINE
