@@ -51,6 +51,8 @@ public:
 	inline void setYSize(const int& ySize) { m_ySize = ySize; }
 	inline int getYSize() { return m_ySize; }
 
+	inline Camera* getCamera() { return m_camera; }
+
 	inline bool isMinimized() const { return m_minimized; }
 	inline bool isMaximized() const { return m_maximized; }
 	inline bool isActive() const { return m_active; }

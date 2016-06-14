@@ -27,7 +27,7 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 		}
 	}
 	m_culler = new Culler(m_camera);
-	m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(1000.0f, 1000.0f, 1000.0f)));
+	m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
 	m_objMeshLoader = new ObjMeshLoader();
 }
 
@@ -103,6 +103,9 @@ void AbstractWindow::onIdle() {
 	std::list<Spatial*> spatials;
 	m_culler->updateFrustum();
 	m_culler->cull(m_octree, spatials);
+
+	std::cout << "Spatials size: " << spatials.size() << std::endl;
+
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
 		if (visual) {
@@ -112,4 +115,5 @@ void AbstractWindow::onIdle() {
 		}
 	}
 	m_renderer->displayColorBuffer(0);
+	m_octree->update();
 }
