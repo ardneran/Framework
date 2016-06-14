@@ -77,6 +77,7 @@ public:
     virtual void clearBuffers(const int& x, const int& y, const int& w, const int& h) = 0;
     virtual void displayColorBuffer(const int& syncInterval) = 0;
     virtual void draw(VisualSpatial* visual) = 0;
+	virtual void draw(BoundingBox* boundingBox) = 0;
 
 protected:
     int m_width;

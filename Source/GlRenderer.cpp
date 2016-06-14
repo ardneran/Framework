@@ -195,6 +195,16 @@ void GlRenderer::draw(VisualSpatial* visual) {
     }
 }
 
+void GlRenderer::draw(BoundingBox* boundingBox) {
+	// Hack
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // GL_FILL or GL_LINE
+
+
+
+	// Hack
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // GL_FILL or GL_LINE
+}
+
 //}
 
 #endif // defined(__APPLE__) || defined(__linux__)
