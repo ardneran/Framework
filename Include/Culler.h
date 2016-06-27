@@ -23,7 +23,6 @@ public:
 	void updateFrustum();
     void cull(Octree* octree, std::list<Spatial*>& spatials);
 
-private:
 	enum Result {
 		In,
 		Out,
@@ -33,8 +32,9 @@ private:
 	Result test(const BoundingBox& boundingBox);
 	Result test(const Vec3& point);
 
+private:
 	Camera* m_camera;
-	Mat4 m_oldViewProjectionMatrix;
+	Mat4 m_ovpt;
 
 	enum CullerPlane {
 		CP_FMIN,

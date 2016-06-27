@@ -10,7 +10,7 @@
 
 Culler::Culler(Camera* camera)
 : m_camera(camera)
-, m_oldViewProjectionMatrix(Mat4::identity) {
+, m_ovpt(Mat4::identity) {
 }
 
 Culler::~Culler() {
@@ -18,46 +18,48 @@ Culler::~Culler() {
 
 void Culler::updateFrustum() {
 	// http://gamedevs.org/uploads/fast-extraction-viewing-frustum-planes-from-world-view-projection-matrix.pdf
+	// Create the frustum matrix from the view matrix and projection matrix.
+	// Transpose is OpenGL hack so that indices match DirectX matrix indices.
 	if (m_camera) {
-		Mat4 viewProjectionMatrix = m_camera->getViewProjectionMatrix();
-		if (m_oldViewProjectionMatrix != viewProjectionMatrix) {
-			m_oldViewProjectionMatrix = viewProjectionMatrix;
-
-			// left
-			m_plane[CP_RMIN].m_normal.x = viewProjectionMatrix.d03 + viewProjectionMatrix.d00;
-			m_plane[CP_RMIN].m_normal.y = viewProjectionMatrix.d13 + viewProjectionMatrix.d10;
-			m_plane[CP_RMIN].m_normal.z = viewProjectionMatrix.d23 + viewProjectionMatrix.d20;
-			m_plane[CP_RMIN].m_constant = viewProjectionMatrix.d33 + viewProjectionMatrix.d30;
-
-			// right
-			m_plane[CP_RMAX].m_normal.x = viewProjectionMatrix.d03 - viewProjectionMatrix.d00;
-			m_plane[CP_RMAX].m_normal.y = viewProjectionMatrix.d13 - viewProjectionMatrix.d10;
-			m_plane[CP_RMAX].m_normal.z = viewProjectionMatrix.d23 - viewProjectionMatrix.d20;
-			m_plane[CP_RMAX].m_constant = viewProjectionMatrix.d33 - viewProjectionMatrix.d30;
-
-			// bottom
-			m_plane[CP_UMIN].m_normal.x = viewProjectionMatrix.d03 + viewProjectionMatrix.d01;
-			m_plane[CP_UMIN].m_normal.y = viewProjectionMatrix.d13 + viewProjectionMatrix.d11;
-			m_plane[CP_UMIN].m_normal.z = viewProjectionMatrix.d23 + viewProjectionMatrix.d21;
-			m_plane[CP_UMIN].m_constant = viewProjectionMatrix.d33 + viewProjectionMatrix.d31;
-
-			// top
-			m_plane[CP_UMAX].m_normal.x = viewProjectionMatrix.d03 - viewProjectionMatrix.d01;
-			m_plane[CP_UMAX].m_normal.y = viewProjectionMatrix.d13 - viewProjectionMatrix.d11;
-			m_plane[CP_UMAX].m_normal.z = viewProjectionMatrix.d23 - viewProjectionMatrix.d21;
-			m_plane[CP_UMAX].m_constant = viewProjectionMatrix.d33 - viewProjectionMatrix.d31;
+		Mat4 vpt = m_camera->getViewProjectionMatrix().transpose();
+		if (m_ovpt != vpt) {
+			m_ovpt = vpt;
 
 			// near
-			m_plane[CP_FMIN].m_normal.x = viewProjectionMatrix.d03 + viewProjectionMatrix.d02;
-			m_plane[CP_FMIN].m_normal.y = viewProjectionMatrix.d13 + viewProjectionMatrix.d12;
-			m_plane[CP_FMIN].m_normal.z = viewProjectionMatrix.d23 + viewProjectionMatrix.d22;
-			m_plane[CP_FMIN].m_constant = viewProjectionMatrix.d33 + viewProjectionMatrix.d32;
+			m_plane[CP_FMIN].m_normal.x = vpt.d03 + vpt.d02;
+			m_plane[CP_FMIN].m_normal.y = vpt.d13 + vpt.d12;
+			m_plane[CP_FMIN].m_normal.z = vpt.d23 + vpt.d22;
+			m_plane[CP_FMIN].m_constant = vpt.d33 + vpt.d32;
 
 			// far
-			m_plane[CP_FMAX].m_normal.x = viewProjectionMatrix.d03 - viewProjectionMatrix.d02;
-			m_plane[CP_FMAX].m_normal.y = viewProjectionMatrix.d13 - viewProjectionMatrix.d12;
-			m_plane[CP_FMAX].m_normal.z = viewProjectionMatrix.d23 - viewProjectionMatrix.d22;
-			m_plane[CP_FMAX].m_constant = viewProjectionMatrix.d33 - viewProjectionMatrix.d32;
+			m_plane[CP_FMAX].m_normal.x = vpt.d03 - vpt.d02;
+			m_plane[CP_FMAX].m_normal.y = vpt.d13 - vpt.d12;
+			m_plane[CP_FMAX].m_normal.z = vpt.d23 - vpt.d22;
+			m_plane[CP_FMAX].m_constant = vpt.d33 - vpt.d32;
+
+			// left
+			m_plane[CP_RMIN].m_normal.x = vpt.d03 + vpt.d00;
+			m_plane[CP_RMIN].m_normal.y = vpt.d13 + vpt.d10;
+			m_plane[CP_RMIN].m_normal.z = vpt.d23 + vpt.d20;
+			m_plane[CP_RMIN].m_constant = vpt.d33 + vpt.d30;
+
+			// right
+			m_plane[CP_RMAX].m_normal.x = vpt.d03 - vpt.d00;
+			m_plane[CP_RMAX].m_normal.y = vpt.d13 - vpt.d10;
+			m_plane[CP_RMAX].m_normal.z = vpt.d23 - vpt.d20;
+			m_plane[CP_RMAX].m_constant = vpt.d33 - vpt.d30;
+
+			// bottom
+			m_plane[CP_UMIN].m_normal.x = vpt.d03 + vpt.d01;
+			m_plane[CP_UMIN].m_normal.y = vpt.d13 + vpt.d11;
+			m_plane[CP_UMIN].m_normal.z = vpt.d23 + vpt.d21;
+			m_plane[CP_UMIN].m_constant = vpt.d33 + vpt.d31;
+
+			// top
+			m_plane[CP_UMAX].m_normal.x = vpt.d03 - vpt.d01;
+			m_plane[CP_UMAX].m_normal.y = vpt.d13 - vpt.d11;
+			m_plane[CP_UMAX].m_normal.z = vpt.d23 - vpt.d21;
+			m_plane[CP_UMAX].m_constant = vpt.d33 - vpt.d31;
 
 			// normalize
 			m_plane[CP_RMIN].normalize();
@@ -83,6 +85,15 @@ void Culler::cull(Octree* octree, std::list<Spatial*>& spatials) {
 				break;
 			case Part:
 				{
+					/*
+					std::list<Spatial*> currentSpatials;
+					octree->collectNode(currentSpatials);
+					for (auto currentSpatial : currentSpatials) {
+						if (test(currentSpatial->getWorldBoundingBox()) != Out) {
+							spatials.push_back(currentSpatial);
+						}
+					}
+					*/
 					octree->collectNode(spatials);
 					for (int i = 0; i < 8; ++i) {
 						cull(octree->node(i), spatials);
@@ -118,12 +129,11 @@ Culler::Result Culler::test(const BoundingBox& boundingBox) {
 }
 
 Culler::Result Culler::test(const Vec3& point) {
-	for (int i = 0; i < 6; i++)
-	{
-		if (m_plane[i].distance(point) < 0)
-		{
-			return Out;
-		}
-	}
+	if (m_plane[0].distance(point) < 0) return Out;
+	if (m_plane[1].distance(point) < 0) return Out;
+	if (m_plane[2].distance(point) < 0) return Out;
+	if (m_plane[3].distance(point) < 0) return Out;
+	if (m_plane[4].distance(point) < 0) return Out;
+	if (m_plane[5].distance(point) < 0) return Out;
 	return In;
 }
