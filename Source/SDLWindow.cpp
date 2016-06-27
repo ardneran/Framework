@@ -253,14 +253,14 @@ void SDLWindow::handleKeyDownEvent() {
 			{
 				Vec3 position;
 				m_camera->getPosition(position);
-				m_camera->setPosition(position + Vec3(0, 0, -1));
+				m_camera->setPosition(position + Vec3(0, 0, 1));
 			}
 			break;
 		case SDLK_DOWN:
 			{
 				Vec3 position;
 				m_camera->getPosition(position);
-				m_camera->setPosition(position + Vec3(0, 0, 1));
+				m_camera->setPosition(position + Vec3(0, 0, -1));
 			}
 			break;
 		case SDLK_RIGHT:

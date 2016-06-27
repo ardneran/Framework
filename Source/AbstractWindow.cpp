@@ -23,7 +23,7 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 		if (m_camera->getType() == Camera::Orthographic) {
 			m_camera->setFrustum(float(parameters.xSize) / 2.0f, -float(parameters.xSize) / 2.0f, float(parameters.ySize) / 2.0f, -float(parameters.ySize) / 2.0f, 1.0f, 100.0f);
 		} else if (m_camera->getType() == Camera::Perspective) {
-			m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 1.0f, 100.0f);
+			m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 0.1f, 1000.0f);
 		}
 	}
 	m_culler = new Culler(m_camera);
@@ -99,11 +99,25 @@ void AbstractWindow::onIdle() {
 	for (int i = 0; i < 3; ++i) {
 		m_visualEffects[i]->getProgram()->set3fv("cameraPosition", 1, cameraPosition.data);
 	}
-	// Iterate and Draw.
+
 	std::list<Spatial*> spatials;
+//#define CULL_OCTREE
+#ifdef CULL_OCTREE
+	// Iterate, Cull and Draw Octree Broken.
 	m_culler->updateFrustum();
 	m_culler->cull(m_octree, spatials);
-
+#else
+	// Iterate, Cull and Draw Normal Worked.
+	m_culler->updateFrustum();
+	m_octree->collectTree(spatials);
+	std::list<Spatial*> culledSpatials;
+	for (auto spatial : spatials) {
+		if (m_culler->test(spatial->getWorldBoundingBox()) != Culler::Out) {
+			culledSpatials.push_back(spatial);
+		}
+	}
+	spatials = culledSpatials;
+#endif
 	std::cout << "Spatials size: " << spatials.size() << std::endl;
 
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
