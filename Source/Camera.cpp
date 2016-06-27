@@ -263,3 +263,11 @@ Mat4 Camera::getViewProjectionMatrix() {
         return m_viewPerspectiveProjectionMatrix;
     }
 }
+
+Mat4 Camera::getProjectionMatrix() {
+	if (m_type == Camera::Orthographic) {
+		return m_orthographicProjectionMatrix;
+	} else {
+		return m_perspectiveProjectionMatrix;
+	}
+}

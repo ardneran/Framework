@@ -45,6 +45,7 @@ public:
     Mat4 getViewMatrix();
 	Mat3 getViewNormMatrix();
     Mat4 getViewProjectionMatrix();
+	Mat4 getProjectionMatrix();
 
 private:
     void updateViewMatrix();
