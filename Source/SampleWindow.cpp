@@ -37,8 +37,8 @@ void SampleWindow::createScene() {
                                                                   Utils::findBasePath("house/house.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectTypePhong]);
-		(*it)->setTranslate(Vec3(0, -1.25, 0));
-		(*it)->setRotate(Quat(0, 30 * M_DEGREE_TO_RADIAN, 0));
+		(*it)->setTranslate(Vec3(0, -2.5, 0));
+		(*it)->setRotate(Quat(0, 0, 0));
 		(*it)->setScale(Vec3(0.09f, 0.09f, 0.09f));
         m_octree->insert(*it);
     }
@@ -47,14 +47,14 @@ void SampleWindow::createScene() {
         std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("cube/cube.obj"),
                                                                       Utils::findBasePath("cube/cube.obj"));
         for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
-			(*it)->setVisualEffect(m_visualEffects[visualEffectType]);
+			(*it)->setVisualEffect(m_visualEffects[visualEffectTypeSmooth]);
             (*it)->setTranslate(getDirection(i) * 2.5);
             m_octree->insert(*it);
         }
         std::list<VisualSpatial*> visualsTeapot = m_objMeshLoader->load(Utils::findFilePath("teapot/teapot.obj"),
-                                                                        Utils::findFilePath("teapot/teapot.obj"));
+                                                                        Utils::findBasePath("teapot/teapot.obj"));
         for (std::list<VisualSpatial*>::iterator it = visualsTeapot.begin(); it != visualsTeapot.end(); ++it) {
-            (*it)->setVisualEffect(m_visualEffects[visualEffectType]);
+            (*it)->setVisualEffect(m_visualEffects[visualEffectTypePhong]);
             (*it)->setTranslate(getDirection(i) * 1.25);
 			(*it)->setScale(Vec3(0.0025,0.0025,0.0025));
             m_octree->insert(*it);
