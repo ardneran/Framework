@@ -24,7 +24,6 @@ private:
     void destroyEffects();
     void destroyScene();
 
-	Vec3 getDirection(const unsigned int& octant); // TODO Remove
 	void testTransform(); // TODO Remove
 };
 

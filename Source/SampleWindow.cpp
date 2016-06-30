@@ -78,29 +78,6 @@ void SampleWindow::destroyEffects() {
 void SampleWindow::destroyScene() {
 }
 
-Vec3 SampleWindow::getDirection(const unsigned int& octant) {
-    unsigned int localOctant = octant % 8;
-    switch (localOctant) {
-        case 0:
-            return Vec3(-1, -1, -1);
-        case 1:
-            return Vec3(-1, -1, +1);
-        case 2:
-            return Vec3(-1, +1, -1);
-        case 3:
-            return Vec3(-1, +1, +1);
-        case 4:
-            return Vec3(+1, -1, -1);
-        case 5:
-            return Vec3(+1, -1, +1);
-        case 6:
-            return Vec3(+1, +1, -1);
-        case 7:
-        default:
-            return Vec3(+1, +1, +1);
-    }
-}
-
 void SampleWindow::testTransform() {
     Transform a;
     a.setTranslate(Vec3(1000, 2000, 3000));
