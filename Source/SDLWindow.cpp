@@ -245,6 +245,7 @@ void SDLWindow::handleKeyUpEvent() {
 }
 
 void SDLWindow::handleKeyDownEvent() {
+	const float increment = 0.50f;
     switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
             m_active = false;
@@ -253,28 +254,28 @@ void SDLWindow::handleKeyDownEvent() {
 			{
 				Vec3 position;
 				m_camera->getPosition(position);
-				m_camera->setPosition(position + Vec3(0, 0, 1));
+				m_camera->setPosition(position + Vec3(0, 0, increment));
 			}
 			break;
 		case SDLK_DOWN:
 			{
 				Vec3 position;
 				m_camera->getPosition(position);
-				m_camera->setPosition(position + Vec3(0, 0, -1));
+				m_camera->setPosition(position + Vec3(0, 0, -increment));
 			}
 			break;
 		case SDLK_RIGHT:
 			{
 				Vec3 position;
 				m_camera->getPosition(position);
-				m_camera->setPosition(position + Vec3(1, 0, 0));
+				m_camera->setPosition(position + Vec3(increment, 0, 0));
 			}
 			break;
 		case SDLK_LEFT:
 			{
 				Vec3 position;
 				m_camera->getPosition(position);
-				m_camera->setPosition(position + Vec3(-1, 0, 0));
+				m_camera->setPosition(position + Vec3(-increment, 0, 0));
 			}
 			break;
         default:
