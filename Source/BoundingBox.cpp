@@ -147,9 +147,17 @@ bool BoundingBox::intersects(const BoundingBox& other) const {
 }
 
 BoundingBox BoundingBox::transform(const Mat4& m) const {
-    BoundingBox boundingBox;
-    boundingBox.updateMinMax(m_cornerMin * m, m_cornerMax * m);
-    return boundingBox;
+	BoundingBox boundingBox;
+	Vec3 min = Vec3::max;
+	Vec3 max = Vec3::min;
+	for (unsigned int i = 0; i < 8; ++i) {
+		Vec4 p4 = pointVector(m_center + entrywiseProduct(m_extent, getDirection(i))) * m;
+		Vec3 p3 = Vec3(p4.x, p4.y, p4.z);
+		min = minVec(min, p3);
+		max = maxVec(max, p3);
+	}
+    boundingBox.updateMinMax(min, max);
+	return boundingBox;
 }
 
 BoundingBox BoundingBox::transform(const Transform& t) const {
