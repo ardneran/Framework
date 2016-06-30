@@ -518,7 +518,7 @@ Vec4 pointVector(const Vec3& v) {
 }
 
 Vec1 minVec(const Vec1& u, const Vec1& v) {
-    return Vec1(minVec(u.x, v.x));
+    return Vec1(u.x < v.x ? u.x : v.x);
 }
 
 Vec2 minVec(const Vec2& u, const Vec2& v) {
@@ -534,7 +534,7 @@ Vec4 minVec(const Vec4& u, const Vec4& v) {
 }
 
 Vec1 maxVec(const Vec1& u, const Vec1& v) {
-    return Vec1(maxVec(u.x, v.x));
+    return Vec1(u.x > v.x ? u.x : v.x);
 }
 
 Vec2 maxVec(const Vec2& u, const Vec2& v) {
