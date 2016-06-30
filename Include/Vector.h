@@ -292,6 +292,13 @@ Vec2 smoothStep(const Vec2& value1, const Vec2& value2, const float& amount);
 Vec3 smoothStep(const Vec3& value1, const Vec3& value2, const float& amount);
 Vec4 smoothStep(const Vec4& value1, const Vec4& value2, const float& amount);
 
+Vec1 entrywiseProduct(const Vec1& u, const Vec1& v);
+Vec2 entrywiseProduct(const Vec2& u, const Vec2& v);
+Vec3 entrywiseProduct(const Vec3& u, const Vec3& v);
+Vec4 entrywiseProduct(const Vec4& u, const Vec4& v);
+
+Vec3 getDirection(const unsigned int& octant);
+
 //}
 
 #endif

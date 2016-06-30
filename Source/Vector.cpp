@@ -761,4 +761,42 @@ Vec4 smoothStep(const Vec4& value1, const Vec4& value2, const float& amount) {
                 smoothStep(value1.w, value2.w, amount));
 }
 
+Vec1 entrywiseProduct(const Vec1& u, const Vec1& v) {
+	return Vec1(u.x * v.x);
+}
+
+Vec2 entrywiseProduct(const Vec2& u, const Vec2& v) {
+	return Vec2(u.x * v.x, u.y * v.y);
+}
+
+Vec3 entrywiseProduct(const Vec3& u, const Vec3& v) {
+	return Vec3(u.x * v.x, u.y * v.y, u.z * v.z);
+}
+
+Vec4 entrywiseProduct(const Vec4& u, const Vec4& v) {
+	return Vec4(u.x * v.x, u.y * v.y, u.z * v.z, u.w * v.w);
+}
+
+Vec3 getDirection(const unsigned int& octant) {
+	switch (octant % 8) {
+		case 0:
+			return Vec3(-1, -1, -1);
+		case 1:
+			return Vec3(-1, -1, +1);
+		case 2:
+			return Vec3(-1, +1, -1);
+		case 3:
+			return Vec3(-1, +1, +1);
+		case 4:
+			return Vec3(+1, -1, -1);
+		case 5:
+			return Vec3(+1, -1, +1);
+		case 6:
+			return Vec3(+1, +1, -1);
+		case 7:
+		default:
+			return Vec3(+1, +1, +1);
+	}
+}
+
 //}
