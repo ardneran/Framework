@@ -215,11 +215,11 @@ void Camera::updateProjectionMatrix() {
         m_perspectiveProjectionMatrix.d13 = 0.0f;
         m_perspectiveProjectionMatrix.d20 = 0.0f;
         m_perspectiveProjectionMatrix.d21 = 0.0f;
-        m_perspectiveProjectionMatrix.d22 = m_frontMax * invFDiff; // -(m_frontMax)*invFDiff; // previously m_frontMax * invFDiff;
-        m_perspectiveProjectionMatrix.d23 = -m_frontMin * m_frontMax * invFDiff; // -2.0f * m_frontMin * m_frontMax * invFDiff; // previously -m_frontMin * m_frontMax * invFDiff;
+        m_perspectiveProjectionMatrix.d22 = m_frontMax * invFDiff;
+        m_perspectiveProjectionMatrix.d23 = -m_frontMin * m_frontMax * invFDiff;
         m_perspectiveProjectionMatrix.d30 = 0.0f;
         m_perspectiveProjectionMatrix.d31 = 0.0f;
-        m_perspectiveProjectionMatrix.d32 = 1.0f; // -1.0f; // previously 1.0f;
+        m_perspectiveProjectionMatrix.d32 = 1.0f;
         m_perspectiveProjectionMatrix.d33 = 0.0f;
     }
 }
