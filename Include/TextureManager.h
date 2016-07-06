@@ -12,7 +12,7 @@
 #include <map>
 #include <string>
 #include "Buffer.h"
-#include "stb_image_helper.h"
+#include "Image.h"
 
 class TextureManager {
 public:

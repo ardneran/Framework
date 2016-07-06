@@ -1,4 +1,15 @@
-#include "stb_image_helper.h"
+//
+//  Image.cpp
+//  Application
+//
+//  Created by Narendra Umate on 5/4/14.
+//
+//
+
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+#include "Image.h"
 
 Image::Image(const string& name)
 :	m_sizeX(0)

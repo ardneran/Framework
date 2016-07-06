@@ -1,11 +1,17 @@
-#ifndef STBIMAGE
-#define STBIMAGE
+//
+//  Image.h
+//  Application
+//
+//  Created by Narendra Umate on 5/4/14.
+//
+//
+
+#ifndef IMAGE
+#define IMAGE
 
 #include <iostream>
 #include <vector>
 using namespace std;
-
-#include "stb_image.h"
 
 class Image
 {
@@ -27,4 +33,4 @@ private:
 	int m_count;
 };
 
-#endif // STBIMAGE
+#endif // IMAGE

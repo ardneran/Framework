@@ -134,6 +134,11 @@ public:
     Mat4 inverse();
     float determinant();
 
+	Vec3 Right() const;
+	Vec3 Up() const;
+	Vec3 Backward() const;
+	Vec3 Translation() const;
+
     Vec4 operator*(const Vec4& v) const;
     Mat4 operator*(const Mat4& m) const;
     Mat4 operator*(const float& f) const;

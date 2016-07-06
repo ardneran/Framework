@@ -412,6 +412,11 @@ float Mat4::determinant() {
 		 d03*(d10*(d21*d32-d31*d22)-d11*(d20*d32-d30*d22)+d12*(d20*d31-d30*d21)));*/
 }
 
+Vec3 Mat4::Right() const { return  Vec3(d00, d01, d02); }
+Vec3 Mat4::Up() const { return Vec3(d10, d11, d12); }
+Vec3 Mat4::Backward() const { return Vec3(d20, d21, d22); }
+Vec3 Mat4::Translation() const { return Vec3(d30, d31, d32); }
+
 Vec4 Mat4::operator*(const Vec4& v) const {
     return Vec4(d00 * v.x + d01 * v.y + d02 * v.z + d03 * v.w,
                 d10 * v.x + d11 * v.y + d12 * v.z + d13 * v.w,

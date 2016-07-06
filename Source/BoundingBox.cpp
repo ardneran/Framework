@@ -147,6 +147,7 @@ bool BoundingBox::intersects(const BoundingBox& other) const {
 }
 
 BoundingBox BoundingBox::transform(const Mat4& m) const {
+#if defined UNOPTIMIZED
 	BoundingBox boundingBox;
 	Vec3 min = Vec3::max;
 	Vec3 max = Vec3::min;
@@ -158,6 +159,19 @@ BoundingBox BoundingBox::transform(const Mat4& m) const {
 	}
     boundingBox.updateMinMax(min, max);
 	return boundingBox;
+#else
+	BoundingBox boundingBox;
+	Vec3 xa = m.Right() * m_cornerMin.x;
+	Vec3 xb = m.Right() * m_cornerMax.x;
+	Vec3 ya = m.Up() * m_cornerMin.y;
+	Vec3 yb = m.Up() * m_cornerMax.y;
+	Vec3 za = m.Backward() * m_cornerMin.z;
+	Vec3 zb = m.Backward() * m_cornerMax.z;
+	Vec3 min = minVec(xa, xb) + minVec(ya, yb) + minVec(za, zb) + m.Translation();
+	Vec3 max = maxVec(xa, xb) + maxVec(ya, yb) + maxVec(za, zb) + m.Translation();
+	boundingBox.updateMinMax(min, max);
+	return boundingBox;
+#endif
 }
 
 BoundingBox BoundingBox::transform(const Transform& t) const {
