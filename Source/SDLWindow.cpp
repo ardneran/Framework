@@ -109,6 +109,8 @@ void SDLWindow::initializeOpenGL() {
     if (m_sdlContext == NULL) {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
         assert(m_sdlContext != NULL);
+    } else {
+        std::cout << "OpenGL context: " << CONTEXT_MAJOR_VERSION << "." CONTEXT_MINOR_VERSION << std::endl;
     }
 #else
     // Create Context
@@ -126,6 +128,8 @@ void SDLWindow::initializeOpenGL() {
     if (m_sdlContext == NULL) {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
         assert(m_sdlContext != NULL);
+    } else {
+        std::cout << "OpenGL context: " << major[index] << "." << minor[index] << std::endl;
     }
 #endif // defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
 
