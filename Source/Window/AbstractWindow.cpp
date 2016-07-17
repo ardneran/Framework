@@ -18,6 +18,7 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 , m_minimized(false)
 , m_maximized(false)
 , m_active(true) {
+	m_renderer->setWindow(this);
 	m_camera = new Camera(Camera::Perspective);
 	if (m_camera) {
 		if (m_camera->getType() == Camera::Orthographic) {

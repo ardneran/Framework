@@ -191,8 +191,6 @@ void SDLWindow::initializeOpenGL() {
             std::cout << ", TT";
         std::cout << "]" << std::endl;
     }
-
-	m_renderer->setWindow(this);
 }
 
 void SDLWindow::deinitializeSDL() {
