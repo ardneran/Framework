@@ -77,15 +77,3 @@ void SampleWindow::destroyEffects() {
 
 void SampleWindow::destroyScene() {
 }
-
-void SampleWindow::testTransform() {
-    Transform a;
-    a.setTranslate(Vec3(1000, 2000, 3000));
-    a.setRotate(Quat(100 * M_DEGREE_TO_RADIAN, 200 * M_DEGREE_TO_RADIAN, 300 * M_DEGREE_TO_RADIAN));
-    a.setScale(Vec3(10, 20, 30));
-    Transform b;
-    b.setTranslate(Vec3(100, 200, 300));
-    b.setRotate(Quat(10 * M_DEGREE_TO_RADIAN, 20 * M_DEGREE_TO_RADIAN, 30 * M_DEGREE_TO_RADIAN));
-    b.setScale(Vec3(1, 2, 3));
-    Transform c = a * b;
-}

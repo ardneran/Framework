@@ -23,8 +23,6 @@ private:
     void createScene();
     void destroyEffects();
     void destroyScene();
-
-	void testTransform(); // TODO Remove
 };
 
 #endif
