@@ -11,6 +11,8 @@
 
 #include "AbstractWindow.h"
 
+#include "Native.h"
+
 struct Parameters;
 
 class NativeWindow : public AbstractWindow {
@@ -27,19 +29,16 @@ public:
 private:
 	void initializeNative();
 	void initializeOpenGL();
-	void initializeOther();
 	void deinitializeNative();
-	void deinitializeNativeimage();
-	void deinitializeNativettf();
 	void deinitializeOpenGL();
 
 	void handleWindowEvent();
 	void handleKeyUpEvent();
 	void handleKeyDownEvent();
 
-	////Native_Event m_nativeEvent;
-	////Native_Window* m_nativeWindow;
-	////Native_GLContext m_nativeContext;
+	Native_Event m_nativeEvent;
+	Native_Window* m_nativeWindow;
+	Native_GLContext m_nativeGlContext;
 };
 
 #endif /* NativeWindow_h */

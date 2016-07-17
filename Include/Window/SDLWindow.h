@@ -50,7 +50,7 @@ private:
 
     SDL_Event m_sdlEvent;
     SDL_Window* m_sdlWindow;
-    SDL_GLContext m_sdlContext;
+    SDL_GLContext m_sdlGlContext;
 };
 
 #endif /* defined(____SDLWindow__) */

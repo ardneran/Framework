@@ -120,21 +120,21 @@ void SDLWindow::initializeOpenGL() {
     for (index = 0; index < 10; ++index) {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major[index]);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor[index]);
-        m_sdlContext = SDL_GL_CreateContext(m_sdlWindow);
-        if (m_sdlContext != NULL) {
+        m_sdlGlContext = SDL_GL_CreateContext(m_sdlWindow);
+        if (m_sdlGlContext != NULL) {
             break;
         }
     }
-    if (m_sdlContext == NULL) {
+    if (m_sdlGlContext == NULL) {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
-        assert(m_sdlContext != NULL);
+        assert(m_sdlGlContext != NULL);
     } else {
         std::cout << "OpenGL context: " << major[index] << "." << minor[index] << std::endl;
     }
 #endif // defined(CONTEXT_MAJOR_VERSION) && defined(CONTEXT_MINOR_VERSION)
 
     // Set Context to Current
-    SDL_GL_MakeCurrent(m_sdlWindow, m_sdlContext);
+    SDL_GL_MakeCurrent(m_sdlWindow, m_sdlGlContext);
 
     // Log relevant information
     std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
