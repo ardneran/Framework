@@ -12,8 +12,15 @@
 #include <list>
 #include "Spatial.h"
 #include "SDLWindow.h"
+#include "NativeWindow.h"
 
+#define USE_SDL 1
+
+#if USE_SDL
 class SampleWindow : public SDLWindow {
+#else
+class SampleWindow : public NativeWindow {
+#endif
 public:
     SampleWindow(Parameters& parameters);
     virtual ~SampleWindow();

@@ -39,7 +39,6 @@ private:
     void initializeSDLimage();
     void initializeSDLttf();
     void initializeOpenGL();
-    void initializeOther();
     void deinitializeSDL();
     void deinitializeSDLimage();
     void deinitializeSDLttf();
