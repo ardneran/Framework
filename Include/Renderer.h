@@ -39,8 +39,17 @@ class AbstractWindow;
 class Renderer {
 
 public:
+	enum Type {
+		DX,
+		GL,
+		Metal
+	};
+
     Renderer(const int& width, const int& height);
     virtual ~Renderer() = 0;
+
+	void setType(const Type& type);
+	Type getType();
 
     void setWidth(const int& width);
     int getWidth();
@@ -80,6 +89,7 @@ public:
 	virtual void draw(BoundingBox* boundingBox) = 0;
 
 protected:
+	Type m_type;
     int m_width;
     int m_height;
     Color4f m_clearColor;

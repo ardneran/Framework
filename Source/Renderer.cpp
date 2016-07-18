@@ -24,6 +24,14 @@ Renderer::~Renderer() {
     m_height = 0;
 }
 
+void Renderer::setType(const Type& type) {
+	m_type = type;
+}
+
+Renderer::Type Renderer::getType() {
+	return m_type;
+}
+
 void Renderer::setWidth(const int& width) {
     m_width = width;
 }

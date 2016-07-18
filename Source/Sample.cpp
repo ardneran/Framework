@@ -16,8 +16,13 @@ int main(int argc, char* argv[]) {
     parameters.yOrigin = 0;
     parameters.xSize = 1280;
     parameters.ySize = 720;
-    parameters.renderer = new GlRenderer(parameters.xSize, parameters.ySize);
-
+#define USE_GL 1
+#if USE_GL
+	parameters.renderer = new GlRenderer(parameters.xSize, parameters.ySize);
+#else
+    parameters.renderer = new MetalRenderer(parameters.xSize, parameters.ySize);
+#endif
+#undef USE_GL
     SampleWindow* sampleWindow = new SampleWindow(parameters);
 
     while (true) {

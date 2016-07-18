@@ -15,6 +15,7 @@
 
 DxRenderer::DxRenderer(const int& width, const int& height)
 : Renderer(width, height) {
+	m_type = DX;
 }
 
 DxRenderer::~DxRenderer() {
@@ -66,9 +67,6 @@ void DxRenderer::setSize(const int& width, const int& height) {
 }
 
 void DxRenderer::getSize(int& width, int& height) {
-}
-
-void DxRenderer::resize(const int& width, const int& height) {
 }
 
 void DxRenderer::clearColorBuffer() {

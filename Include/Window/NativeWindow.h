@@ -29,8 +29,10 @@ public:
 private:
 	void initializeNative();
 	void initializeOpenGL();
+	void initializeMetal();
 	void deinitializeNative();
 	void deinitializeOpenGL();
+	void deinitializeMetal();
 
 	void handleWindowEvent();
 	void handleKeyUpEvent();

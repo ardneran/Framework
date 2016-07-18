@@ -11,7 +11,17 @@
 NativeWindow::NativeWindow(Parameters& parameters)
 : AbstractWindow(parameters) {
 	initializeNative();
-	initializeOpenGL();
+	switch (m_renderer->getType()) {
+		case Renderer::DX:
+			break;
+		case Renderer::GL:
+			initializeOpenGL();
+			break;
+		case Renderer::Metal:
+			initializeMetal();
+		default:
+			break;
+	}
 	m_renderer->initialize(); // Called here after the context is created.
 }
 
@@ -184,6 +194,9 @@ void NativeWindow::initializeOpenGL() {
 */
 }
 
+void NativeWindow::initializeMetal() {
+}
+
 void NativeWindow::deinitializeNative() {
 ////Native_Quit();
 }
@@ -194,6 +207,9 @@ void NativeWindow::deinitializeOpenGL() {
 		Native_DestroyWindow(m_nativeWindow);
 	}
 */
+}
+
+void NativeWindow::deinitializeMetal() {
 }
 
 void NativeWindow::handleWindowEvent() {

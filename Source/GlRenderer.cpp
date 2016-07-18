@@ -15,6 +15,7 @@
 
 GlRenderer::GlRenderer(const int& width, const int& height)
 : Renderer(width, height) {
+	m_type = GL;
 }
 
 GlRenderer::~GlRenderer() {
