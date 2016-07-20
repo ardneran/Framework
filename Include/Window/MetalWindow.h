@@ -1,25 +1,23 @@
 //
-//  NativeWindow.h
+//  MetalWindow.h
 //  Framework
 //
 //  Created by Narendra Umate on 7/17/16.
 //
 //
 
-#ifndef NativeWindow_h
-#define NativeWindow_h
+#ifndef MetalWindow_h
+#define MetalWindow_h
 
 #include "AbstractWindow.h"
 
-#include "Native.h"
-
 struct Parameters;
 
-class NativeWindow : public AbstractWindow {
+class MetalWindow : public AbstractWindow {
 
 public:
-	NativeWindow(Parameters& parameters);
-	virtual ~NativeWindow() = 0;
+	MetalWindow(Parameters& parameters);
+	virtual ~MetalWindow() = 0;
 
 	void handlePollEvent();
 
@@ -28,19 +26,13 @@ public:
 
 private:
 	void initializeNative();
-	void initializeOpenGL();
 	void initializeMetal();
 	void deinitializeNative();
-	void deinitializeOpenGL();
 	void deinitializeMetal();
 
 	void handleWindowEvent();
 	void handleKeyUpEvent();
 	void handleKeyDownEvent();
-
-	Native_Event m_nativeEvent;
-	Native_Window* m_nativeWindow;
-	Native_GLContext m_nativeGlContext;
 };
 
-#endif /* NativeWindow_h */
+#endif /* MetalWindow_h */

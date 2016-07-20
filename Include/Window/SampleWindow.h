@@ -11,8 +11,9 @@
 
 #include <list>
 #include "Spatial.h"
+#include "GLFWWindow.h"
+#include "MetalWindow.h"
 #include "SDLWindow.h"
-#include "NativeWindow.h"
 
 #define USE_SDL 1
 
