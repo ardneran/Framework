@@ -43,8 +43,11 @@ solution "Framework"
 			excludes { "**/MacOS/**", "**/Linux/**" }
 
 		configuration "macosx"
-			frameworkdirs { "Library/MacOS/SDL2-2.0.3", "Library/MacOS/SDL2_image-2.0.0", "Library/MacOS/SDL2_ttf-2.0.12" }
-			linkoptions { "-framework SDL2", "-framework SDL2_image", "-framework SDL2_ttf", "-framework OpenGL" }
+			-- defines { "USE_SDL" }
+			-- frameworkdirs { "Library/MacOS/SDL2-2.0.3", "Library/MacOS/SDL2_image-2.0.0", "Library/MacOS/SDL2_ttf-2.0.12" }
+			-- linkoptions { "-framework SDL2", "-framework SDL2_image", "-framework SDL2_ttf" }
+			libdirs { "Library/MacOS/glfw-3.2" }
+			linkoptions { "-framework Cocoa", "-framework OpenGL", "-framework IOKit", "-framework CoreVideo", "-lglfw3" }
 			files { "**.m", "**.mm" }
 			excludes { "**/Windows/**", "**/Linux/**" }
 

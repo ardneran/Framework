@@ -119,7 +119,7 @@ void AbstractWindow::onIdle() {
 	}
 	spatials = culledSpatials;
 #endif
-	std::cout << "Spatials size: " << spatials.size() << std::endl;
+	//std::cout << "Spatials size: " << spatials.size() << std::endl;
 
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
@@ -131,4 +131,8 @@ void AbstractWindow::onIdle() {
 	}
 	m_renderer->displayColorBuffer(0);
 	m_octree->update();
+}
+
+void AbstractWindow::onClose() {
+    m_active = false;
 }

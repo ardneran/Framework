@@ -64,6 +64,7 @@ public:
 	virtual void onRestore();
 	virtual void onDisplay();
 	virtual void onIdle();
+    virtual void onClose();
 
 	virtual void setSwapInterval(const int& syncInterval) = 0;
 	virtual void swapWindow() = 0;

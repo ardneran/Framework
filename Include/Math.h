@@ -15,7 +15,12 @@
 #include <math.h>
 #endif //defined(__linux__)
 
-#include "SDL.h"
+#if defined(__APPLE__)
+// Use this without SDL
+#define _USE_MATH_DEFINES
+#define M_PI 22.0f / 7.0f
+#include <math.h>
+#endif // defined(__APPLE__)
 
 #if defined(__APPLE__)
 #else
@@ -31,10 +36,6 @@
 //#define sqrtf SDL_sqrt
 //#define fabsf SDL_fabs
 #endif // defined(__APPLE__)
-
-// Use this without SDL
-//#define _USE_MATH_DEFINES
-//#include <math.h>
 
 // double precision literal is either
 // 1 place before point and 35 after or

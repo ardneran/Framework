@@ -12,7 +12,7 @@ SampleWindow::SampleWindow(Parameters& parameters)
 #if USE_SDL
 : SDLWindow(parameters) {
 #else
-: NativeWindow(parameters) {
+: GLFWWindow(parameters) {
 #endif
 	m_renderer->setClearColor(Gray);
 	m_camera->setPosition(Vec3(0.0f, 0.0f, -10.0f));

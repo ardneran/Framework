@@ -12,15 +12,13 @@
 #include <list>
 #include "Spatial.h"
 #include "GLFWWindow.h"
-#include "MetalWindow.h"
+#include "NativeWindow.h"
 #include "SDLWindow.h"
-
-#define USE_SDL 1
 
 #if USE_SDL
 class SampleWindow : public SDLWindow {
 #else
-class SampleWindow : public NativeWindow {
+class SampleWindow : public GLFWWindow {
 #endif
 public:
     SampleWindow(Parameters& parameters);

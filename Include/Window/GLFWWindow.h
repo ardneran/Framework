@@ -9,7 +9,12 @@
 #ifndef GLFWWindow_h
 #define GLFWWindow_h
 
+#include <cassert>
+
 #include "AbstractWindow.h"
+
+#include "glfw3.h"
+#include "glfw_config.h"
 
 struct Parameters;
 
@@ -24,15 +29,15 @@ public:
 	virtual void setSwapInterval(const int& syncInterval);
 	virtual void swapWindow();
 
+    static std::map<GLFWwindow*, GLFWWindow*> s_windowMap;
+    
 private:
 	void initializeGLFW();
-	void initializeOpenGL();
+    void initializeOpenGL();
 	void deinitializeGLFW();
-	void deinitializeOpenGL();
+    void deinitializeOpenGL();
 
-	void handleWindowEvent();
-	void handleKeyUpEvent();
-	void handleKeyDownEvent();
+    GLFWwindow* m_glfwWindow;
 };
 
 #endif /* GLFWWindow_h */

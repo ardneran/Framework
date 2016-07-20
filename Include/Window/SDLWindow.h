@@ -9,6 +9,8 @@
 #ifndef ____SDLWindow__
 #define ____SDLWindow__
 
+#if USE_SDL
+
 #include <cassert>
 #include <iostream>
 
@@ -52,5 +54,7 @@ private:
     SDL_Window* m_sdlWindow;
     SDL_GLContext m_sdlGlContext;
 };
+
+#endif
 
 #endif /* defined(____SDLWindow__) */

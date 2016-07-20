@@ -9,13 +9,7 @@
 #ifndef Native_h
 #define Native_h
 
-class Native_Event {
-};
-
-class Native_Window {
-};
-
-class Native_GLContext {
+class Nativewindow {
 };
 
 #endif /* Native_h */

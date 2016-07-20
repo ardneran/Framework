@@ -6,6 +6,8 @@
 //
 //
 
+#if USE_SDL
+
 #include "SDLWindow.h"
 
 SDLWindow::SDLWindow(Parameters& parameters)
@@ -38,7 +40,7 @@ void SDLWindow::handlePollEvent() {
                 handleKeyDownEvent();
             } break;
             case SDL_QUIT: {
-                m_active = false;
+                onClose();
             } break;
         }
     }
@@ -67,6 +69,7 @@ void SDLWindow::initializeSDLttf() {
 }
 
 void SDLWindow::initializeOpenGL() {
+    // Set Attributes
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 2);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 2);
@@ -110,14 +113,14 @@ void SDLWindow::initializeOpenGL() {
         printf("SDL_GL_CreateContext Error: %s\n", SDL_GetError());
         assert(m_sdlContext != NULL);
     } else {
-        std::cout << "OpenGL context: " << CONTEXT_MAJOR_VERSION << "." CONTEXT_MINOR_VERSION << std::endl;
+        std::cout << "OpenGL context: " << CONTEXT_MAJOR_VERSION << "." << CONTEXT_MINOR_VERSION << std::endl;
     }
 #else
     // Create Context
-    const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3 };
-    const int minor[] = { 5, 4, 3, 2, 1, 0, 3, 2, 1, 0 };
+    const int major[] = { 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 2 };
+    const int minor[] = { 5, 4, 3, 2, 1, 0, 3, 2, 1, 0, 0 };
     int index = 0;
-    for (index = 0; index < 10; ++index) {
+    for (index = 0; index < 11; ++index) {
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, major[index]);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, minor[index]);
         m_sdlGlContext = SDL_GL_CreateContext(m_sdlWindow);
@@ -250,7 +253,7 @@ void SDLWindow::handleKeyDownEvent() {
 	const float increment = 0.50f;
     switch (m_sdlEvent.key.keysym.sym) {
         case SDLK_ESCAPE:
-            m_active = false;
+            onClose();
             break;
 		case SDLK_UP:
 			{
@@ -284,3 +287,5 @@ void SDLWindow::handleKeyDownEvent() {
             break;
     }
 }
+
+#endif
