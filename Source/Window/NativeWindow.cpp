@@ -27,7 +27,17 @@ NativeWindow::NativeWindow(Parameters& parameters)
 
 NativeWindow::~NativeWindow() {
 	m_renderer->deinitialize(); // Called here before the context is destroyed.
-	deinitializeOpenGL();
+    switch (m_renderer->getType()) {
+        case Renderer::DX:
+            break;
+        case Renderer::GL:
+            deinitializeOpenGL();
+            break;
+        case Renderer::Metal:
+            deinitializeMetal();
+        default:
+            break;
+    }
 	deinitializeNative();
 }
 
