@@ -12,8 +12,6 @@ GLFWWindow::GLFWWindow(Parameters& parameters)
 : AbstractWindow(parameters) {
 	initializeGLFW();
 	switch (m_renderer->getType()) {
-		case Renderer::DX:
-			break;
 		case Renderer::GL:
 			initializeOpenGL();
 			break;
@@ -26,8 +24,6 @@ GLFWWindow::GLFWWindow(Parameters& parameters)
 GLFWWindow::~GLFWWindow() {
 	m_renderer->deinitialize(); // Called here before the context is destroyed.
     switch (m_renderer->getType()) {
-        case Renderer::DX:
-            break;
         case Renderer::GL:
             deinitializeOpenGL();
             break;

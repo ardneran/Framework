@@ -12,10 +12,9 @@ MetalWindow::MetalWindow(Parameters& parameters)
 : AbstractWindow(parameters) {
 	initializeNative();
 	switch (m_renderer->getType()) {
-		case Renderer::DX:
-			break;
 		case Renderer::Metal:
 			initializeMetal();
+            break;
 		default:
 			break;
 	}
@@ -25,8 +24,6 @@ MetalWindow::MetalWindow(Parameters& parameters)
 MetalWindow::~MetalWindow() {
 	m_renderer->deinitialize(); // Called here before the context is destroyed.
     switch (m_renderer->getType()) {
-        case Renderer::DX:
-            break;
         case Renderer::Metal:
             deinitializeMetal();
         default:
