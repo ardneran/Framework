@@ -8,21 +8,34 @@
 
 #include "VisualEffect.h"
 
-VisualEffect::VisualEffect(GlProgram* program)
+VisualEffect::VisualEffect(void* program)
 : m_program(program) {
 }
 
 VisualEffect::~VisualEffect() {
-    if (m_program) {
-        delete m_program;
-        m_program = NULL;
-    }
+    m_program = nullptr;
 }
 
-void VisualEffect::setProgram(GlProgram* program) {
+void VisualEffect::setProgram(void* program) {
     m_program = program;
 }
 
-GlProgram* VisualEffect::getProgram() {
+void* VisualEffect::getProgram() {
     return m_program;
+}
+
+GlVisualEffect::GlVisualEffect(GlProgram* program)
+: VisualEffect(program) {
+}
+
+GlVisualEffect::~GlVisualEffect() {
+    delete static_cast<GlVisualEffect*>(m_program);
+}
+
+void GlVisualEffect::setProgram(GlProgram* program) {
+    m_program = program;
+}
+
+GlProgram* GlVisualEffect::getProgram() {
+    return static_cast<GlProgram*>(m_program);
 }

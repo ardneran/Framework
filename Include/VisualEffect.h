@@ -13,14 +13,23 @@
 
 class VisualEffect {
 public:
-    VisualEffect(GlProgram* program);
+    VisualEffect(void* program);
     virtual ~VisualEffect();
 
+    void setProgram(void* program);
+    void* getProgram();
+
+protected:
+    void* m_program;
+};
+
+class GlVisualEffect : public VisualEffect {
+public:
+    GlVisualEffect(GlProgram* program);
+    virtual ~GlVisualEffect();
+    
     void setProgram(GlProgram* program);
     GlProgram* getProgram();
-
-private:
-    GlProgram* m_program;
 };
 
 #endif /* VisualEffect_h */

@@ -159,7 +159,7 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
 void GlRenderer::draw(VisualSpatial* visual) {
-    VisualEffect* vEffect = visual->getVisualEffect();
+    GlVisualEffect* vEffect = static_cast<GlVisualEffect*>(visual->getVisualEffect());
     VertexBuffer* vBuffer = visual->getVertexBuffer();
     IndexBuffer* iBuffer = visual->getIndexBuffer();
 	Material* material = visual->getMaterial();
