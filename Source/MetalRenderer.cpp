@@ -99,9 +99,6 @@ void MetalRenderer::displayColorBuffer(const int& syncInterval) {
 void MetalRenderer::draw(VisualSpatial* visual) {
 }
 
-void MetalRenderer::draw(BoundingBox* boundingBox) {
-}
-
 //}
 
 #endif // defined(__APPLE__)

@@ -99,9 +99,6 @@ void DxRenderer::displayColorBuffer(const int& syncInterval) {
 void DxRenderer::draw(VisualSpatial* visual) {
 }
 
-void DxRenderer::draw(BoundingBox* boundingBox) {
-}
-
 //}
 
 #endif // defined(_WIN32)

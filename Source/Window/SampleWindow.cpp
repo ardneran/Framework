@@ -34,7 +34,6 @@ void SampleWindow::createEffects() {
 void SampleWindow::createScene() {
     const int visualEffectTypeSmooth = 0;
 	const int visualEffectTypePhong = 2;
-	BoundingBox::visualEffect = m_visualEffects[visualEffectTypeSmooth];
 #define TEST
 #ifdef TEST
     std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("house/house.obj"),

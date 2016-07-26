@@ -8,8 +8,6 @@
 
 #include "BoundingBox.h"
 
-VisualEffect* BoundingBox::visualEffect = nullptr;
-
 BoundingBox::BoundingBox()
 : m_center(Vec3::zero)
 , m_extent(Vec3::zero) {
