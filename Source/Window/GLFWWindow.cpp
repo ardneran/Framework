@@ -67,7 +67,18 @@ GLFWWindow::GLFWWindow(Parameters& parameters)
 : AbstractWindow(parameters)
 , m_glfwWindow(NULL) {
     initializeGLFW();
-    initializeOpenGL();
+    switch (m_renderer->getType()) {
+        case Renderer::GL:
+            initializeOpenGL();
+            break;
+            
+        case Renderer::Metal:
+            initializeMetal();
+            break;
+            
+        default:
+            break;
+    }
     m_renderer->initialize(); // Called here after the context is created.
 }
 
@@ -147,6 +158,9 @@ void GLFWWindow::initializeOpenGL() {
     onResize(width, height);
 }
 
+void GLFWWindow::initializeMetal() {
+}
+
 void GLFWWindow::deinitializeGLFW() {
     glfwTerminate();
     glfwSetErrorCallback(NULL);
@@ -156,4 +170,7 @@ void GLFWWindow::deinitializeOpenGL() {
     // Remove entry from map
     s_windowMap.erase(m_glfwWindow);
     glfwDestroyWindow(m_glfwWindow);
+}
+
+void GLFWWindow::deinitializeMetal() {
 }

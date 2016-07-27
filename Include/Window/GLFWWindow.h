@@ -34,9 +34,11 @@ public:
 private:
 	void initializeGLFW();
     void initializeOpenGL();
+    void initializeMetal();
 	void deinitializeGLFW();
     void deinitializeOpenGL();
-
+    void deinitializeMetal();
+    
     GLFWwindow* m_glfwWindow;
 };
 
