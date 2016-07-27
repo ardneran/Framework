@@ -99,6 +99,14 @@ void MetalRenderer::displayColorBuffer(const int& syncInterval) {
 void MetalRenderer::draw(VisualSpatial* visual) {
 }
 
+VisualEffect* MetalRenderer::createVisualEffect(const std::string& vsfilename, const std::string& fsfilename) {
+    return nullptr;
+}
+
+void MetalRenderer::destroyVisualEffect(VisualEffect* visualEffect) {
+    // do nothing
+}
+
 //}
 
 #endif // defined(__APPLE__)

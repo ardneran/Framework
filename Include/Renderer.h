@@ -86,6 +86,9 @@ public:
     virtual void clearBuffers(const int& x, const int& y, const int& w, const int& h) = 0;
     virtual void displayColorBuffer(const int& syncInterval) = 0;
     virtual void draw(VisualSpatial* visual) = 0;
+    
+    virtual VisualEffect* createVisualEffect(const std::string& vsfilename, const std::string& fsfilename) = 0;
+    virtual void destroyVisualEffect(VisualEffect* visualEffect) = 0;
 
 protected:
 	Type m_type;

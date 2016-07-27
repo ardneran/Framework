@@ -99,6 +99,14 @@ void DxRenderer::displayColorBuffer(const int& syncInterval) {
 void DxRenderer::draw(VisualSpatial* visual) {
 }
 
+VisualEffect* DxRenderer::createVisualEffect(const std::string& vsfilename, const std::string& fsfilename) {
+    return nullptr;
+}
+
+void DxRenderer::destroyVisualEffect(VisualEffect* visualEffect) {
+    // do nothing
+}
+
 //}
 
 #endif // defined(_WIN32)

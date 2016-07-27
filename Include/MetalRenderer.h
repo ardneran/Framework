@@ -47,6 +47,9 @@ public:
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
     void draw(VisualSpatial* visual);
+    
+    VisualEffect* createVisualEffect(const std::string& vsfilename, const std::string& fsfilename);
+    void destroyVisualEffect(VisualEffect* visualEffect);
 };
 
 //}

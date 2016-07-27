@@ -196,6 +196,14 @@ void GlRenderer::draw(VisualSpatial* visual) {
     }
 }
 
+VisualEffect* GlRenderer::createVisualEffect(const std::string& vsfilename, const std::string& fsfilename) {
+    return new GlVisualEffect(new GlProgram(vsfilename, fsfilename));
+}
+
+void GlRenderer::destroyVisualEffect(VisualEffect* visualEffect) {
+    delete visualEffect;
+}
+
 //}
 
 #endif // defined(__APPLE__) || defined(__linux__)
