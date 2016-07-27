@@ -159,6 +159,28 @@ void GLFWWindow::initializeOpenGL() {
 }
 
 void GLFWWindow::initializeMetal() {
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+    
+    m_glfwWindow = glfwCreateWindow(m_xSize, m_ySize, m_title.c_str(), NULL, NULL);
+    if (m_glfwWindow == NULL) {
+        printf("glfwCreateWindow Error: Unknown\n");
+        assert(m_glfwWindow != NULL);
+    }
+    
+    // Set callbacks
+    glfwSetFramebufferSizeCallback(m_glfwWindow, &glfwFramebufferSizeCallback);
+    glfwSetWindowCloseCallback(m_glfwWindow, &glfwWindowCloseCallback);
+    glfwSetKeyCallback(m_glfwWindow, &glfwKeyCallback);
+    
+    // Insert entry into map
+    s_windowMap[m_glfwWindow] = this;
+    glfwMakeContextCurrent(m_glfwWindow);
+    
+    // The returned dimensions could be different from the expected ones so scale accordingly
+    int width = 0;
+    int height = 0;
+    glfwGetFramebufferSize(m_glfwWindow, &width, &height);
+    onResize(width, height);
 }
 
 void GLFWWindow::deinitializeGLFW() {

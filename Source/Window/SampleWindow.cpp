@@ -26,9 +26,9 @@ SampleWindow::~SampleWindow() {
 }
 
 void SampleWindow::createEffects() {
-    m_visualEffects[0] = new VisualEffect(new GlProgram("smooth.vert", "smooth.frag"));
-    m_visualEffects[1] = new VisualEffect(new GlProgram("gouraud.vert", "gouraud.frag"));
-    m_visualEffects[2] = new VisualEffect(new GlProgram("phong.vert", "phong.frag"));
+    m_visualEffects[0] = m_renderer->createVisualEffect("smooth.vert", "smooth.frag");
+    m_visualEffects[1] = m_renderer->createVisualEffect("gouraud.vert", "gouraud.frag");
+    m_visualEffects[2] = m_renderer->createVisualEffect("phong.vert", "phong.frag");
 }
 
 void SampleWindow::createScene() {
@@ -67,15 +67,9 @@ void SampleWindow::createScene() {
 }
 
 void SampleWindow::destroyEffects() {
-    if (m_visualEffects[0]) {
-        delete m_visualEffects[0];
-    }
-    if (m_visualEffects[1]) {
-        delete m_visualEffects[1];
-    }
-    if (m_visualEffects[2]) {
-        delete m_visualEffects[2];
-    }
+    m_renderer->destroyVisualEffect(m_visualEffects[0]);
+    m_renderer->destroyVisualEffect(m_visualEffects[1]);
+    m_renderer->destroyVisualEffect(m_visualEffects[2]);
 }
 
 void SampleWindow::destroyScene() {
