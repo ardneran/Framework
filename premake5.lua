@@ -21,15 +21,15 @@ solution "Framework"
 		configuration "debug"
 			defines { "DEBUG" }
 			flags { "Symbols" }
-			targetdir ( "bin/debug" )
-			objdir ( "obj/debug" )
+			targetdir ( "Build/Bin/Debug" )
+			objdir ( "Build/Obj/Debug" )
 			-- targetname ( "Framework" )
 
 		configuration "release"
 			defines { "NDEBUG" }
 			flags { "Optimize" }
-			targetdir ( "bin/release" )
-			objdir ( "obj/release" )
+			targetdir ( "Build/Bin/Release" )
+			objdir ( "Build/Obj/Release" )
 			-- targetname ( "Framework" )
 
 		configuration "windows"
