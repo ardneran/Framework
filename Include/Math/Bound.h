@@ -13,7 +13,6 @@
 #include "Math.h"
 #include "Transform.h"
 #include "Vector.h"
-#include "VisualEffect.h"
 
 class Bound3 {
 public:
