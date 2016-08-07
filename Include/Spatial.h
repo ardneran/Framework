@@ -9,7 +9,7 @@
 #ifndef Spatial_h
 #define Spatial_h
 
-#include "BoundingBox.h"
+#include "Bound.h"
 #include "Transform.h"
 
 class Spatial {
@@ -26,12 +26,12 @@ public:
     Quat getRotate();
     Vec3 getScale();
 
-    BoundingBox getWorldBoundingBox();
+    Bound3 getWorldBoundingBox();
 
 protected:
     virtual void updateWorldBoundingBox();
 
-    BoundingBox m_worldBoundingBox;
+    Bound3 m_worldBoundingBox;
     Transform m_worldTransform;
 };
 

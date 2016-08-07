@@ -1,13 +1,13 @@
 //
-//  BoundingBox.h
+//  Bound.h
 //  Framework
 //
 //  Created by Narendra Umate on 8/24/15.
 //
 //
 
-#ifndef TEST_BoundingBox_H
-#define TEST_BoundingBox_H
+#ifndef TEST_Bound_H
+#define TEST_Bound_H
 
 #include <list>
 #include "Math.h"
@@ -15,12 +15,12 @@
 #include "Vector.h"
 #include "VisualEffect.h"
 
-class BoundingBox {
+class Bound {
 public:
-    BoundingBox();
-    BoundingBox(const Vec3& center, const Vec3& extent);
-    BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
-    virtual ~BoundingBox();
+    Bound();
+    Bound(const Vec3& center, const Vec3& extent);
+    Bound(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
+    virtual ~Bound();
 
     inline Vec3 getCenter() const { return m_center; }
     inline Vec3 getExtent() const { return m_extent; }
@@ -32,17 +32,17 @@ public:
     void updateMinMax(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ);
     void updateMinMax(const Vec3& cornerMin, const Vec3& cornerMax);
 
-    void create(const std::list<BoundingBox>& boxes);
+    void create(const std::list<Bound>& boxes);
     void create(const std::list<Vec3>& points);
 
     bool contains(const Vec3& p) const;
-    bool contains(const BoundingBox& other) const;
-    bool intersects(const BoundingBox& other) const;
-    BoundingBox transform(const Mat4& m) const;
-	BoundingBox transform(const Transform& t) const;
+    bool contains(const Bound& other) const;
+    bool intersects(const Bound& other) const;
+    Bound transform(const Mat4& m) const;
+	Bound transform(const Transform& t) const;
 
-    bool operator==(const BoundingBox& other) const;
-    bool operator!=(const BoundingBox& other) const;
+    bool operator==(const Bound& other) const;
+    bool operator!=(const Bound& other) const;
 
 private:
     Vec3 m_center;
@@ -51,4 +51,4 @@ private:
     Vec3 m_cornerMax;
 };
 
-#endif // TEST_BoundingBox_H
+#endif // TEST_Bound_H

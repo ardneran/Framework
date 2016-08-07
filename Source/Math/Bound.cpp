@@ -1,26 +1,26 @@
 //
-//  BoundingBox.cpp
+//  Bound.cpp
 //  Framework
 //
 //  Created by Narendra Umate on 8/24/15.
 //
 //
 
-#include "BoundingBox.h"
+#include "Bound.h"
 
-BoundingBox::BoundingBox()
+Bound3::Bound3()
 : m_center(Vec3::zero)
 , m_extent(Vec3::zero) {
 }
 
-BoundingBox::BoundingBox(const Vec3& center, const Vec3& extent)
+Bound3::Bound3(const Vec3& center, const Vec3& extent)
 : m_center(center)
 , m_extent(extent) {
     m_cornerMin = center - extent;
     m_cornerMax = center + extent;
 }
 
-BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ) {
+Bound3::Bound3(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ) {
     m_cornerMin.x = minX;
     m_cornerMin.y = minY;
     m_cornerMin.z = minZ;
@@ -31,30 +31,30 @@ BoundingBox::BoundingBox(const float& minX, const float& minY, const float& minZ
     m_extent = m_center - m_cornerMin;
 }
 
-BoundingBox::~BoundingBox() {
+Bound3::~Bound3() {
 }
 
-void BoundingBox::updateCenter(const Vec3& center) {
+void Bound3::updateCenter(const Vec3& center) {
     m_center = center;
     m_cornerMin = center - m_extent;
     m_cornerMax = center + m_extent;
 }
 
-void BoundingBox::updateCenterExtent(const Vec3& center, const Vec3& extent) {
+void Bound3::updateCenterExtent(const Vec3& center, const Vec3& extent) {
     m_center = center;
     m_extent = extent;
     m_cornerMin = center - extent;
     m_cornerMax = center + extent;
 }
 
-void BoundingBox::updateMinMax(const Vec3& cornerMin, const Vec3& cornerMax) {
+void Bound3::updateMinMax(const Vec3& cornerMin, const Vec3& cornerMax) {
     m_cornerMin = cornerMin;
     m_cornerMax = cornerMax;
     m_center = (m_cornerMin + m_cornerMax) * 0.5f;
     m_extent = m_center - m_cornerMin;
 }
 
-void BoundingBox::updateMinMax(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ) {
+void Bound3::updateMinMax(const float& minX, const float& minY, const float& minZ, const float& maxX, const float& maxY, const float& maxZ) {
     m_cornerMin.x = minX;
     m_cornerMin.y = minY;
     m_cornerMin.z = minZ;
@@ -65,16 +65,16 @@ void BoundingBox::updateMinMax(const float& minX, const float& minY, const float
     m_extent = m_center - m_cornerMin;
 }
 
-void BoundingBox::create(const std::list<BoundingBox>& boxes) {
+void Bound3::create(const std::list<Bound3>& boxes) {
     std::list<Vec3> points;
-    for (std::list<BoundingBox>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer) {
+    for (std::list<Bound3>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer) {
         points.push_back(boxPointer->getCornerMin());
         points.push_back(boxPointer->getCornerMax());
     }
     create(points);
 }
 
-void BoundingBox::create(const std::list<Vec3>& points) {
+void Bound3::create(const std::list<Vec3>& points) {
     Vec3 cornerMin = Vec3::max;
     Vec3 cornerMax = Vec3::min;
     for (std::list<Vec3>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer) {
@@ -104,7 +104,7 @@ void BoundingBox::create(const std::list<Vec3>& points) {
     }
 }
 
-bool BoundingBox::contains(const Vec3& p) const {
+bool Bound3::contains(const Vec3& p) const {
     if (p.x > m_cornerMax.x) {
         return false;
     }
@@ -132,11 +132,11 @@ bool BoundingBox::contains(const Vec3& p) const {
     return true;
 }
 
-bool BoundingBox::contains(const BoundingBox& other) const {
+bool Bound3::contains(const Bound3& other) const {
     return (contains(other.m_cornerMin) && contains(other.m_cornerMax));
 }
 
-bool BoundingBox::intersects(const BoundingBox& other) const {
+bool Bound3::intersects(const Bound3& other) const {
     // Calculate current and min non intersecting distance between centers.
     // If we are not intersecting at all then return (0, 0).
     Vec3 curDistance = m_center - other.m_center;
@@ -144,9 +144,9 @@ bool BoundingBox::intersects(const BoundingBox& other) const {
     return ((!(fabsf(curDistance.x) >= minDistance.x)) && (!(fabsf(curDistance.y) >= minDistance.y)) && (!(fabsf(curDistance.z) >= minDistance.z)));
 }
 
-BoundingBox BoundingBox::transform(const Mat4& m) const {
+Bound3 Bound3::transform(const Mat4& m) const {
 #if defined UNOPTIMIZED
-	BoundingBox boundingBox;
+	Bound boundingBox;
 	Vec3 min = Vec3::max;
 	Vec3 max = Vec3::min;
 	for (unsigned int i = 0; i < 8; ++i) {
@@ -158,7 +158,7 @@ BoundingBox BoundingBox::transform(const Mat4& m) const {
     boundingBox.updateMinMax(min, max);
 	return boundingBox;
 #else
-	BoundingBox boundingBox;
+	Bound3 boundingBox;
 	Vec3 xa = m.Right() * m_cornerMin.x;
 	Vec3 xb = m.Right() * m_cornerMax.x;
 	Vec3 ya = m.Up() * m_cornerMin.y;
@@ -172,14 +172,14 @@ BoundingBox BoundingBox::transform(const Mat4& m) const {
 #endif
 }
 
-BoundingBox BoundingBox::transform(const Transform& t) const {
+Bound3 Bound3::transform(const Transform& t) const {
 	return transform(t.getMatrix());
 }
 
-bool BoundingBox::operator==(const BoundingBox& other) const {
+bool Bound3::operator==(const Bound3& other) const {
     return (m_center == other.m_center && m_extent == other.m_extent);
 }
 
-bool BoundingBox::operator!=(const BoundingBox& other) const {
+bool Bound3::operator!=(const Bound3& other) const {
     return (m_center != other.m_center || m_extent != other.m_extent);
 }

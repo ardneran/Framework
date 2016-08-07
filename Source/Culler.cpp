@@ -104,7 +104,7 @@ void Culler::cull(Octree* octree, std::list<Spatial*>& spatials) {
 	}
 }
 
-Culler::Result Culler::test(const BoundingBox& boundingBox) {
+Culler::Result Culler::test(const Bound3& boundingBox) {
 	int out = 0;
 
 	Vec3 min = boundingBox.getCornerMin();

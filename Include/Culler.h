@@ -29,7 +29,7 @@ public:
 		Part
 	};
 
-	Result test(const BoundingBox& boundingBox);
+	Result test(const Bound3& boundingBox);
 	Result test(const Vec3& point);
 
 private:

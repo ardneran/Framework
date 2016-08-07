@@ -75,7 +75,7 @@ public:
     IndexBuffer* getIndexBuffer() { return m_indexBuffer; }
 	Material* getMaterial() { return m_material; }
 
-    BoundingBox getModelBoudingBox() { return m_modelBoundingBox; }
+    Bound3 getModelBoudingBox() { return m_modelBoundingBox; }
 
 protected:
     void updateWorldBoundingBox();
@@ -88,7 +88,7 @@ private:
     IndexBuffer* m_indexBuffer;
 	Material* m_material;
 
-    BoundingBox m_modelBoundingBox;
+    Bound3 m_modelBoundingBox;
 
     Mat3 m_worldViewNormMatrix;
 

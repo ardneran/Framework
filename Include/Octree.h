@@ -10,12 +10,12 @@
 #define Octree_h
 
 #include <list>
-#include "BoundingBox.h"
+#include "Bound.h"
 #include "Spatial.h"
 
 class Octree {
 public:
-    Octree(const int& depth, const BoundingBox& boundingBox);
+    Octree(const int& depth, const Bound3& boundingBox);
     Octree(const int& depth, const Vec3& center, const Vec3 extent);
     virtual ~Octree();
 
@@ -23,7 +23,7 @@ public:
     void update();
 	void collectTree(std::list<Spatial*>& collection);
 	void collectNode(std::list<Spatial*>& collection);
-	BoundingBox boundingBox();
+	Bound3 boundingBox();
 	Octree* node(const int& index);
 
 private:
@@ -43,7 +43,7 @@ private:
     bool subtreesArePresent();
 
     int m_depth;
-    BoundingBox m_boundingBox;
+    Bound3 m_boundingBox;
     Octree* m_children[8];
     std::list<Spatial*> m_acceptedSpatials;
     std::list<Spatial*> m_rejectedSpatials;

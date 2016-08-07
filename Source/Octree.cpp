@@ -11,7 +11,7 @@
 const int Octree::bucketSize = 1;
 const int Octree::maxDepth = 8;
 
-Octree::Octree(const int& depth, const BoundingBox& boundingBox)
+Octree::Octree(const int& depth, const Bound3& boundingBox)
 : m_depth(depth)
 , m_boundingBox(boundingBox) {
     for (int i = 0; i < 8; ++i) {
@@ -188,7 +188,7 @@ void Octree::collectNode(std::list<Spatial*>& collection) {
 	collection.insert(collection.end(), m_acceptedSpatials.begin(), m_acceptedSpatials.end());
 }
 
-BoundingBox Octree::boundingBox() {
+Bound3 Octree::boundingBox() {
 	return m_boundingBox;
 }
 

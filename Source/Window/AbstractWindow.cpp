@@ -28,7 +28,7 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 		}
 	}
 	m_culler = new Culler(m_camera);
-	m_octree = new Octree(0, BoundingBox(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
+	m_octree = new Octree(0, Bound3(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
 	m_objMeshLoader = new ObjMeshLoader();
 }
 

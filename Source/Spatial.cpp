@@ -47,6 +47,6 @@ Vec3 Spatial::getScale() {
     return m_worldTransform.getScale();
 }
 
-BoundingBox Spatial::getWorldBoundingBox() {
+Bound3 Spatial::getWorldBoundingBox() {
     return m_worldBoundingBox;
 }
