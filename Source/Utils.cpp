@@ -17,23 +17,29 @@ Utils::Utils() {
 Utils::~Utils() {
 }
 
+bool Utils::fileExists(const std::string filepath) {
+    std::ifstream testFile(filepath.c_str());
+    if (testFile.is_open()) {
+        testFile.close();
+        return true;
+    }
+    return false;
+}
+
 // TODO Faster file check
 std::string Utils::findFilePath(const std::string& strFileName) {
     std::string strFilePath = GLOBAL_MESHES_DIR + strFileName;
-    std::ifstream testFile(strFilePath.c_str());
-    if (testFile.is_open()) {
-        testFile.close();
+    if (fileExists(strFilePath)) {
         return strFilePath;
     }
 
     strFilePath = GLOBAL_SHADERS_DIR + strFileName;
-    testFile.open(strFilePath.c_str());
-    if (testFile.is_open()) {
-        testFile.close();
+    if (fileExists(strFilePath)) {
         return strFilePath;
     }
 
-    return "";
+    strFilePath.empty();
+    return strFilePath;
 }
 
 std::string Utils::findBasePath(const std::string& strFileName) {

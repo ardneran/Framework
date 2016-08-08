@@ -32,6 +32,7 @@ public:
     Utils();
     virtual ~Utils();
 
+    static bool fileExists(const std::string filepath);
     static std::string findFilePath(const std::string& strFileName);
     static std::string findBasePath(const std::string& strFileName);
 };
