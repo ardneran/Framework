@@ -28,6 +28,10 @@ void GlRenderer::initialize() {
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW); // GL_CW or GL_CCW
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // GL_FILL or GL_LINE
+	glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
+	glClearDepth(m_clearDepth);
+	glClearStencil(m_clearStencil);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void GlRenderer::deinitialize() {
