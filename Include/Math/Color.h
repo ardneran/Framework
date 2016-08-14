@@ -30,10 +30,7 @@
 
 // http://en.wikipedia.org/wiki/Webcolors
 
-//namespace Engine
-//{
-
-//  Color
+// Color
 
 enum Color {
     //  Red colors
@@ -197,12 +194,13 @@ enum Color {
     Black = RGBA(0x00, 0x00, 0x00, 0xFF), //	  0   0   0 255
 };
 
-//  Color4f
+// Color4f
 
 class Color4f {
 
 public:
     Color4f(const Color& color = Black);
+	Color4f(const unsigned char& r, const unsigned char& g, const unsigned char& b, const unsigned char& a = 255);
     Color4f(const float& r, const float& g, const float& b, const float& a = 1.0f);
     Color4f(const Vec3& v, const float& a = 1.0f);
     Color4f(const Vec4& v);
@@ -235,7 +233,10 @@ public:
 
     friend std::ostream& operator<<(std::ostream& out, const Color4f& u);
 
-    float r, g, b, a;
+    float r;
+	float g;
+	float b;
+	float a;
 };
 
 //  Functions
@@ -243,7 +244,5 @@ public:
 Color color(const Vec3& v, const float& a = 1.0f);
 Color color(const Vec4& v);
 Color4f lerp(const Color4f& u, const Color4f& v, const float& t);
-
-//}
 
 #endif

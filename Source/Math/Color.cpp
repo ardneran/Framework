@@ -8,8 +8,6 @@
 
 #include "Color.h"
 
-//namespace Engine {
-
 //  Color4f
 
 Color4f::Color4f(const Color& color)
@@ -25,6 +23,13 @@ Color4f::Color4f(const Color& color)
 , r((float)((color >> 24) & 0x000000FF) / 255.0f)
 #endif
 {
+}
+
+Color4f::Color4f(const unsigned char& r, const unsigned char& g, const unsigned char& b, const unsigned char& a)
+: r((float)r / 255.0f)
+, g((float)g / 255.0f)
+, b((float)b / 255.0f)
+, a((float)a / 255.0f) {
 }
 
 Color4f::Color4f(const float& r, const float& g, const float& b, const float& a)
@@ -192,5 +197,3 @@ Color color(const Vec4& v) {
 Color4f lerp(const Color4f& u, const Color4f& v, const float& t) {
     return (u - v) * t + v;
 }
-
-//}
