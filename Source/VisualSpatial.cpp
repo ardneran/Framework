@@ -8,10 +8,10 @@
 
 #include "VisualSpatial.h"
 
-VisualSpatial::VisualSpatial()
+VisualSpatial::VisualSpatial(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texcoords, const std::vector<unsigned int>& indices)
 : m_visualEffect(NULL)
-, m_vertexBuffer(new VertexBuffer())
-, m_indexBuffer(new IndexBuffer())
+, m_vertexBuffer(new VertexBuffer(positions, normals, texcoords))
+, m_indexBuffer(new IndexBuffer(indices))
 , m_material(new Material())
 , m_modelBoundingBox() {
 }

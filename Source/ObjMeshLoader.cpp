@@ -21,9 +21,7 @@ std::list<VisualSpatial*> ObjMeshLoader::load(const std::string& filepath, const
     std::string error;
     if (LoadObj(shapes, materials, error, filepath.c_str(), filebase.c_str())) {
         for (std::vector<tinyobj::shape_t>::iterator it = shapes.begin(); it != shapes.end(); ++it) {
-            VisualSpatial* visual = new VisualSpatial();
-            visual->getVertexBuffer()->initialize(it->mesh.positions, it->mesh.normals, it->mesh.texcoords);
-            visual->getIndexBuffer()->initialize(it->mesh.indices);
+            VisualSpatial* visual = new VisualSpatial(it->mesh.positions, it->mesh.normals, it->mesh.texcoords, it->mesh.indices);
 
 			// Assume that every shape has only one material.
 			loadMaterial(visual, materials[it->mesh.material_ids[0]], filebase);

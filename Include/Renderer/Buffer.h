@@ -40,27 +40,33 @@ protected:
 ////////////////////////////////////////////////////////////////////////////////
 class VertexBuffer : public Buffer {
 public:
-    VertexBuffer();
+    VertexBuffer(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texcoords);
     virtual ~VertexBuffer();
 
     void bind();
     void unbind();
-    void initialize(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texcoords);
+    void initialize();
     void deinitialize();
 
 private:
     unsigned int m_vertexArray;
+	std::vector<float> m_positions;
+	std::vector<float> m_normals;
+	std::vector<float> m_texcoords;
 };
 ////////////////////////////////////////////////////////////////////////////////
 class IndexBuffer : public Buffer {
 public:
-    IndexBuffer();
+    IndexBuffer(const std::vector<unsigned int>& indices);
     virtual ~IndexBuffer();
 
     void bind();
     void unbind();
-    void initialize(const std::vector<unsigned int>& indices);
+    void initialize();
     void deinitialize();
+
+private:
+	std::vector<unsigned int> m_indices;
 };
 ////////////////////////////////////////////////////////////////////////////////
 class Texture2D {

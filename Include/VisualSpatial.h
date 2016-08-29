@@ -19,7 +19,7 @@
 
 class VisualSpatial : public Spatial {
 public:
-    VisualSpatial();
+    VisualSpatial(const std::vector<float>& positions, const std::vector<float>& normals, const std::vector<float>& texcoords, const std::vector<unsigned int>& indices);
     virtual ~VisualSpatial();
 
     void update();
