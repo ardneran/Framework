@@ -54,6 +54,7 @@ void VertexBuffer::unbind() {
 void VertexBuffer::initialize() {
     m_count = (m_positions.size() / 3.0f) * 8.0f;
     m_size = m_count * sizeof(float);
+	//
     glBindVertexArray(m_vertexArray);
     //
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
@@ -89,12 +90,17 @@ void VertexBuffer::initialize() {
 void VertexBuffer::deinitialize() {
     m_count = 0;
     m_size = 0;
+	//
     glBindVertexArray(m_vertexArray);
+	//
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
+	glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_STATIC_DRAW);
+	//
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//
     glBindVertexArray(0);
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -138,6 +144,11 @@ void IndexBuffer::initialize() {
 void IndexBuffer::deinitialize() {
     m_count = 0;
     m_size = 0;
+	//
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_buffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_size, NULL, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	//
 }
 ////////////////////////////////////////////////////////////////////////////////
 Texture2D::Texture2D() {
