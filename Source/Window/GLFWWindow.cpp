@@ -11,7 +11,12 @@
 std::map<GLFWwindow*, GLFWWindow*> GLFWWindow::s_windowMap;
 
 void glfwErrorCallback(int error, const char* description) {
-    fprintf(stderr, "Error %d: %s\n", error, description);
+    if (strncmp(description, "Requested client API version 4.5, got version 4.1", 32) != 0 &&
+        strncmp(description, "Requested client API version 4.4, got version 4.1", 32) != 0 &&
+        strncmp(description, "Requested client API version 4.3, got version 4.1", 32) != 0 &&
+        strncmp(description, "Requested client API version 4.2, got version 4.1", 32) != 0) {
+        fprintf(stderr, "Error %d: %s\n", error, description);
+    }
 }
 
 void glfwFramebufferSizeCallback(GLFWwindow* window, int width, int height) {
