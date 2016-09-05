@@ -32,15 +32,16 @@ VertexBuffer::VertexBuffer(const std::vector<float>& positions, const std::vecto
 , m_texcoords(texcoords) {
     glGenVertexArrays(1, &m_vertexArray);
     glGenBuffers(1, &m_buffer);
+	initialize();
 }
 
 VertexBuffer::~VertexBuffer() {
+	deinitialize();
     glDeleteBuffers(1, &m_buffer);
     glDeleteVertexArrays(1, &m_vertexArray);
 }
 
 void VertexBuffer::bind() {
-	initialize();
     glBindVertexArray(m_vertexArray);
     ////glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
 }
@@ -48,7 +49,6 @@ void VertexBuffer::bind() {
 void VertexBuffer::unbind() {
     ////glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-	deinitialize();
 }
 
 void VertexBuffer::initialize() {
@@ -59,8 +59,7 @@ void VertexBuffer::initialize() {
     glBindBuffer(GL_ARRAY_BUFFER, m_buffer);
     glBufferData(GL_ARRAY_BUFFER, m_size, NULL, GL_STATIC_DRAW);
     //
-    void* m_bufferPointer = glMapBuffer(GL_ARRAY_BUFFER, GL_READ_WRITE);
-    float* m_vertexData = reinterpret_cast<float*>(m_bufferPointer);
+    float* m_vertexData = reinterpret_cast<float*>(glMapBuffer(GL_ARRAY_BUFFER, GL_READ_ONLY));
     unsigned int vertexCount = m_positions.size() / 3.0f;
     bool fillNormals = m_normals.size() > 0;
     bool fillTexcoords = m_texcoords.size() > 0;
@@ -74,7 +73,7 @@ void VertexBuffer::initialize() {
         m_vertexData[i * 8 + 6] = fillTexcoords ? m_texcoords.at(i * 2 + 0) : 0.0f;
         m_vertexData[i * 8 + 7] = fillTexcoords ? m_texcoords.at(i * 2 + 1) : 0.0f;
     }
-    glUnmapBuffer(GL_ARRAY_BUFFER);
+	glUnmapBuffer(GL_ARRAY_BUFFER);
     //
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, BUFFER_OFFSET(0));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, BUFFER_OFFSET(sizeof(float) * 3));
@@ -103,20 +102,20 @@ IndexBuffer::IndexBuffer(const std::vector<unsigned int>& indices)
 : Buffer()
 , m_indices(indices) {
     glGenBuffers(1, &m_buffer);
+	initialize();
 }
 
 IndexBuffer::~IndexBuffer() {
+	deinitialize();
     glDeleteBuffers(1, &m_buffer);
 }
 
 void IndexBuffer::bind() {
-	initialize();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_buffer);
 }
 
 void IndexBuffer::unbind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	deinitialize();
 }
 
 void IndexBuffer::initialize() {
@@ -126,8 +125,7 @@ void IndexBuffer::initialize() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_buffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_size, NULL, GL_STATIC_DRAW);
     //
-    void* m_bufferPointer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_READ_WRITE);
-    unsigned int* m_indexData = reinterpret_cast<unsigned int*>(m_bufferPointer);
+    unsigned int* m_indexData = reinterpret_cast<unsigned int*>(glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_READ_ONLY));
     for (unsigned int i = 0; i < m_count; ++i) {
         m_indexData[i] = m_indices.at(i);
     }
