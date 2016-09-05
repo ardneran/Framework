@@ -109,19 +109,11 @@ void Camera::setPostProjectionMatrix(const Mat4& postProjectionMatrix) {
     updateViewProjectionMatrix();
 }
 
-Camera::Type Camera::getType() {
-    return m_type;
-}
-
 void Camera::getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front) {
     position = m_position;
     right = m_right;
     up = m_up;
     front = m_front;
-}
-
-void Camera::getPosition(Vec3& position) {
-    position = m_position;
 }
 
 void Camera::getAxes(Vec3& right, Vec3& up, Vec3& front) {
@@ -151,12 +143,44 @@ void Camera::getSize(int& screenWidth, int& screenHeight) {
 	screenHeight = m_upMax - m_upMin;
 }
 
-void Camera::getPreViewMatrix(Mat4& preViewMatrix) {
-    preViewMatrix = m_preViewMatrix;
+Camera::Type Camera::getType() {
+	return m_type;
 }
 
-void Camera::getPostProjectionMatrix(Mat4& postProjectionMatrix) {
-    postProjectionMatrix = m_postProjectionMatrix;
+Vec3 Camera::getPosition() {
+	return m_position;
+}
+
+Mat4 Camera::getPreViewMatrix() {
+    return m_preViewMatrix;
+}
+
+Mat4 Camera::getPostProjectionMatrix() {
+    return m_postProjectionMatrix;
+}
+
+Mat4 Camera::getViewMatrix() {
+	return m_viewMatrix;
+}
+
+Mat3 Camera::getViewNormMatrix() {
+	return Mat3(m_viewMatrix).inverse().transpose();
+}
+
+Mat4 Camera::getViewProjectionMatrix() {
+	if (m_type == Camera::Orthographic) {
+		return m_viewOrthographicProjectionMatrix;
+	} else {
+		return m_viewPerspectiveProjectionMatrix;
+	}
+}
+
+Mat4 Camera::getProjectionMatrix() {
+	if (m_type == Camera::Orthographic) {
+		return m_orthographicProjectionMatrix;
+	} else {
+		return m_perspectiveProjectionMatrix;
+	}
 }
 
 void Camera::updateViewMatrix() {
@@ -246,28 +270,4 @@ void Camera::updateViewProjectionMatrix() {
             m_viewPerspectiveProjectionMatrix = m_viewPerspectiveProjectionMatrix * m_preViewMatrix;
         }
     }
-}
-
-Mat4 Camera::getViewMatrix() {
-    return m_viewMatrix;
-}
-
-Mat3 Camera::getViewNormMatrix() {
-	return Mat3(m_viewMatrix).inverse().transpose();
-}
-
-Mat4 Camera::getViewProjectionMatrix() {
-    if (m_type == Camera::Orthographic) {
-        return m_viewOrthographicProjectionMatrix;
-    } else {
-        return m_viewPerspectiveProjectionMatrix;
-    }
-}
-
-Mat4 Camera::getProjectionMatrix() {
-	if (m_type == Camera::Orthographic) {
-		return m_orthographicProjectionMatrix;
-	} else {
-		return m_perspectiveProjectionMatrix;
-	}
 }

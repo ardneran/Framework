@@ -32,15 +32,16 @@ public:
     void setPreViewMatrix(const Mat4& preViewMatrix);
     void setPostProjectionMatrix(const Mat4& postProjectionMatrix);
 
-    Type getType();
     void getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front);
-    void getPosition(Vec3& position);
     void getAxes(Vec3& right, Vec3& up, Vec3& front);
 	void getFrustum(float& rightMin, float& rightMax, float& upMin, float& upMax, float& frontMin, float& frontMax);
     void getFrustum(float& upFovDegrees, float& aspectRatio, float& frontMin, float& frontMax);
 	void getSize(int& screenWidth, int& screenHeight);
-    void getPreViewMatrix(Mat4& preViewMatrix);
-    void getPostProjectionMatrix(Mat4& postProjectionMatrix);
+
+	Type getType();
+	Vec3 getPosition();
+	Mat4 getPreViewMatrix();
+	Mat4 getPostProjectionMatrix();
 
     Mat4 getViewMatrix();
 	Mat3 getViewNormMatrix();
