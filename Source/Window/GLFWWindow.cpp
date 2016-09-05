@@ -36,29 +36,25 @@ void glfwKeyCallback(GLFWwindow* window, int k, int s, int action, int mods) {
                 break;
             case GLFW_KEY_UP:
             {
-                Vec3 position;
-                GLFWWindow::s_windowMap[window]->getCamera()->getPosition(position);
+                Vec3 position = GLFWWindow::s_windowMap[window]->getCamera()->getPosition();
                 GLFWWindow::s_windowMap[window]->getCamera()->setPosition(position + Vec3(0, 0, increment));
             }
                 break;
             case GLFW_KEY_DOWN:
             {
-                Vec3 position;
-                GLFWWindow::s_windowMap[window]->getCamera()->getPosition(position);
+                Vec3 position = GLFWWindow::s_windowMap[window]->getCamera()->getPosition();
                 GLFWWindow::s_windowMap[window]->getCamera()->setPosition(position + Vec3(0, 0, -increment));
             }
                 break;
             case GLFW_KEY_RIGHT:
             {
-                Vec3 position;
-                GLFWWindow::s_windowMap[window]->getCamera()->getPosition(position);
+                Vec3 position = GLFWWindow::s_windowMap[window]->getCamera()->getPosition();
                 GLFWWindow::s_windowMap[window]->getCamera()->setPosition(position + Vec3(increment, 0, 0));
             }
                 break;
             case GLFW_KEY_LEFT:
             {
-                Vec3 position;
-                GLFWWindow::s_windowMap[window]->getCamera()->getPosition(position);
+                Vec3 position = GLFWWindow::s_windowMap[window]->getCamera()->getPosition();
                 GLFWWindow::s_windowMap[window]->getCamera()->setPosition(position + Vec3(-increment, 0, 0));
             }
                 break;

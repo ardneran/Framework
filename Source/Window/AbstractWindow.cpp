@@ -93,12 +93,11 @@ void AbstractWindow::onDisplay() {
 
 void AbstractWindow::onIdle() {
 	m_renderer->clearBuffers();
+
 	// Push common uniforms to all shaders.
-	Vec3 cameraPosition;
-	m_camera->getPosition(cameraPosition);
 	// TODO Remove hardcoded loop limit.
 	for (int i = 0; i < 3; ++i) {
-		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("cameraPosition", 1, cameraPosition.data);
+		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("cameraPosition", 1, m_camera->getPosition().data);
 	}
 
 	std::list<Spatial*> spatials;
