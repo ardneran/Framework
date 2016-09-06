@@ -193,6 +193,9 @@ Mat4 Camera::getProjectionMatrix() {
 }
 
 bool Camera::boundInFrustum(const Bound3& bound) {
+	// Reference
+	// http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
+
 	const float band = 0.0f;
 	Vec3 boundMin = bound.getCornerMin();
 	Vec3 boundMax = bound.getCornerMax();
@@ -313,6 +316,9 @@ void Camera::updateViewProjectionMatrix() {
 }
 
 void Camera::updateFrustumPlanesAndPoints() {
+	// Reference
+	// http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
+
 	Mat4 matrix;
 	if (m_type == Camera::Orthographic) {
 		matrix = m_viewOrthographicProjectionMatrix.transpose();
