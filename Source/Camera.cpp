@@ -315,9 +315,9 @@ void Camera::updateViewProjectionMatrix() {
 void Camera::updateFrustumPlanesAndPoints() {
 	Mat4 matrix;
 	if (m_type == Camera::Orthographic) {
-		matrix = m_viewOrthographicProjectionMatrix;
+		matrix = m_viewOrthographicProjectionMatrix.transpose();
 	} else if (m_type == Camera::Perspective) {
-		matrix = m_viewPerspectiveProjectionMatrix;
+		matrix = m_viewPerspectiveProjectionMatrix.transpose();
 	}
 
 	m_planes[0].x = matrix.data[12] - matrix.data[ 0];
