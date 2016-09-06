@@ -32,6 +32,7 @@ Camera::Camera(const Type& type)
     updateViewMatrix();
     updateProjectionMatrix();
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 Camera::~Camera() {
@@ -41,6 +42,7 @@ void Camera::setType(const Type& type) {
     m_type = type;
 	updateProjectionMatrix();
 	updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setFrame(const Vec3& position, const Vec3& right, const Vec3& up, const Vec3& front) {
@@ -50,12 +52,14 @@ void Camera::setFrame(const Vec3& position, const Vec3& right, const Vec3& up, c
     m_front = front;
     updateViewMatrix();
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setPosition(const Vec3& position) {
     m_position = position;
     updateViewMatrix();
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setAxes(const Vec3& right, const Vec3& up, const Vec3& front) {
@@ -64,6 +68,7 @@ void Camera::setAxes(const Vec3& right, const Vec3& up, const Vec3& front) {
     m_front = front;
     updateViewMatrix();
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setFrustum(const float& rightMin, const float& rightMax, const float& upMin, const float& upMax, const float& frontMin, const float& frontMax) {
@@ -75,6 +80,7 @@ void Camera::setFrustum(const float& rightMin, const float& rightMax, const floa
 	m_frontMax = frontMax;
 	updateProjectionMatrix();
 	updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setFrustum(const float& upFovDegrees, const float& aspectRatio, const float& frontMin, const float& frontMax) {
@@ -88,6 +94,7 @@ void Camera::setFrustum(const float& upFovDegrees, const float& aspectRatio, con
     m_rightMin = -m_rightMax;
     updateProjectionMatrix();
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setSize(const int& screenWidth, const int& screenHeight) {
@@ -102,11 +109,13 @@ void Camera::setSize(const int& screenWidth, const int& screenHeight) {
 void Camera::setPreViewMatrix(const Mat4& preViewMatrix) {
     m_preViewMatrix = preViewMatrix;
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::setPostProjectionMatrix(const Mat4& postProjectionMatrix) {
     m_postProjectionMatrix = postProjectionMatrix;
     updateViewProjectionMatrix();
+	updateFrustumPlanesAndPoints();
 }
 
 void Camera::getFrame(Vec3& position, Vec3& right, Vec3& up, Vec3& front) {
@@ -270,4 +279,52 @@ void Camera::updateViewProjectionMatrix() {
             m_viewPerspectiveProjectionMatrix = m_viewPerspectiveProjectionMatrix * m_preViewMatrix;
         }
     }
+}
+
+void Camera::updateFrustumPlanesAndPoints() {
+	Mat4 m_matrix;
+	if (m_type == Camera::Orthographic) {
+		m_matrix = m_viewOrthographicProjectionMatrix;
+	} else if (m_type == Camera::Perspective) {
+		m_matrix = m_viewPerspectiveProjectionMatrix;
+	}
+
+	m_planes[0].x = m_matrix.data[12] - m_matrix.data[ 0];
+	m_planes[0].y = m_matrix.data[13] - m_matrix.data[ 1];
+	m_planes[0].z = m_matrix.data[14] - m_matrix.data[ 2];
+	m_planes[0].w = m_matrix.data[15] - m_matrix.data[ 3];
+	m_planes[1].x = m_matrix.data[12] + m_matrix.data[ 0];
+	m_planes[1].y = m_matrix.data[13] + m_matrix.data[ 1];
+	m_planes[1].z = m_matrix.data[14] + m_matrix.data[ 2];
+	m_planes[1].w = m_matrix.data[15] + m_matrix.data[ 3];
+	m_planes[2].x = m_matrix.data[12] + m_matrix.data[ 4];
+	m_planes[2].y = m_matrix.data[13] + m_matrix.data[ 5];
+	m_planes[2].z = m_matrix.data[14] + m_matrix.data[ 6];
+	m_planes[2].w = m_matrix.data[15] + m_matrix.data[ 7];
+	m_planes[3].x = m_matrix.data[12] - m_matrix.data[ 4];
+	m_planes[3].y = m_matrix.data[13] - m_matrix.data[ 5];
+	m_planes[3].z = m_matrix.data[14] - m_matrix.data[ 6];
+	m_planes[3].w = m_matrix.data[15] - m_matrix.data[ 7];
+	m_planes[4].x = m_matrix.data[12] - m_matrix.data[ 8];
+	m_planes[4].y = m_matrix.data[13] - m_matrix.data[ 9];
+	m_planes[4].z = m_matrix.data[14] - m_matrix.data[10];
+	m_planes[4].w = m_matrix.data[15] - m_matrix.data[11];
+	m_planes[5].x = m_matrix.data[12] + m_matrix.data[ 8];
+	m_planes[5].y = m_matrix.data[13] + m_matrix.data[ 9];
+	m_planes[5].z = m_matrix.data[14] + m_matrix.data[10];
+	m_planes[5].w = m_matrix.data[15] + m_matrix.data[11];
+
+	for (unsigned int i = 0; i < 6; ++i) {
+		m_planes[i] /= m_planes[i].project().norm();
+	}
+#if defined UNOPTIMIZED
+	m_points[0] = pointFromPlanes(m_planes[1], m_planes[2], m_planes[4]);
+	m_points[1] = pointFromPlanes(m_planes[0], m_planes[2], m_planes[4]);
+	m_points[2] = pointFromPlanes(m_planes[0], m_planes[3], m_planes[4]);
+	m_points[3] = pointFromPlanes(m_planes[1], m_planes[3], m_planes[4]);
+	m_points[4] = pointFromPlanes(m_planes[1], m_planes[2], m_planes[5]); // left,  bottom, near = -right, -top, near
+	m_points[5] = pointFromPlanes(m_planes[0], m_planes[2], m_planes[5]); // right, bottom, near =  right, -top, near
+	m_points[6] = pointFromPlanes(m_planes[0], m_planes[3], m_planes[5]); // right, top,    near
+	m_points[7] = pointFromPlanes(m_planes[1], m_planes[3], m_planes[5]); // left,  top,    near = -right,  top, near
+#endif // defined UNOPTIMIZED
 }

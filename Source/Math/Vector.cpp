@@ -8,9 +8,6 @@
 
 #include "Vector.h"
 
-//namespace Engine
-//{
-
 const Vec1 Vec1::zero = Vec1(0.0f);
 const Vec1 Vec1::one = Vec1(1.0f);
 const Vec1 Vec1::min = Vec1(FLT_MIN);
@@ -69,14 +66,12 @@ float Vec1::norm(void) const {
 
 Vec1 Vec1::normal(void) const {
     float magnitude = norm();
-    return (magnitude > 1.0f) ? (*this / magnitude) : (*this);
+    return (*this / magnitude);
 }
 
 void Vec1::normalize(void) {
     float magnitude = norm();
-    if (magnitude > 1.0f) {
-        *this /= norm();
-    }
+    *this /= magnitude;
 }
 
 float Vec1::operator[](const int index) const {
@@ -174,14 +169,12 @@ float Vec2::norm(void) const {
 
 Vec2 Vec2::normal(void) const {
     float magnitude = norm();
-    return (magnitude > 1.0f) ? (*this / magnitude) : (*this);
+    return (*this / magnitude);
 }
 
 void Vec2::normalize(void) {
     float magnitude = norm();
-    if (magnitude > 1.0f) {
-        *this /= norm();
-    }
+    *this /= magnitude;
 }
 
 float Vec2::operator[](const int index) const {
@@ -288,14 +281,12 @@ float Vec3::norm(void) const {
 
 Vec3 Vec3::normal(void) const {
     float magnitude = norm();
-    return (magnitude > 1.0f) ? (*this / magnitude) : (*this);
+    return (*this / magnitude);
 }
 
 void Vec3::normalize(void) {
     float magnitude = norm();
-    if (magnitude > 1.0f) {
-        *this /= norm();
-    }
+    *this /= magnitude;
 }
 
 float Vec3::operator[](const int index) const {
@@ -411,17 +402,15 @@ float Vec4::norm(void) const {
 
 Vec4 Vec4::normal(void) const {
     float magnitude = norm();
-    return (magnitude > 1.0f) ? (*this / magnitude) : (*this);
+    return (*this / magnitude);
 }
 
 void Vec4::normalize(void) {
     float magnitude = norm();
-    if (magnitude > 1.0f) {
-        *this /= norm();
-    }
+    *this /= magnitude;
 }
 
-Vec3 Vec4::project(void) {
+Vec3 Vec4::project(void) const {
     return Vec3(x, y, z);
 }
 
@@ -569,22 +558,6 @@ Vec3 cross(const Vec3& u, const Vec3& v) {
     return Vec3(u.y * v.z - v.y * u.z,
                 v.x * u.z - u.x * v.z,
                 u.x * v.y - v.x * u.y);
-}
-
-Vec4 cross(const Vec4& u, const Vec4& v, const Vec4& w) {
-    // Calculate intermediate values.
-    float a = (v[0] * w[1]) - (v[1] * w[0]);
-    float b = (v[0] * w[2]) - (v[2] * w[0]);
-    float c = (v[0] * w[3]) - (v[3] * w[0]);
-    float d = (v[1] * w[2]) - (v[2] * w[1]);
-    float e = (v[1] * w[3]) - (v[3] * w[1]);
-    float f = (v[2] * w[3]) - (v[3] * w[2]);
-
-    // Calculate the result-vector components.
-    return Vec4(+(u.y * f) - (u.z * e) + (u.w * d),
-                -(u.x * f) + (u.z * c) - (u.w * b),
-                +(u.x * e) - (u.y * c) + (u.w * a),
-                -(u.x * d) + (u.y * b) - (u.z * a));
 }
 
 float dist(const Vec1& u, const Vec1& v) {
@@ -799,4 +772,17 @@ Vec3 getDirection(const unsigned int& octant) {
 	}
 }
 
-//}
+Vec4 planeFromPoints(const Vec3& a, const Vec3& b, const Vec3& c) {
+	const Vec3 n = cross(b - a, c - a).normal();
+	return Vec4(n.x, n.y, n.z, -dot(a, n));
+}
+
+Vec3 pointFromPlanes(const Vec4& a, const Vec4& b, const Vec4& c) {
+	const float den = scalarTripleProduct(a.project(), b.project(), c.project());
+	if (den == 0.0f) {
+		return Vec3::zero;
+	} else {
+		Vec3 res = cross(b.project(), c.project()) * a.w + cross(c.project(), a.project()) * b.w + cross(a.project(), b.project()) * c.w;
+		return res * (-1.0f / den);
+	}
+}

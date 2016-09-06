@@ -12,6 +12,8 @@
 #include "Matrix.h"
 #include "Vector.h"
 
+#define UNOPTIMIZED
+
 class Camera {
 public:
     enum Type {
@@ -52,6 +54,7 @@ private:
     void updateViewMatrix();
     void updateProjectionMatrix();
     void updateViewProjectionMatrix();
+	void updateFrustumPlanesAndPoints();
 
     Type m_type;
     Vec3 m_position;
@@ -76,6 +79,11 @@ private:
     Mat4 m_viewOrthographicProjectionMatrix;
     Mat4 m_viewPerspectiveProjectionMatrix;
     Mat4 m_postProjectionMatrix;
+
+	Vec4 m_planes[6];
+#if defined UNOPTIMIZED
+	Vec3 m_points[8];
+#endif // defined UNOPTIMIZED
 };
 
 #endif /* Camera_h */

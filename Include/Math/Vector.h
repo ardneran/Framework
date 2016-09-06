@@ -12,9 +12,6 @@
 #include "Math.h"
 #include "Matrix.h"
 
-//namespace Engine
-//{
-
 class Mat4;
 
 //  Vec1
@@ -67,15 +64,9 @@ public:
 class Vec2 {
 public:
     union {
-        struct
-            {
-            union {
-                float x; // s, u;
-            };
-
-            union {
-                float y; // t, v;
-            };
+        struct {
+            float x; // s, u;
+            float y; // t, v;
         };
         float data[2];
     };
@@ -120,19 +111,10 @@ public:
 class Vec3 {
 public:
     union {
-        struct
-            {
-            union {
-                float x; // u;
-            };
-
-            union {
-                float y; // v;
-            };
-
-            union {
-                float z; // w;
-            };
+        struct {
+            float x; // u;
+            float y; // v;
+            float z; // w;
         };
         float data[3];
     };
@@ -197,7 +179,7 @@ public:
     float norm(void) const;
     Vec4 normal(void) const;
     void normalize(void);
-    Vec3 project(void);
+    Vec3 project(void) const;
 
     float operator[](const int index) const;
     float& operator[](const int index);
@@ -247,7 +229,6 @@ float dot(const Vec3& u, const Vec3& v);
 float dot(const Vec4& u, const Vec4& v);
 
 Vec3 cross(const Vec3& u, const Vec3& v);
-Vec4 cross(const Vec4& u, const Vec4& v, const Vec4& w);
 
 float dist(const Vec1& u, const Vec1& v);
 float dist(const Vec2& u, const Vec2& v);
@@ -299,6 +280,7 @@ Vec4 entrywiseProduct(const Vec4& u, const Vec4& v);
 
 Vec3 getDirection(const unsigned int& octant);
 
-//}
+Vec4 planeFromPoints(const Vec3& a, const Vec3& b, const Vec3& c);
+Vec3 pointFromPlanes(const Vec4& a, const Vec4& b, const Vec4& c);
 
 #endif

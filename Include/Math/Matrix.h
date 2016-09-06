@@ -36,13 +36,18 @@ class Quat;
 
 class Mat2 {
 public:
+	union {
+		struct {
 #if defined(ROW_MAJOR)
-    float d00, d01;
-    float d10, d11;
+			float d00, d01;
+			float d10, d11;
 #elif defined(COLUMN_MAJOR)
-    float d00, d10;
-    float d01, d11;
+			float d00, d10;
+			float d01, d11;
 #endif // defined(COLUMN_MAJOR)
+		};
+		float data[4];
+	};
 
     Mat2(void);
     Mat2(const float& m00, const float& m01,
@@ -66,15 +71,20 @@ public:
 
 class Mat3 {
 public:
+	union {
+		struct {
 #if defined(ROW_MAJOR)
-    float d00, d01, d02;
-    float d10, d11, d12;
-    float d20, d21, d22;
+			float d00, d01, d02;
+			float d10, d11, d12;
+			float d20, d21, d22;
 #elif defined(COLUMN_MAJOR)
-    float d00, d10, d20;
-    float d01, d11, d21;
-    float d02, d12, d22;
+			float d00, d10, d20;
+			float d01, d11, d21;
+			float d02, d12, d22;
 #endif // defined(COLUMN_MAJOR)
+		};
+		float data[9];
+	};
 
     Mat3(void);
     Mat3(const float& m00, const float& m01, const float& m02,
@@ -92,6 +102,10 @@ public:
     Mat3 inverse();
     float determinant();
 
+	Vec2 Right() const;
+	Vec2 Up() const;
+	Vec2 Translation() const;
+
     Vec3 operator*(const Vec3& v) const;
     Mat3 operator*(const Mat3& v) const;
     Mat3 operator*(const float& f) const;
@@ -105,17 +119,22 @@ public:
 
 class Mat4 {
 public:
+	union {
+		struct {
 #if defined(ROW_MAJOR)
-    float d00, d01, d02, d03;
-    float d10, d11, d12, d13;
-    float d20, d21, d22, d23;
-    float d30, d31, d32, d33;
+			float d00, d01, d02, d03;
+			float d10, d11, d12, d13;
+			float d20, d21, d22, d23;
+			float d30, d31, d32, d33;
 #elif defined(COLUMN_MAJOR)
-    float d00, d10, d20, d30;
-    float d01, d11, d21, d31;
-    float d02, d12, d22, d32;
-    float d03, d13, d23, d33;
+			float d00, d10, d20, d30;
+			float d01, d11, d21, d31;
+			float d02, d12, d22, d32;
+			float d03, d13, d23, d33;
 #endif // defined(COLUMN_MAJOR)
+		};
+		float data[16];
+	};
 
     Mat4(void);
     Mat4(const float& m00, const float& m01, const float& m02, const float& m03,
