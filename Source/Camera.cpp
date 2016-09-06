@@ -192,6 +192,37 @@ Mat4 Camera::getProjectionMatrix() {
 	}
 }
 
+bool Camera::boundInFrustum(const Bound3& bound) {
+	const float band = 0.0f;
+	Vec3 boundMin = bound.getCornerMin();
+	Vec3 boundMax = bound.getCornerMax();
+
+	// check box outside/inside of frustum
+	for (unsigned int i = 0; i < 6; ++i) {
+		int out = 0;
+		out += ((dot(m_planes[i], Vec4(boundMin.x, boundMin.y, boundMin.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMax.x, boundMin.y, boundMin.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMin.x, boundMax.y, boundMin.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMax.x, boundMax.y, boundMin.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMin.x, boundMin.y, boundMax.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMax.x, boundMin.y, boundMax.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMin.x, boundMax.y, boundMax.z, 1.0f)) < -band) ? 1 : 0);
+		out += ((dot(m_planes[i], Vec4(boundMax.x, boundMax.y, boundMax.z, 1.0f)) < -band) ? 1 : 0);
+		if (out == 8) return 0;
+	}
+#if defined UNOPTIMIZED
+	// check frustum outside/inside box
+	int out;
+	out = 0; for(int i = 0; i < 8; ++i) out += ((m_points[i].x > (boundMax.x + band)) ? 1 : 0); if (out == 8) return 0;
+	out = 0; for(int i = 0; i < 8; ++i) out += ((m_points[i].x < (boundMin.x - band)) ? 1 : 0); if (out == 8) return 0;
+	out = 0; for(int i = 0; i < 8; ++i) out += ((m_points[i].y > (boundMax.y + band)) ? 1 : 0); if (out == 8) return 0;
+	out = 0; for(int i = 0; i < 8; ++i) out += ((m_points[i].y < (boundMin.y - band)) ? 1 : 0); if (out == 8) return 0;
+	out = 0; for(int i = 0; i < 8; ++i) out += ((m_points[i].z > (boundMax.z + band)) ? 1 : 0); if (out == 8) return 0;
+	out = 0; for(int i = 0; i < 8; ++i) out += ((m_points[i].z < (boundMin.z - band)) ? 1 : 0); if (out == 8) return 0;
+#endif // defined UNOPTIMIZED
+	return 1;
+}
+
 void Camera::updateViewMatrix() {
     // update view matrix
     m_viewMatrix.d00 = m_right[0];

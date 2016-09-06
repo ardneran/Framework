@@ -9,6 +9,7 @@
 #ifndef Camera_h
 #define Camera_h
 
+#include "Bound.h"
 #include "Matrix.h"
 #include "Vector.h"
 
@@ -49,6 +50,8 @@ public:
 	Mat3 getViewNormMatrix();
     Mat4 getViewProjectionMatrix();
 	Mat4 getProjectionMatrix();
+
+	bool boundInFrustum(const Bound3& bound);
 
 private:
     void updateViewMatrix();
