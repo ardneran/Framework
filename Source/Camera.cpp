@@ -282,37 +282,37 @@ void Camera::updateViewProjectionMatrix() {
 }
 
 void Camera::updateFrustumPlanesAndPoints() {
-	Mat4 m_matrix;
+	Mat4 matrix;
 	if (m_type == Camera::Orthographic) {
-		m_matrix = m_viewOrthographicProjectionMatrix;
+		matrix = m_viewOrthographicProjectionMatrix;
 	} else if (m_type == Camera::Perspective) {
-		m_matrix = m_viewPerspectiveProjectionMatrix;
+		matrix = m_viewPerspectiveProjectionMatrix;
 	}
 
-	m_planes[0].x = m_matrix.data[12] - m_matrix.data[ 0];
-	m_planes[0].y = m_matrix.data[13] - m_matrix.data[ 1];
-	m_planes[0].z = m_matrix.data[14] - m_matrix.data[ 2];
-	m_planes[0].w = m_matrix.data[15] - m_matrix.data[ 3];
-	m_planes[1].x = m_matrix.data[12] + m_matrix.data[ 0];
-	m_planes[1].y = m_matrix.data[13] + m_matrix.data[ 1];
-	m_planes[1].z = m_matrix.data[14] + m_matrix.data[ 2];
-	m_planes[1].w = m_matrix.data[15] + m_matrix.data[ 3];
-	m_planes[2].x = m_matrix.data[12] + m_matrix.data[ 4];
-	m_planes[2].y = m_matrix.data[13] + m_matrix.data[ 5];
-	m_planes[2].z = m_matrix.data[14] + m_matrix.data[ 6];
-	m_planes[2].w = m_matrix.data[15] + m_matrix.data[ 7];
-	m_planes[3].x = m_matrix.data[12] - m_matrix.data[ 4];
-	m_planes[3].y = m_matrix.data[13] - m_matrix.data[ 5];
-	m_planes[3].z = m_matrix.data[14] - m_matrix.data[ 6];
-	m_planes[3].w = m_matrix.data[15] - m_matrix.data[ 7];
-	m_planes[4].x = m_matrix.data[12] - m_matrix.data[ 8];
-	m_planes[4].y = m_matrix.data[13] - m_matrix.data[ 9];
-	m_planes[4].z = m_matrix.data[14] - m_matrix.data[10];
-	m_planes[4].w = m_matrix.data[15] - m_matrix.data[11];
-	m_planes[5].x = m_matrix.data[12] + m_matrix.data[ 8];
-	m_planes[5].y = m_matrix.data[13] + m_matrix.data[ 9];
-	m_planes[5].z = m_matrix.data[14] + m_matrix.data[10];
-	m_planes[5].w = m_matrix.data[15] + m_matrix.data[11];
+	m_planes[0].x = matrix.data[12] - matrix.data[ 0];
+	m_planes[0].y = matrix.data[13] - matrix.data[ 1];
+	m_planes[0].z = matrix.data[14] - matrix.data[ 2];
+	m_planes[0].w = matrix.data[15] - matrix.data[ 3];
+	m_planes[1].x = matrix.data[12] + matrix.data[ 0];
+	m_planes[1].y = matrix.data[13] + matrix.data[ 1];
+	m_planes[1].z = matrix.data[14] + matrix.data[ 2];
+	m_planes[1].w = matrix.data[15] + matrix.data[ 3];
+	m_planes[2].x = matrix.data[12] + matrix.data[ 4];
+	m_planes[2].y = matrix.data[13] + matrix.data[ 5];
+	m_planes[2].z = matrix.data[14] + matrix.data[ 6];
+	m_planes[2].w = matrix.data[15] + matrix.data[ 7];
+	m_planes[3].x = matrix.data[12] - matrix.data[ 4];
+	m_planes[3].y = matrix.data[13] - matrix.data[ 5];
+	m_planes[3].z = matrix.data[14] - matrix.data[ 6];
+	m_planes[3].w = matrix.data[15] - matrix.data[ 7];
+	m_planes[4].x = matrix.data[12] - matrix.data[ 8];
+	m_planes[4].y = matrix.data[13] - matrix.data[ 9];
+	m_planes[4].z = matrix.data[14] - matrix.data[10];
+	m_planes[4].w = matrix.data[15] - matrix.data[11];
+	m_planes[5].x = matrix.data[12] + matrix.data[ 8];
+	m_planes[5].y = matrix.data[13] + matrix.data[ 9];
+	m_planes[5].z = matrix.data[14] + matrix.data[10];
+	m_planes[5].w = matrix.data[15] + matrix.data[11];
 
 	for (unsigned int i = 0; i < 6; ++i) {
 		m_planes[i] /= m_planes[i].project().norm();
