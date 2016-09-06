@@ -15,7 +15,6 @@
 #include <iostream>
 
 #include "AbstractWindow.h"
-#include "Culler.h"
 #include "ObjMeshLoader.h"
 #include "Octree.h"
 

@@ -10,8 +10,8 @@
 #define AbstractWindow_h
 
 #include "Camera.h"
-#include "Culler.h"
 #include "ObjMeshLoader.h"
+#include "Octree.h"
 #include "Renderer.h"
 
 class Renderer;
