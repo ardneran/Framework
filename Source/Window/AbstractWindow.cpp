@@ -27,7 +27,6 @@ AbstractWindow::AbstractWindow(Parameters& parameters)
 			m_camera->setFrustum(45.0f, float(parameters.xSize) / float(parameters.ySize), 0.1f, 1000.0f);
 		}
 	}
-	m_culler = new Culler(m_camera);
 	m_octree = new Octree(0, Bound3(Vec3::zero, Vec3(100.0f, 100.0f, 100.0f)));
 	m_objMeshLoader = new ObjMeshLoader();
 }
@@ -38,9 +37,6 @@ AbstractWindow::~AbstractWindow() {
 	}
 	if (m_octree != NULL) {
 		delete m_octree;
-	}
-	if (m_culler != NULL) {
-		delete m_culler;
 	}
 	if (m_camera != NULL) {
 		delete m_camera;
@@ -101,24 +97,18 @@ void AbstractWindow::onIdle() {
 	}
 
 	std::list<Spatial*> spatials;
-//#define CULL_OCTREE
-#ifdef CULL_OCTREE
-	// Iterate, Cull and Draw Octree Broken.
-	m_culler->updateFrustum();
-	m_culler->cull(m_octree, spatials);
-#else
+
 	// Iterate, Cull and Draw Normal Worked.
-	m_culler->updateFrustum();
 	m_octree->collectTree(spatials);
 	std::list<Spatial*> culledSpatials;
 	for (auto spatial : spatials) {
-		if (m_culler->test(spatial->getWorldBoundingBox()) != Culler::Out) {
+		if (m_camera->boundInFrustum(spatial->getWorldBoundingBox())) {
 			culledSpatials.push_back(spatial);
 		}
 	}
 	spatials = culledSpatials;
-#endif
-	//std::cout << "Spatials size: " << spatials.size() << std::endl;
+
+	std::cout << "Spatials size: " << spatials.size() << std::endl;
 
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);

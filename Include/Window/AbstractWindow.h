@@ -82,7 +82,6 @@ protected:
 	bool m_active;
 
 	Camera* m_camera;
-	Culler* m_culler;
 	Octree* m_octree;
 	ObjMeshLoader* m_objMeshLoader;
 
