@@ -9,6 +9,8 @@
 #ifndef MeshLoader_h
 #define MeshLoader_h
 
+#include <list>
+
 #include "VisualSpatial.h"
 #include "TextureManager.h"
 
