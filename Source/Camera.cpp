@@ -351,9 +351,13 @@ void Camera::updateFrustumPlanesAndPoints() {
 	m_planes[5].z = matrix.data[14] + matrix.data[10];
 	m_planes[5].w = matrix.data[15] + matrix.data[11];
 
-	for (unsigned int i = 0; i < 6; ++i) {
-		m_planes[i] /= m_planes[i].project().norm();
-	}
+	m_planes[0] /= m_planes[0].project().norm();
+	m_planes[1] /= m_planes[1].project().norm();
+	m_planes[2] /= m_planes[2].project().norm();
+	m_planes[3] /= m_planes[3].project().norm();
+	m_planes[4] /= m_planes[4].project().norm();
+	m_planes[5] /= m_planes[5].project().norm();
+
 #if defined UNOPTIMIZED
 	m_points[0] = pointFromPlanes(m_planes[1], m_planes[2], m_planes[4]);
 	m_points[1] = pointFromPlanes(m_planes[0], m_planes[2], m_planes[4]);
