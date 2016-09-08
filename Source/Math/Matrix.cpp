@@ -201,6 +201,10 @@ float Mat3::determinant() {
     return d00 * (d11 * d22 - d21 * d12) - d01 * (d10 * d22 - d20 * d12) + d02 * (d10 * d21 - d20 * d11);
 }
 
+Vec2 Mat3::Right() const { return Vec2(d00, d01); }
+Vec2 Mat3::Up() const { return Vec2(d10, d11); }
+Vec2 Mat3::Translation() const { return Vec2(d20, d21); }
+
 Vec3 Mat3::operator*(const Vec3& v) const {
     return Vec3(d00 * v.x + d01 * v.y + d02 * v.z,
                 d10 * v.x + d11 * v.y + d12 * v.z,
