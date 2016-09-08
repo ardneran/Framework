@@ -63,19 +63,19 @@ void Bound2::updateMinMax(const float& minX, const float& minY, const float& max
 	m_extent = m_center - m_cornerMin;
 }
 
-void Bound2::create(const std::list<Bound2>& boxes) {
-	std::list<Vec2> points;
-	for (std::list<Bound2>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer) {
+void Bound2::create(const std::vector<Bound2>& boxes) {
+	std::vector<Vec2> points;
+	for (std::vector<Bound2>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer) {
 		points.push_back(boxPointer->getCornerMin());
 		points.push_back(boxPointer->getCornerMax());
 	}
 	create(points);
 }
 
-void Bound2::create(const std::list<Vec2>& points) {
+void Bound2::create(const std::vector<Vec2>& points) {
 	Vec2 cornerMin = Vec2::max;
 	Vec2 cornerMax = Vec2::min;
-	for (std::list<Vec2>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer) {
+	for (std::vector<Vec2>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer) {
 		if (pointPointer->x < cornerMin.x) {
 			cornerMin.x = pointPointer->x;
 		}
@@ -264,7 +264,7 @@ void Bound3::create(const std::vector<Vec3>& points) {
 	m_extent = m_center - m_cornerMin;
 }
 
-void Bound3::create(const std::vector<Vertex>& vertices) {
+/*void Bound3::create(const std::vector<Vertex>& vertices) {
 	m_cornerMin = Vec3::max;
 	m_cornerMax = Vec3::min;
 	for (std::vector<Vertex>::const_iterator vertexPointer = vertices.begin(); vertexPointer != vertices.end(); ++vertexPointer) {
@@ -294,7 +294,7 @@ void Bound3::create(const std::vector<Vertex>& vertices) {
 	}
 	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
 	m_extent = m_center - m_cornerMin;
-}
+}*/
 
 bool Bound3::contains(const Vec3& p) const {
     if (p.x > m_cornerMax.x) {
