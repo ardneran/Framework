@@ -32,13 +32,14 @@ void SampleWindow::createEffects() {
 
 void SampleWindow::createScene() {
     const int visualEffectTypeSmooth = 0;
+	const int visualEffectTypeGouraud = 1;
 	const int visualEffectTypePhong = 2;
 #define TEST
 #ifdef TEST
     std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("house/house.obj"),
                                                                   Utils::findBasePath("house/house.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
-        (*it)->setVisualEffect(m_visualEffects[visualEffectTypePhong]);
+        (*it)->setVisualEffect(m_visualEffects[visualEffectTypeGouraud]);
 		(*it)->setTranslate(Vec3(0, -2.5, 0));
 		(*it)->setRotate(Quat(0, 0, 0));
 		(*it)->setScale(Vec3(0.09f, 0.09f, 0.09f));
