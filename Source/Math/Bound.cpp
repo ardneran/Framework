@@ -73,25 +73,27 @@ void Bound2::create(const std::vector<Bound2>& boxes) {
 }
 
 void Bound2::create(const std::vector<Vec2>& points) {
-	Vec2 cornerMin = Vec2::max;
-	Vec2 cornerMax = Vec2::min;
+	m_cornerMin = Vec2::max;
+	m_cornerMax = Vec2::min;
 	for (std::vector<Vec2>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer) {
-		if (pointPointer->x < cornerMin.x) {
-			cornerMin.x = pointPointer->x;
+		if (pointPointer->x < m_cornerMin.x) {
+			m_cornerMin.x = pointPointer->x;
 		}
 
-		if (pointPointer->x > cornerMax.x) {
-			cornerMax.x = pointPointer->x;
+		if (pointPointer->x > m_cornerMax.x) {
+			m_cornerMax.x = pointPointer->x;
 		}
 
-		if (pointPointer->y < cornerMin.y) {
-			cornerMin.y = pointPointer->y;
+		if (pointPointer->y < m_cornerMin.y) {
+			m_cornerMin.y = pointPointer->y;
 		}
 
-		if (pointPointer->y > cornerMax.y) {
-			cornerMax.y = pointPointer->y;
+		if (pointPointer->y > m_cornerMax.y) {
+			m_cornerMax.y = pointPointer->y;
 		}
 	}
+	m_center = (m_cornerMin + m_cornerMax) * 0.5f;
+	m_extent = m_center - m_cornerMin;
 }
 
 bool Bound2::contains(const Vec2& p) const {
