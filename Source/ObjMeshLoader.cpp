@@ -16,17 +16,36 @@ ObjMeshLoader::~ObjMeshLoader() {
 
 std::list<VisualSpatial*> ObjMeshLoader::load(const std::string& filepath, const std::string& filebase) {
     std::list<VisualSpatial*> visuals;
+	tinyobj::attrib_t attribs;
     std::vector<tinyobj::shape_t> shapes;
     std::vector<tinyobj::material_t> materials;
     std::string error;
-    if (LoadObj(shapes, materials, error, filepath.c_str(), filebase.c_str())) {
+    if (LoadObj(&attribs, &shapes, &materials, &error, filepath.c_str(), filebase.c_str())) {
         for (std::vector<tinyobj::shape_t>::iterator it = shapes.begin(); it != shapes.end(); ++it) {
-            VisualSpatial* visual = new VisualSpatial(it->mesh.positions, it->mesh.normals, it->mesh.texcoords, it->mesh.indices);
-
+			std::vector<float> positions;
+			std::vector<float> normals;
+			std::vector<float> texcoords;
+			std::vector<unsigned int> indices;
+			positions.resize(it->mesh.indices.size() * 3);
+			normals.resize(it->mesh.indices.size() * 3);
+			texcoords.resize(it->mesh.indices.size() * 2);
+			indices.resize(it->mesh.indices.size());
+			for (unsigned int i = 0; i < it->mesh.indices.size(); ++i) {
+				tinyobj::index_t indicesTuple = it->mesh.indices[i];
+				positions[i * 3 + 0] = (attribs.vertices[indicesTuple.vertex_index * 3 + 0]);
+				positions[i * 3 + 1] = (attribs.vertices[indicesTuple.vertex_index * 3 + 1]);
+				positions[i * 3 + 2] = (attribs.vertices[indicesTuple.vertex_index * 3 + 2]);
+				normals[i * 3 + 0] = (attribs.normals[indicesTuple.normal_index * 3 + 0]);
+				normals[i * 3 + 1] = (attribs.normals[indicesTuple.normal_index * 3 + 1]);
+				normals[i * 3 + 2] = (attribs.normals[indicesTuple.normal_index * 3 + 2]);
+				texcoords[i * 2 + 0] = (attribs.texcoords[indicesTuple.texcoord_index * 2 + 0]);
+				texcoords[i * 2 + 1] = (attribs.texcoords[indicesTuple.texcoord_index * 2 + 1]);
+				indices[i] = (i);
+			}
+            VisualSpatial* visual = new VisualSpatial(positions, normals, texcoords, indices);
 			// Assume that every shape has only one material.
 			loadMaterial(visual, materials[it->mesh.material_ids[0]], filebase);
-
-            visual->setModelBoundingBox(it->mesh.positions);
+            visual->setModelBoundingBox(positions);
             visuals.push_back(visual);
         }
     } else {
