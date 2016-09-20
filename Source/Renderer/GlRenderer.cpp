@@ -26,7 +26,7 @@ void GlRenderer::initialize() {
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
-    glFrontFace(GL_CCW); // GL_CW or GL_CCW
+    glFrontFace(GL_CW); // GL_CW or GL_CCW
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // GL_FILL or GL_LINE
 	glClearColor(m_clearColor.r, m_clearColor.g, m_clearColor.b, m_clearColor.a);
 	glClearDepth(m_clearDepth);
