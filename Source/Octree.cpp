@@ -175,17 +175,23 @@ void Octree::update() {
     }
 }
 
-void Octree::collectTree(std::list<Spatial*>& collection) {
+void Octree::collectTree(std::list<Spatial*>& collection, const Camera* camera) {
 	if (subtreesArePresent()) {
 		for (int i = 0; i < 8; ++i) {
-			m_children[i]->collectTree(collection);
+			if (camera->boundInFrustum(m_children[i]->m_boundingBox)) {
+				m_children[i]->collectTree(collection, camera);
+			}
 		}
 	}
-	collectNode(collection);
+	collectNode(collection, camera);
 }
 
-void Octree::collectNode(std::list<Spatial*>& collection) {
-	collection.insert(collection.end(), m_acceptedSpatials.begin(), m_acceptedSpatials.end());
+void Octree::collectNode(std::list<Spatial*>& collection, const Camera* camera) {
+	for (auto acceptedSpatial : m_acceptedSpatials) {
+		if (camera->boundInFrustum(acceptedSpatial->getWorldBoundingBox())) {
+			collection.push_back(acceptedSpatial);
+		}
+	}
 }
 
 Bound3 Octree::boundingBox() {

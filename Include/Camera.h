@@ -51,7 +51,7 @@ public:
     Mat4 getViewProjectionMatrix();
 	Mat4 getProjectionMatrix();
 
-	bool boundInFrustum(const Bound3& bound);
+	bool boundInFrustum(const Bound3& bound) const;
 
 private:
     void updateViewMatrix();

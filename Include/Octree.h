@@ -11,6 +11,7 @@
 
 #include <list>
 #include "Bound.h"
+#include "Camera.h"
 #include "Spatial.h"
 
 class Octree {
@@ -21,8 +22,8 @@ public:
 
     bool insert(Spatial* spatial);
     void update();
-	void collectTree(std::list<Spatial*>& collection);
-	void collectNode(std::list<Spatial*>& collection);
+	void collectTree(std::list<Spatial*>& collection, const Camera* camera);
+	void collectNode(std::list<Spatial*>& collection, const Camera* camera);
 	Bound3 boundingBox();
 	Octree* node(const int& index);
 

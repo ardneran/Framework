@@ -192,7 +192,7 @@ Mat4 Camera::getProjectionMatrix() {
 	}
 }
 
-bool Camera::boundInFrustum(const Bound3& bound) {
+bool Camera::boundInFrustum(const Bound3& bound) const {
 	// Reference
 	// http://www.iquilezles.org/www/articles/frustumcorrect/frustumcorrect.htm
 

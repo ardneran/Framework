@@ -88,28 +88,19 @@ void AbstractWindow::onDisplay() {
 }
 
 void AbstractWindow::onIdle() {
-	m_renderer->clearBuffers();
+	// Update Octree.
+	m_octree->update();
+	std::list<Spatial*> spatials;
+	m_octree->collectTree(spatials, m_camera);
+	std::cout << "Spatials size: " << spatials.size() << "\n";
 
+	// Render Octree.
 	// Push common uniforms to all shaders.
 	// TODO Remove hardcoded loop limit.
 	for (int i = 0; i < 3; ++i) {
 		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("cameraPosition", 1, m_camera->getPosition().data);
 	}
-
-	std::list<Spatial*> spatials;
-
-	// Iterate, Cull and Draw Normal Worked.
-	m_octree->collectTree(spatials);
-	std::list<Spatial*> culledSpatials;
-	for (auto spatial : spatials) {
-		if (m_camera->boundInFrustum(spatial->getWorldBoundingBox())) {
-			culledSpatials.push_back(spatial);
-		}
-	}
-	spatials = culledSpatials;
-
-	std::cout << "Spatials size: " << spatials.size() << std::endl;
-
+	m_renderer->clearBuffers();
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
 		if (visual) {
@@ -119,7 +110,6 @@ void AbstractWindow::onIdle() {
 		}
 	}
 	m_renderer->displayColorBuffer(0);
-	m_octree->update();
 }
 
 void AbstractWindow::onClose() {
