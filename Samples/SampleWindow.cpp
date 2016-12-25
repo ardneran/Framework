@@ -14,7 +14,7 @@ SampleWindow::SampleWindow(Parameters& parameters)
 #else
 : GLFWWindow(parameters) {
 #endif
-	m_camera->setPosition(Vec3(0.0f, 0.0f, -10.0f));
+	m_camera->setPosition(Vec3(0.0f, 0.0f, 0.0f));
     createEffects();
     createScene();
 }
@@ -39,10 +39,12 @@ void SampleWindow::createScene() {
     std::list<VisualSpatial*> visualsCube = m_objMeshLoader->load(Utils::findFilePath("house/house.obj"),
                                                                   Utils::findBasePath("house/house.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
-        (*it)->setVisualEffect(m_visualEffects[visualEffectTypeGouraud]);
-		(*it)->setTranslate(Vec3(0, -2.5, 0));
+        (*it)->setVisualEffect(m_visualEffects[visualEffectTypePhong]);
+		(*it)->setTranslate(Vec3(0, -25, 100));
 		(*it)->setRotate(Quat(0, 0, 0));
-		(*it)->setScale(Vec3(0.09f, 0.09f, 0.09f));
+		(*it)->setScale(Vec3(0.1f, 0.1f, 0.1f));
+		//g_glModels[0]->setPosition(Vec3(0, -15, 0));
+		//g_glModels[0]->setScale(Vec3(0.1f, 0.1f, 0.1f));
         m_octree->insert(*it);
     }
 #else
