@@ -9,12 +9,9 @@
 #ifndef __Camaleao__Quaternion__
 #define __Camaleao__Quaternion__
 
-#include "Math.h"
+#include "Mathematics.h"
 #include "Matrix.h"
 #include "Vector.h"
-
-//namespace Engine
-//{
 
 class Mat3;
 class Mat4;
@@ -64,7 +61,5 @@ public:
 float dot(const Quat& q0, const Quat& q1);
 Quat lerp(const Quat& q0, const Quat& q1, const float& t);
 Quat slerp(const Quat& q0, const Quat& q1, const float& t);
-
-//}
 
 #endif /* defined(__Camaleao__Quaternion__) */

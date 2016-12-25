@@ -9,7 +9,10 @@
 #ifndef __Camaleao__Vector__
 #define __Camaleao__Vector__
 
-#include "Math.h"
+#include <float.h>
+#include <math.h>
+#include <string.h>
+
 #include "Matrix.h"
 
 class Mat4;

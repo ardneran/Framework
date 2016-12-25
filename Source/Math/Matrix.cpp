@@ -18,9 +18,6 @@
 //  http://www.geometrictools.com/Documentation/LaplaceExpansionTheorem.pdf
 //  http://www.cs.rochester.edu/u/brown/Crypto/assts/projects/adj.html
 
-//namespace Engine
-//{
-
 //  Mat2
 
 Mat2::Mat2(void)
@@ -86,6 +83,14 @@ Mat2 Mat2::operator/(const float& f) const {
     m.d10 /= f;
     m.d11 /= f;
     return m;
+}
+
+bool Mat2::operator==(const Mat2& m) const {
+	return (memcmp(this, &m, sizeof(Mat2)) == 0);
+}
+
+bool Mat2::operator!=(const Mat2& m) const {
+	return (memcmp(this, &m, sizeof(Mat2)) != 0);
 }
 
 const Mat2 Mat2::identity = Mat2(1.0f, 0.0f,
@@ -249,6 +254,14 @@ Mat3 Mat3::operator/(const float& f) const {
     m.d21 /= f;
     m.d22 /= f;
     return m;
+}
+
+bool Mat3::operator==(const Mat3& m) const {
+	return (memcmp(this, &m, sizeof(Mat3)) == 0);
+}
+
+bool Mat3::operator!=(const Mat3& m) const {
+	return (memcmp(this, &m, sizeof(Mat3)) != 0);
 }
 
 const Mat3 Mat3::identity = Mat3(1.0f, 0.0f, 0.0f,
@@ -416,7 +429,7 @@ float Mat4::determinant() {
 		 d03*(d10*(d21*d32-d31*d22)-d11*(d20*d32-d30*d22)+d12*(d20*d31-d30*d21)));*/
 }
 
-Vec3 Mat4::Right() const { return  Vec3(d00, d01, d02); }
+Vec3 Mat4::Right() const { return Vec3(d00, d01, d02); }
 Vec3 Mat4::Up() const { return Vec3(d10, d11, d12); }
 Vec3 Mat4::Backward() const { return Vec3(d20, d21, d22); }
 Vec3 Mat4::Translation() const { return Vec3(d30, d31, d32); }
@@ -490,11 +503,11 @@ Mat4 Mat4::operator/(const float& f) const {
 }
 
 bool Mat4::operator==(const Mat4& m) const {
-    return (d00 == m.d00 && d01 == m.d01 && d02 == m.d02 && d03 == m.d03 && d10 == m.d10 && d11 == m.d11 && d12 == m.d12 && d13 == m.d13 && d20 == m.d20 && d21 == m.d21 && d22 == m.d22 && d23 == m.d23 && d30 == m.d30 && d31 == m.d31 && d32 == m.d32 && d33 == m.d33);
+	return (memcmp(this, &m, sizeof(Mat4)) == 0);
 }
 
 bool Mat4::operator!=(const Mat4& m) const {
-    return (d00 != m.d00 || d01 != m.d01 || d02 != m.d02 || d03 != m.d03 || d10 != m.d10 || d11 != m.d11 || d12 != m.d12 || d13 != m.d13 || d20 != m.d20 || d21 != m.d21 || d22 != m.d22 || d23 != m.d23 || d30 != m.d30 || d31 != m.d31 || d32 != m.d32 || d33 != m.d33);
+	return (memcmp(this, &m, sizeof(Mat4)) != 0);
 }
 
 const Mat4 Mat4::identity = Mat4(1.0f, 0.0f, 0.0f, 0.0f,
@@ -506,5 +519,3 @@ const Mat4 Mat4::zero = Mat4(0.0f, 0.0f, 0.0f, 0.0f,
                              0.0f, 0.0f, 0.0f, 0.0f,
                              0.0f, 0.0f, 0.0f, 0.0f,
                              0.0f, 0.0f, 0.0f, 0.0f);
-
-//}

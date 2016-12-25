@@ -8,9 +8,6 @@
 
 #include "Quaternion.h"
 
-//namespace Engine
-//{
-
 const Quat Quat::identity = Quat(0.0f, 0.0f, 0.0f, 1.0f);
 
 Quat::Quat(void)
@@ -234,5 +231,3 @@ Quat lerp(const Quat& q0, const Quat& q1, const float& t) {
 Quat slerp(const Quat& q0, const Quat& q1, const float& t) {
     return Quat::identity; // TODO implement this
 }
-
-//}

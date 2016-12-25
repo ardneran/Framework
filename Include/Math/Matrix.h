@@ -9,7 +9,9 @@
 #ifndef __Camaleao__Matrix__
 #define __Camaleao__Matrix__
 
-#include "Math.h"
+#include <string.h>
+
+#include "Mathematics.h"
 #include "Vector.h"
 #include "Quaternion.h"
 
@@ -20,9 +22,6 @@
 // DirectX
 #define ROW_MAJOR
 #endif // defined(_WIN32)
-
-//namespace Engine
-//{
 
 class Vec2;
 class Vec3;
@@ -62,6 +61,8 @@ public:
     Mat2 operator*(const Mat2& v) const;
     Mat2 operator*(const float& f) const;
     Mat2 operator/(const float& f) const;
+	bool operator==(const Mat2& m) const;
+	bool operator!=(const Mat2& m) const;
 
     static const Mat2 identity;
     static const Mat2 zero;
@@ -110,6 +111,8 @@ public:
     Mat3 operator*(const Mat3& v) const;
     Mat3 operator*(const float& f) const;
     Mat3 operator/(const float& f) const;
+	bool operator==(const Mat3& m) const;
+	bool operator!=(const Mat3& m) const;
 
     static const Mat3 identity;
     static const Mat3 zero;
@@ -168,7 +171,5 @@ public:
     static const Mat4 identity;
     static const Mat4 zero;
 };
-
-//}
 
 #endif /* defined(__Camaleao__Matrix__) */

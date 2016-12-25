@@ -55,10 +55,7 @@ Color4f::Color4f(const Vec4& v)
 
 Color4f& Color4f::operator=(const Color4f& u) {
     if (this != &u) {
-        r = u.r;
-        g = u.g;
-        b = u.b;
-        a = u.a;
+		memcpy(this, &u, sizeof(Color4f));
     }
     return *this;
 }
@@ -144,11 +141,11 @@ Color4f& Color4f::operator*=(const float u) {
 }
 
 bool Color4f::operator==(const Color4f& u) const {
-    return (r == u.r && g == u.g && b == u.b && a == u.a);
+	return (memcmp(this, &u, sizeof(Color4f)) == 0);
 }
 
 bool Color4f::operator!=(const Color4f& u) const {
-    return (r != u.r || g != u.g || b != u.b || a != u.a);
+	return (memcmp(this, &u, sizeof(Color4f)) != 0);
 }
 
 Color4f Color4f::clamp() {

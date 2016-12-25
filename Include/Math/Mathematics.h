@@ -18,24 +18,14 @@
 #if defined(__APPLE__)
 // Use this without SDL
 #define _USE_MATH_DEFINES
-#define M_PI 22.0f / 7.0f
 #include <math.h>
 #endif // defined(__APPLE__)
 
-#if defined(__APPLE__)
-#else
-//#define M_PI_2 22.0f / 14.0f
-//#define sinf SDL_sin
-//#define asinf SDL_asin
-//#define cosf SDL_cos
-//#define acosf SDL_acos
-//#define tanf SDL_tan
-//#define atanf SDL_atan
-//#define tan2f SDL_tan2
-//#define atan2f SDL_atan2
-//#define sqrtf SDL_sqrt
-//#define fabsf SDL_fabs
-#endif // defined(__APPLE__)
+#if defined(_WIN32)
+// Use this without SDL
+#define _USE_MATH_DEFINES
+#include <cmath>
+#endif // defined(_WIN32)
 
 // double precision literal is either
 // 1 place before point and 35 after or
@@ -46,9 +36,6 @@
 #define M_EPSILON 0.000001f
 #define M_DEGREE_TO_RADIAN M_PI_180
 #define M_RADIAN_TO_DEGREE M_180_PI
-
-//namespace Engine
-//{
 
 //	Windows UINT
 #ifndef UINT
@@ -76,7 +63,5 @@ float barycentric(const float& value1, const float& value2, const float& value3,
 float catmullRom(const float& value1, const float& value2, const float& value3, const float& value4, const float& amount);
 float hermite(const float& value1, const float& tangent1, const float& value2, const float& tangent2, const float& amount);
 float smoothStep(const float& value1, const float& value2, const float& amount);
-
-//}
 
 #endif /* defined(__Engine_Framework__Math__) */

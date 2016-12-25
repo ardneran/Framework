@@ -6,10 +6,7 @@
 //  Copyright (c) 2013 Narendra Umate. All rights reserved.
 //
 
-#include "Math.h"
-
-//namespace Engine
-//{
+#include "Mathematics.h"
 
 float invsqrt(const float& value) {
 	return 1.0f / sqrtf(value);
@@ -137,5 +134,3 @@ float smoothStep(const float& value1, const float& value2, const float& amount) 
     // If amount > 1, return value2
     return hermite(value1, 0.0f, value2, 0.0f, clamp(amount, 0.0f, 1.0f));
 }
-
-//}

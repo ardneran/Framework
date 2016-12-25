@@ -127,11 +127,11 @@ void Vec1::operator*=(const float& a) {
 }
 
 bool Vec1::operator==(const Vec1& a) const {
-    return (x == a.x);
+	return (memcmp(this, &a, sizeof(Vec1)) == 0);
 }
 
 bool Vec1::operator!=(const Vec1& a) const {
-    return (x != a.x);
+	return (memcmp(this, &a, sizeof(Vec1)) != 0);
 }
 
 Vec1 Vec1::operator*(const Mat4& m) const {
@@ -235,11 +235,11 @@ void Vec2::operator*=(const float& a) {
 }
 
 bool Vec2::operator==(const Vec2& a) const {
-    return (x == a.x && y == a.y);
+	return (memcmp(this, &a, sizeof(Vec2)) == 0);
 }
 
 bool Vec2::operator!=(const Vec2& a) const {
-    return (x != a.x || y != a.y);
+	return (memcmp(this, &a, sizeof(Vec1)) != 0);
 }
 
 Vec2 Vec2::operator*(const Mat4& m) const {
@@ -352,11 +352,11 @@ void Vec3::operator*=(const float& a) {
 }
 
 bool Vec3::operator==(const Vec3& a) const {
-    return (x == a.x && y == a.y && z == a.z);
+	return (memcmp(this, &a, sizeof(Vec3)) == 0);
 }
 
 bool Vec3::operator!=(const Vec3& a) const {
-    return (x != a.x || y != a.y || z != a.z);
+	return (memcmp(this, &a, sizeof(Vec1)) != 0);
 }
 
 Vec3 Vec3::operator*(const Mat4& m) const {
@@ -482,11 +482,11 @@ void Vec4::operator*=(const float& a) {
 }
 
 bool Vec4::operator==(const Vec4& a) const {
-    return (x == a.x && y == a.y && z == a.z && w == a.w);
+	return (memcmp(this, &a, sizeof(Vec4)) == 0);
 }
 
 bool Vec4::operator!=(const Vec4& a) const {
-    return (x != a.x || y != a.y || z != a.z || w != a.w);
+	return (memcmp(this, &a, sizeof(Vec4)) != 0);
 }
 
 Vec4 Vec4::operator*(const Mat4& m) const {
@@ -499,11 +499,11 @@ Vec4 Vec4::operator*(const Mat4& m) const {
 //  Functions
 
 Vec4 freeVector(const Vec3& v) {
-    return Vec4(v.x, v.y, v.z, 1.0f);
+    return Vec4(v.x, v.y, v.z, 0.0f); // This has been verified correct.
 }
 
 Vec4 pointVector(const Vec3& v) {
-    return Vec4(v.x, v.y, v.z, 0.0f);
+    return Vec4(v.x, v.y, v.z, 1.0f); // This has been verified correct.
 }
 
 Vec1 minVec(const Vec1& u, const Vec1& v) {

@@ -63,19 +63,19 @@ void Bound2::updateMinMax(const float& minX, const float& minY, const float& max
 	m_extent = m_center - m_cornerMin;
 }
 
-void Bound2::create(const std::vector<Bound2>& boxes) {
-	std::vector<Vec2> points;
-	for (std::vector<Bound2>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer) {
+void Bound2::create(const std::list<Bound2>& boxes) {
+	std::list<Vec2> points;
+	for (std::list<Bound2>::const_iterator boxPointer = boxes.begin(); boxPointer != boxes.end(); ++boxPointer) {
 		points.push_back(boxPointer->getCornerMin());
 		points.push_back(boxPointer->getCornerMax());
 	}
 	create(points);
 }
 
-void Bound2::create(const std::vector<Vec2>& points) {
+void Bound2::create(const std::list<Vec2>& points) {
 	m_cornerMin = Vec2::max;
 	m_cornerMax = Vec2::min;
-	for (std::vector<Vec2>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer) {
+	for (std::list<Vec2>::const_iterator pointPointer = points.begin(); pointPointer != points.end(); ++pointPointer) {
 		if (pointPointer->x < m_cornerMin.x) {
 			m_cornerMin.x = pointPointer->x;
 		}
@@ -159,11 +159,11 @@ Bound2 Bound2::transform(const Transform& t) const {
 }
 
 bool Bound2::operator==(const Bound2& other) const {
-	return (m_center == other.m_center && m_extent == other.m_extent);
+	return (memcmp(this, &other, sizeof(Bound2)) == 0);
 }
 
 bool Bound2::operator!=(const Bound2& other) const {
-	return (m_center != other.m_center || m_extent != other.m_extent);
+	return (memcmp(this, &other, sizeof(Bound2)) != 0);
 }
 
 // Bound3
@@ -339,16 +339,18 @@ bool Bound3::intersects(const Bound3& other) const {
 }
 
 Bound3 Bound3::transform(const Mat4& m) const {
+#define UNOPTIMIZED
 #if defined UNOPTIMIZED
-	Bound boundingBox;
 	Vec3 min = Vec3::max;
 	Vec3 max = Vec3::min;
 	for (unsigned int i = 0; i < 8; ++i) {
-		Vec4 p4 = pointVector(m_center + entrywiseProduct(m_extent, getDirection(i))) * m;
+		// The order of multiplication below between matrix and vector is correct and verified.
+		Vec4 p4 = m * pointVector(m_center + entrywiseProduct(m_extent, getDirection(i)));
 		Vec3 p3 = Vec3(p4.x, p4.y, p4.z);
 		min = minVec(min, p3);
 		max = maxVec(max, p3);
 	}
+	Bound3 boundingBox;
     boundingBox.updateMinMax(min, max);
 	return boundingBox;
 #else
@@ -364,6 +366,7 @@ Bound3 Bound3::transform(const Mat4& m) const {
 	boundingBox.updateMinMax(min, max);
 	return boundingBox;
 #endif
+#undef UNOPTIMIZED
 }
 
 Bound3 Bound3::transform(const Transform& t) const {
@@ -371,9 +374,9 @@ Bound3 Bound3::transform(const Transform& t) const {
 }
 
 bool Bound3::operator==(const Bound3& other) const {
-    return (m_center == other.m_center && m_extent == other.m_extent);
+	return (memcmp(this, &other, sizeof(Bound3)) == 0);
 }
 
 bool Bound3::operator!=(const Bound3& other) const {
-    return (m_center != other.m_center || m_extent != other.m_extent);
+	return (memcmp(this, &other, sizeof(Bound3)) != 0);
 }
