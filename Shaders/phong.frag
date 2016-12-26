@@ -11,7 +11,7 @@ in vec2 vTexcoord;
 
 out vec4 fColor;
 
-uniform vec3 cameraPosition;
+uniform vec3 eyePosition;
 uniform vec3 ambient;
 uniform vec3 diffuse;
 uniform vec3 specular;
@@ -29,10 +29,10 @@ void main()
 	vec3 N = normalize(vNormal);
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, vTexcoord).rgb;
-	vec3 L = normalize(cameraPosition - P);
+	vec3 L = normalize(eyePosition - P);
 	float diffuseLight = max(dot(N, L), 0);
 	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, vTexcoord).rgb * diffuseLight;
-	vec3 V = normalize(cameraPosition - P);
+	vec3 V = normalize(eyePosition - P);
 	vec3 H = normalize(L + V);
 	float specularLight = 0.0;
 	if (diffuseLight <= 0.0)

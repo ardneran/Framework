@@ -98,7 +98,7 @@ void AbstractWindow::onIdle() {
 	// Push common uniforms to all shaders.
 	// TODO Remove hardcoded loop limit.
 	for (int i = 0; i < 3; ++i) {
-		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("cameraPosition", 1, m_camera->getPosition().data);
+		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("eyePosition", 1, m_camera->getPosition().data);
 	}
 	m_renderer->clearBuffers();
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
