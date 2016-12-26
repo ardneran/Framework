@@ -162,16 +162,20 @@ void GlRenderer::displayColorBuffer(const int& syncInterval) {
 	m_window->swapWindow();
 }
 
-void GlRenderer::draw(VisualSpatial* visual) {
+void GlRenderer::draw(VisualSpatial* visual, const Vec3& lightColor, const Vec3& lightPosition, const Vec3& eyePosition) {
     GlVisualEffect* vEffect = static_cast<GlVisualEffect*>(visual->getVisualEffect());
     VertexBuffer* vBuffer = visual->getVertexBuffer();
     IndexBuffer* iBuffer = visual->getIndexBuffer();
 	Material* material = visual->getMaterial();
     if (vEffect && vBuffer && iBuffer && material) {
-        // Set Program
+        // Set Program.
         GLuint program = vEffect->getProgram()->getProgram();
         glUseProgram(program);
-        // Set World View Norm Matrix
+		// Set light and eye parameters.
+		vEffect->getProgram()->set3fv("lightColor", 1, lightColor.data);
+		vEffect->getProgram()->set3fv("lightPosition", 1, lightPosition.data);
+		vEffect->getProgram()->set3fv("eyePosition", 1, eyePosition.data);
+        // Set World View Norm Matrix.
         GLint worldViewNormMatrixLocation = glGetUniformLocation(program, "worldViewNorm");
         glUniformMatrix3fv(worldViewNormMatrixLocation, 1, GL_FALSE, (float*)&(visual->getWorldViewNormMatrix()));
         // Set World View Projection Matrix.

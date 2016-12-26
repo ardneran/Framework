@@ -96,7 +96,7 @@ void DxRenderer::clearBuffers(const int& x, const int& y, const int& w, const in
 void DxRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
-void DxRenderer::draw(VisualSpatial* visual) {
+void DxRenderer::draw(VisualSpatial* visual, const Vec3& lightColor, const Vec3& lightPosition, const Vec3& eyePosition) {
 }
 
 VisualEffect* DxRenderer::createVisualEffect(const std::string& vsfilename, const std::string& fsfilename) {

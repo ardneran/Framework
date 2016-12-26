@@ -107,7 +107,7 @@ void AbstractWindow::onIdle() {
 		if (visual) {
 			visual->setViewProjectionMatrix(m_camera->getViewProjectionMatrix());
 			visual->setViewMatrix(m_camera->getViewMatrix());
-			m_renderer->draw(visual);
+			m_renderer->draw(visual, Vec3(1.0f, 1.0f, 1.0f), m_camera->getPosition(), m_camera->getPosition());
 		}
 	}
 	m_renderer->displayColorBuffer(0);

@@ -96,7 +96,7 @@ void MetalRenderer::clearBuffers(const int& x, const int& y, const int& w, const
 void MetalRenderer::displayColorBuffer(const int& syncInterval) {
 }
 
-void MetalRenderer::draw(VisualSpatial* visual) {
+void MetalRenderer::draw(VisualSpatial* visual, const Vec3& lightColor, const Vec3& lightPosition, const Vec3& eyePosition) {
 }
 
 VisualEffect* MetalRenderer::createVisualEffect(const std::string& vsfilename, const std::string& fsfilename) {

@@ -56,7 +56,7 @@ public:
     void clearStencilBuffer(const int& x, const int& y, const int& w, const int& h);
     void clearBuffers(const int& x, const int& y, const int& w, const int& h);
     void displayColorBuffer(const int& syncInterval);
-    void draw(VisualSpatial* visual);
+    void draw(VisualSpatial* visual, const Vec3& lightColor, const Vec3& lightPosition, const Vec3& eyePosition);
     
     VisualEffect* createVisualEffect(const std::string& vsfilename, const std::string& fsfilename);
     void destroyVisualEffect(VisualEffect* visualEffect);
