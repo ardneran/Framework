@@ -13,6 +13,7 @@ out vec4 vColor;
 
 uniform mat3 worldViewNorm;
 uniform mat4 worldViewProjection;
+uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -33,7 +34,7 @@ void main()
 	vec3 N = normalize(worldViewNorm * normal);
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, texcoord).rgb;
-	vec3 L = normalize(eyePosition - P);
+	vec3 L = normalize(lightPosition - P);
 	float diffuseLight = max(dot(N, L), 0);
 	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, texcoord).rgb * diffuseLight;
 	vec3 V = normalize(eyePosition - P);

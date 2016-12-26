@@ -11,6 +11,7 @@ in vec2 vTexcoord;
 
 out vec4 fColor;
 
+uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 uniform vec3 ambient;
 uniform vec3 diffuse;
@@ -29,7 +30,7 @@ void main()
 	vec3 N = normalize(vNormal);
 	vec3 emission_ = emission;
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, vTexcoord).rgb;
-	vec3 L = normalize(eyePosition - P);
+	vec3 L = normalize(lightPosition - P);
 	float diffuseLight = max(dot(N, L), 0);
 	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, vTexcoord).rgb * diffuseLight;
 	vec3 V = normalize(eyePosition - P);
