@@ -86,8 +86,43 @@ Transform Transform::operator*=(const Transform& other) {
 }
 
 void Transform::compose() {
-    // Unoptimized but correct multiplication order SRT. This needs to be optimized further.
-    m_matrix = Mat4::scale(m_scale) * Mat4::rotate(m_rotate) * Mat4::translate(m_translate);
+	// Both these paths have been tried and tested to be correct.
+#if defined(UNOPTIMIZED)
+	m_matrix = Mat4::translate(m_translate) * Mat4::rotate(m_rotate) * Mat4::scale(m_scale);
+#else
+	const float x2 = m_rotate.x + m_rotate.x;
+	const float y2 = m_rotate.y + m_rotate.y;
+	const float z2 = m_rotate.z + m_rotate.z;
+	const float xx2 = m_rotate.x * x2;
+	const float yy2 = m_rotate.y * y2;
+	const float zz2 = m_rotate.z * z2;
+	const float xy2 = m_rotate.x * y2;
+	const float xz2 = m_rotate.x * z2;
+	const float yz2 = m_rotate.y * z2;
+	const float wx2 = m_rotate.w * x2;
+	const float wz2 = m_rotate.w * z2;
+	const float wy2 = m_rotate.w * y2;
+
+	m_matrix.d00 = (1.0f - yy2 - zz2) * m_scale.x;
+	m_matrix.d01 = (xy2 - wz2) * m_scale.y;
+	m_matrix.d02 = (xz2 + wy2) * m_scale.z;
+	m_matrix.d03 = m_translate.x;
+
+	m_matrix.d10 = (xy2 + wz2) * m_scale.x;
+	m_matrix.d11 = (1.0f - xx2 - zz2) * m_scale.y;
+	m_matrix.d12 = (yz2 - wx2) * m_scale.z;
+	m_matrix.d13 = m_translate.y;//
+
+	m_matrix.d20 = (xz2 - wy2) * m_scale.x;
+	m_matrix.d21 = (yz2 + wx2) * m_scale.y;
+	m_matrix.d22 = (1.0f - xx2 - yy2) * m_scale.z;
+	m_matrix.d23 = m_translate.z;//
+
+	m_matrix.d30 = 0.0f;
+	m_matrix.d31 = 0.0f;
+	m_matrix.d32 = 0.0f;
+	m_matrix.d33 = 1.0f;
+#endif // UNOPTIMIZED
 }
 
 void Transform::decompose() {
