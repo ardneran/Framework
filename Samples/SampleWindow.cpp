@@ -40,11 +40,9 @@ void SampleWindow::createScene() {
                                                                   Utils::findBasePath("house/house.obj"));
     for (std::list<VisualSpatial*>::iterator it = visualsCube.begin(); it != visualsCube.end(); ++it) {
         (*it)->setVisualEffect(m_visualEffects[visualEffectTypePhong]);
-		(*it)->setTranslate(Vec3(0, -25, 100));
+		(*it)->setTranslate(Vec3(0, -2, 10));
 		(*it)->setRotate(Quat(0, 0, 0));
 		(*it)->setScale(Vec3(0.1f, 0.1f, 0.1f));
-		//g_glModels[0]->setPosition(Vec3(0, -15, 0));
-		//g_glModels[0]->setScale(Vec3(0.1f, 0.1f, 0.1f));
         m_octree->insert(*it);
     }
 #else
