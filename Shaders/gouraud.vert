@@ -13,6 +13,7 @@ out vec4 vColor;
 
 uniform mat3 worldViewNorm;
 uniform mat4 worldViewProjection;
+uniform vec3 lightColor;
 uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 uniform vec3 ambient;
@@ -36,7 +37,7 @@ void main()
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, texcoord).rgb;
 	vec3 L = normalize(lightPosition - P);
 	float diffuseLight = max(dot(N, L), 0);
-	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, texcoord).rgb * diffuseLight;
+	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, texcoord).rgb * lightColor * diffuseLight;
 	vec3 V = normalize(eyePosition - P);
 	vec3 H = normalize(L + V);
 	float specularLight = 0.0;
@@ -48,6 +49,6 @@ void main()
 	{
 		specularLight = pow(max(dot(N, H), 0), shininess);
 	}
-	vec3 specular_ = specular * texture(specularTextureSampler, texcoord).rgb * specularLight;
+	vec3 specular_ = specular * texture(specularTextureSampler, texcoord).rgb * lightColor * specularLight;
 	vColor = vec4(emission_ + ambient_ + diffuse_ + specular_, 1);
 }

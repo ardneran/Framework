@@ -11,6 +11,7 @@ in vec2 vTexcoord;
 
 out vec4 fColor;
 
+uniform vec3 lightColor;
 uniform vec3 lightPosition;
 uniform vec3 eyePosition;
 uniform vec3 ambient;
@@ -32,7 +33,7 @@ void main()
 	vec3 ambient_ = ambient * texture(ambientTextureSampler, vTexcoord).rgb;
 	vec3 L = normalize(lightPosition - P);
 	float diffuseLight = max(dot(N, L), 0);
-	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, vTexcoord).rgb * diffuseLight;
+	vec3 diffuse_ = diffuse * texture(diffuseTextureSampler, vTexcoord).rgb * lightColor * diffuseLight;
 	vec3 V = normalize(eyePosition - P);
 	vec3 H = normalize(L + V);
 	float specularLight = 0.0;
@@ -44,6 +45,6 @@ void main()
 	{
 		specularLight = pow(max(dot(N, H), 0), shininess);
 	}
-	vec3 specular_ = specular * texture(specularTextureSampler, vTexcoord).rgb * specularLight;
+	vec3 specular_ = specular * texture(specularTextureSampler, vTexcoord).rgb * lightColor * specularLight;
 	fColor = vec4(emission_ + ambient_ + diffuse_ + specular_, 1);
 }
