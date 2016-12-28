@@ -92,15 +92,13 @@ void AbstractWindow::onIdle() {
 	m_octree->update();
 	std::list<Spatial*> spatials;
 	m_octree->collectTree(spatials, m_camera);
-	std::cout << "Spatials size: " << spatials.size() << "\n";
+	static int spatialsSize = 0;
+	if (spatials.size() != spatialsSize) {
+		spatialsSize = spatials.size();
+		std::cout << "Spatials size: " << spatialsSize << "\n";
+	}
 
 	// Render Octree.
-	// Push common uniforms to all shaders.
-	// TODO Remove hardcoded loop limit.
-	for (int i = 0; i < 3; ++i) {
-		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("lightPosition", 1, m_camera->getPosition().data);
-		static_cast<GlProgram*>(m_visualEffects[i]->getProgram())->set3fv("eyePosition", 1, m_camera->getPosition().data);
-	}
 	m_renderer->clearBuffers();
 	for (std::list<Spatial*>::iterator it = spatials.begin(); it != spatials.end(); ++it) {
 		VisualSpatial* visual = dynamic_cast<VisualSpatial*>(*it);
