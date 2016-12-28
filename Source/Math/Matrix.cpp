@@ -206,8 +206,8 @@ float Mat3::determinant() {
     return d00 * (d11 * d22 - d21 * d12) - d01 * (d10 * d22 - d20 * d12) + d02 * (d10 * d21 - d20 * d11);
 }
 
-Vec2 Mat3::Right() const { return Vec2(d00, d01).normal(); }
-Vec2 Mat3::Up() const { return Vec2(d10, d11).normal(); }
+Vec2 Mat3::Right() const { return Vec2(d00, d01); }
+Vec2 Mat3::Up() const { return Vec2(d10, d11); }
 Vec2 Mat3::Translation() const { return Vec2(d20, d21); }
 
 Vec3 Mat3::operator*(const Vec3& v) const {
@@ -429,9 +429,9 @@ float Mat4::determinant() {
 		 d03*(d10*(d21*d32-d31*d22)-d11*(d20*d32-d30*d22)+d12*(d20*d31-d30*d21)));*/
 }
 
-Vec3 Mat4::Right() const { return Vec3(d00, d01, d02).normal(); }
-Vec3 Mat4::Up() const { return Vec3(d10, d11, d12).normal(); }
-Vec3 Mat4::Forward() const { return Vec3(d20, d21, d22).normal(); }
+Vec3 Mat4::Right() const { return Vec3(d00, d01, d02); }
+Vec3 Mat4::Up() const { return Vec3(d10, d11, d12); }
+Vec3 Mat4::Forward() const { return Vec3(d20, d21, d22); }
 Vec3 Mat4::Translation() const { return Vec3(d03, d13, d23); }
 
 Vec4 Mat4::operator*(const Vec4& v) const {

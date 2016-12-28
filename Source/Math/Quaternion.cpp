@@ -80,21 +80,21 @@ Quat::Quat(const float& radpitch, const float& radyaw, const float& radroll) {
 	const float sr = sinf(halfRoll);
 	const float cr = cosf(halfRoll);
 
-#if defined(RIGHT_HANDED)
 	// Reference
 	// Visualizing Quaternions Page 53
-	w = + cp * cy * cr - sp * sy * sr;
-	x = + sp * cy * cr + cp * sy * sr;
-	y = + cp * sy * cr - sp * cy * sr;
-	z = + cp * cy * sr + sp * sy * cr;
-#else
+	// Need to verify about right hand
+	w = cp * cy * cr - sp * sy * sr;
+	x = sp * cy * cr + cp * sy * sr;
+	y = cp * sy * cr - sp * cy * sr;
+	z = cp * cy * sr + sp * sy * cr;
+
 	// Reference
-	// Flip the signs of all sin above
-	w = + cp * cy * cr + sp * sy * sr;
-	x = - sp * cy * cr + cp * sy * sr;
-	y = - cp * sy * cr - sp * cy * sr;
-	z = - cp * cy * sr + sp * sy * cr;
-#endif // defined(RIGHT_HANDED)
+	// Old code not fully sure about..
+	// Works but signs are different..
+	//w = cp * cy * cr + sp * sy * sr;
+	//x = sp * cy * cr + cp * sy * sr;
+	//y = cp * sy * cr - sp * cy * sr;
+	//z = cp * cy * sr - sp * sy * cr;
 }
 
 Quat::Quat(const Mat4& matrix) {
