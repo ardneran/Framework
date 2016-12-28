@@ -15,6 +15,11 @@ Transform::Transform()
     compose();
 }
 
+Transform::Transform(const Mat4& matrix) {
+	m_matrix = matrix;
+	decompose();
+}
+
 Transform::Transform(const Vec3& translate, const Quat& rotate, const Vec3& scale)
 : m_translate(translate)
 , m_rotate(rotate)

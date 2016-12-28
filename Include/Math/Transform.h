@@ -15,6 +15,7 @@
 class Transform {
 public:
     Transform();
+	Transform(const Mat4& matrix);
     Transform(const Vec3& translate, const Quat& rotate, const Vec3& scale);
     virtual ~Transform();
 
