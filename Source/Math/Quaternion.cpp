@@ -38,8 +38,8 @@ Quat::Quat(const float& s, const Vec3& vec3)
 , w(s) {
 }
 
-Quat::Quat(const Vec3& axis, const float& angle) {
-    float angle_divide_2 = angle * 0.5f;
+Quat::Quat(const Vec3& axis, const float& radangle) {
+    float angle_divide_2 = radangle * 0.5f;
     Vec3 v = axis.normal() * sinf(angle_divide_2);
     x = v.x;
     y = v.y;
@@ -67,27 +67,34 @@ Quat::Quat(const Vec3& v0, const Vec3& v1) {
     w = /* s = */ s_multiply_2 / 2.0f;
 }
 
-Quat::Quat(const float& yaw, const float& pitch, const float& roll) {
-    // Reference
-    // http://referencesource.microsoft.com/#System.Numerics/System/Numerics/Quaternion.cs
-    // Roll first, about axis the object is facing, then
-    // pitch upward, then yaw to face into the new heading
-    const float halfRoll = roll * 0.5f;
-    const float sr = sinf(halfRoll);
-    const float cr = cosf(halfRoll);
-
-    const float halfPitch = pitch * 0.5f;
+Quat::Quat(const float& radpitch, const float& radyaw, const float& radroll) {
+    const float halfPitch = radpitch * 0.5f;
     const float sp = sinf(halfPitch);
     const float cp = cosf(halfPitch);
 
-    const float halfYaw = yaw * 0.5f;
+    const float halfYaw = radyaw * 0.5f;
     const float sy = sinf(halfYaw);
     const float cy = cosf(halfYaw);
 
-    x = cy * sp * cr + sy * cp * sr;
-    y = sy * cp * cr - cy * sp * sr;
-    z = cy * cp * sr - sy * sp * cr;
-    w = cy * cp * cr + sy * sp * sr;
+	const float halfRoll = radroll * 0.5f;
+	const float sr = sinf(halfRoll);
+	const float cr = cosf(halfRoll);
+
+#if defined(RIGHT_HANDED)
+	// Reference
+	// Visualizing Quaternions Page 53
+	w = + cp * cy * cr - sp * sy * sr;
+	x = + sp * cy * cr + cp * sy * sr;
+	y = + cp * sy * cr - sp * cy * sr;
+	z = + cp * cy * sr + sp * sy * cr;
+#else
+	// Reference
+	// Flip the signs of all sin above
+	w = + cp * cy * cr + sp * sy * sr;
+	x = - sp * cy * cr + cp * sy * sr;
+	y = - cp * sy * cr - sp * cy * sr;
+	z = - cp * cy * sr + sp * sy * cr;
+#endif // defined(RIGHT_HANDED)
 }
 
 Quat::Quat(const Mat4& matrix) {

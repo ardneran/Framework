@@ -32,9 +32,9 @@ public:
     Quat(const Vec4& vec4);
     Quat(const float& x, const float& y, const float& z, const float& w);
     Quat(const float& s, const Vec3& vec3);
-    Quat(const Vec3& axis, const float& angle);
+    Quat(const Vec3& axis, const float& radangle);
     Quat(const Vec3& v0, const Vec3& v1); // q that rotates v0 to v1
-    Quat(const float& yaw, const float& pitch, const float& roll);
+    Quat(const float& radpitch, const float& radyaw, const float& radroll);
     Quat(const Mat4& matrix);
 
     Vec3 axis() const;
