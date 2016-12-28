@@ -158,7 +158,7 @@ public:
 
 	Vec3 Right() const;
 	Vec3 Up() const;
-	Vec3 Backward() const;
+	Vec3 Forward() const;
 	Vec3 Translation() const;
 
     Vec4 operator*(const Vec4& v) const;
