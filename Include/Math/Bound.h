@@ -12,6 +12,7 @@
 #include <list>
 #include <string.h>
 #include <vector>
+#include "Frustum.h"
 #include "Mathematics.h"
 //#include "Mesh.h"
 #include "Transform.h"
@@ -39,9 +40,14 @@ public:
 	void create(const std::list<Bound2>& boxes);
 	void create(const std::list<Vec2>& points);
 
-	bool contains(const Vec2& p) const;
-	bool contains(const Bound2& other) const;
-	bool intersects(const Bound2& other) const;
+	bool contains(const Vec2& point) const;
+	bool contains(const Bound2& bound) const;
+
+	bool intersects(const Bound2& bound) const;
+
+	bool completelyInside(const Bound2& bound) const;
+	bool completelyInside(const Frustum2& frustum) const;
+
 	Bound2 transform(const Mat3& m) const;
 	Bound2 transform(const Transform& t) const;
 
@@ -78,9 +84,14 @@ public:
     void create(const std::vector<Vec3>& points);
 	//void create(const std::vector<Vertex>& vertices);
 
-    bool contains(const Vec3& p) const;
-    bool contains(const Bound3& other) const;
-    bool intersects(const Bound3& other) const;
+    bool contains(const Vec3& point) const;
+    bool contains(const Bound3& bound) const;
+
+	bool intersects(const Bound3& bound) const;
+
+	bool completelyInside(const Bound3& bound) const;
+	bool completelyInside(const Frustum3& frustum) const;
+
     Bound3 transform(const Mat4& m) const;
 	Bound3 transform(const Transform& t) const;
 
